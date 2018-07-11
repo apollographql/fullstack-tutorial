@@ -5,43 +5,43 @@ const { ApolloServer, gql } = require('apollo-server');
 // Construct a schema, using GraphQL schema language
 const typeDefs = gql`
   type Query {
-    launches: [Launch]!
-    launch: Launch
-    getAllTrips: [Trip]!
-    getTrip(user: ID!): Trip!
+    launches(limit: Int, offset: Int): [Launch]!
+    launch(id: ID!): Launch
+    trips(user: ID): [Launch]!
+    user(id: ID!): User
   }
 
   type Mutation {
-    signUpForTrip: String!
-    cancelTrip: String!
+    # if false, signup failed -- check errors
+    bookTrip(user: ID!, trip: ID!): Boolean! 
+
+    # if false, cancellation failed -- check errors
+    cancelTrip(user: ID!, trip: ID!): Boolean!
+    
+    login(email: String): String
   }
 
   type Launch {
-    id: ID
-    year: String
-    date: String
+    id: ID!
+    year: String!
+    date: String!
     mission: String
-    rocket: Rocket
+    rocket: Rocket!
     launch_success: Boolean
+    passengers: [User]!
   }
 
   type Rocket {
-    id: ID
+    id: ID!
     name: String!
     type: String!
   }
 
-  type Trip {
-    id: ID
-    launch: Launch
-    reservedBy: [User]
-  }
-
   type User {
-    id: ID
+    id: ID!
     email: String!
-    avatar: String!
-    trips: [Trip]
+    avatar: String
+    trips: [Launch]!
   }
 `;
 
@@ -53,20 +53,28 @@ const resolvers = {
     launch: (root, args, context) => {
       return "Get one launch";
     },
-    getAllTrips: (root, args, context) => {
+    trips: (root, args, context) => {
       return "Get all trips for all launches";
     },
-    getTrip: (root, args, context) => {
-      return "Get trip for a particular user";
-    }
   },
   Mutation: {
-    signUpForTrip: (root, args, context) => {
+    bookTrip: (root, args, context) => {
       return "Mutation bruuuh";
     },
     cancelTrip: (root, args, context) => {
       return "Cancel trip bruuuh";
+    },
+    login: () => {
+      /*
+      > try to login
+        > if details don't exist, create a new user and return token
+        > if details do exist, login and return token
+        */
     }
+  },
+  User: {
+    avatar: () => {},
+    trips: () => {}
   }
 };
 
