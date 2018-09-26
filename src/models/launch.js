@@ -6,6 +6,7 @@ class LaunchAPI extends RESTDataSource {
     this.baseURL = 'https://api.spacexdata.com/v2/';
   }
   
+  // leaving this inside the class to make the class easier to test
   launchReducer(launch){
     return {
       id: launch.flight_number || 0,
