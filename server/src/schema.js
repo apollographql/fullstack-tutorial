@@ -4,16 +4,15 @@ const typeDefs = gql`
   type Query {
     launches(limit: Int, offset: Int): [Launch]!
     launch(id: ID!): Launch
-    trips(user: ID): [Launch]!
     user(id: ID!): User
   }
 
   type Mutation {
     # if false, signup failed -- check errors
-    bookTrip(user: ID!, trip: ID!): Boolean!
+    bookTrips(userId: ID!, tripId: [ID!]): Boolean!
 
     # if false, cancellation failed -- check errors
-    cancelTrip(user: ID!, trip: ID!): Boolean!
+    cancelTrip(userId: ID!, tripId: ID!): Boolean!
 
     login(email: String): String
   }
@@ -24,7 +23,7 @@ const typeDefs = gql`
     date: String!
     mission: Mission!
     rocket: Rocket!
-    launch_success: Boolean
+    launchSuccess: Boolean
   }
 
   type Rocket {
