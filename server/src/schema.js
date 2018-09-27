@@ -25,7 +25,6 @@ const typeDefs = gql`
     mission: String
     rocket: Rocket!
     launch_success: Boolean
-    passengers: [User]!
   }
 
   type Rocket {
@@ -38,7 +37,12 @@ const typeDefs = gql`
     id: ID!
     email: String!
     avatar: String
-    trips: [Launch]!
+    trips: [Launch]
+  }
+
+  type Mission {
+    name: String!
+    missionPatch: String
   }
 `;
 
