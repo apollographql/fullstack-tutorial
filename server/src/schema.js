@@ -2,7 +2,7 @@ const { gql } = require('apollo-server');
 
 const typeDefs = gql`
   type Query {
-    launches(limit: Int, offset: Int): [Launch]!
+    launches(first: Int, cursor: String): [Launch]!
     launch(id: ID!): Launch
     user(id: ID!): User
   }
