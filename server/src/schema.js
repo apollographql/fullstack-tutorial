@@ -22,7 +22,7 @@ const typeDefs = gql`
     id: ID!
     year: String!
     date: String!
-    mission: String
+    mission: Mission!
     rocket: Rocket!
     launch_success: Boolean
   }
