@@ -8,7 +8,9 @@ const resolvers = require('./resolvers');
 const server = new ApolloServer({
   typeDefs,
   resolvers,
-  engine: { apiKey: process.env.ENGINE_API_KEY },
+  engine: process.env.ENGINE_API_KEY
+    ? { apiKey: process.env.ENGINE_API_KEY }
+    : undefined,
 });
 
 // Start our server
