@@ -4,17 +4,17 @@ const typeDefs = gql`
   type Query {
     launches(pageSize: Int, cursor: String): [Launch]!
     launch(id: ID!): Launch
-    user(id: ID!): User
+    me: User
   }
 
   type Mutation {
     # if false, signup failed -- check errors
-    bookTrips(userId: ID!, tripId: [ID!]): Boolean!
+    bookTrips(tripId: [ID!]): Boolean!
 
     # if false, cancellation failed -- check errors
-    cancelTrip(userId: ID!, tripId: ID!): Boolean!
+    cancelTrip(tripId: ID!): Boolean!
 
-    login(email: String): String
+    login(email: String): String # login token
   }
 
   type Launch {
