@@ -6,12 +6,14 @@ module.exports = {
         userId: id,
       });
 
-      if (!launchIds.length) return null;
+      if (!launchIds.length) return [];
 
       // look up those launches by their ids
-      return dataSources.launchAPI.getLaunchesByIds({
-        launchIds,
-      });
+      return (
+        dataSources.launchAPI.getLaunchesByIds({
+          launchIds,
+        }) || []
+      );
     },
   },
 };

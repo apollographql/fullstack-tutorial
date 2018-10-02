@@ -1,22 +1,25 @@
 module.exports = {
   Mutation: {
-    bookTrips: async (root, { launch }, { dataSources, user = { id: 3 } }) => {
+    bookTrip: async (root, { launchId }, { dataSources, user = { id: 3 } }) => {
       const res = await dataSources.userAPI.bookTrip({
         userId: user.id,
-        launchId: launch,
+        launchId: launchId,
       });
-      console.log(res);
+
       return true;
     },
-    cancelTrip: async (root, { launch }, { dataSources, user = { id: 3 } }) => {
+    cancelTrip: async (
+      root,
+      { launchId },
+      { dataSources, user = { id: 3 } },
+    ) => {
       return dataSources.userAPI.cancelTrip({
-        launchId: launch,
+        launchId: launchId,
         userId: user.id,
       });
     },
     login: async (root, { email }, { dataSources, user: cUser }) => {
       const user = await dataSources.userAPI.findOrCreateUser({ email });
-      console.log({ cUser });
       if (user) return new Buffer(email).toString('base64');
     },
   },

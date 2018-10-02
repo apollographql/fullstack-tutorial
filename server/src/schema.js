@@ -9,10 +9,10 @@ const typeDefs = gql`
 
   type Mutation {
     # if false, signup failed -- check errors
-    bookTrips(tripId: [ID!]): Boolean!
+    bookTrip(launchId: ID!): Boolean!
 
     # if false, cancellation failed -- check errors
-    cancelTrip(tripId: ID!): Boolean!
+    cancelTrip(launchId: ID!): Boolean!
 
     login(email: String): String # login token
   }
@@ -25,6 +25,7 @@ const typeDefs = gql`
     mission: Mission!
     rocket: Rocket!
     launchSuccess: Boolean
+    passengers: [User]!
   }
 
   type Rocket {
@@ -37,7 +38,7 @@ const typeDefs = gql`
     id: ID!
     email: String!
     avatar: String
-    trips: [Launch]
+    trips: [Launch]!
   }
 
   type Mission {

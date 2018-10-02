@@ -8,12 +8,19 @@ class UserAPI extends DataSource {
     this.store = createStore();
   }
 
+  // leaving this inside the class to make the class easier to test
+  userReducer(user) {
+    return {
+      id: user.id,
+      email: user.email,
+      avatar: user.avatar,
+    };
+  }
+
   async findOrCreateUser({ email }) {
     if (!isEmail.validate(email)) return null;
     const users = await this.store.users.findOrCreate({ where: { email } });
-    return users && users[0]
-      ? { id: users[0].id, email: users[0].email, avatar: users[0].avatar }
-      : null;
+    return users && users[0] ? this.userReducer(users[0]) : null;
   }
 
   async bookTrip({ userId, launchId }) {
@@ -28,7 +35,9 @@ class UserAPI extends DataSource {
     const found = await this.store.trips.findAll({
       where: { userId: +userId },
     });
-    return found && found.length ? found.map(l => l.dataValues.launchId) : [];
+    return found && found.length
+      ? found.map(l => l.dataValues.launchId).filter(l => !!l)
+      : [];
   }
 
   async getUsersByLaunch({ launchId }) {
@@ -44,7 +53,7 @@ class UserAPI extends DataSource {
     });
     if (!foundUsers || !foundUsers.length) return [];
 
-    return foundUsers;
+    return foundUsers.map(u => this.userReducer(u));
   }
 }
 
@@ -62,15 +71,6 @@ const createStore = () => {
     operatorsAliases,
   });
 
-  // const CREATE_USERS_QUERY = `CREATE TABLE IF NOT EXISTS users(
-  //   id INTEGER PRIMARY KEY AUTOINCREMENT,
-  //   createdAt DATETIME,
-  //   updatedAt DATETIME,
-  //   email TEXT
-  // )`;
-
-  // db.query(CREATE_USERS_QUERY);
-
   const users = db.define('user', {
     id: {
       type: SQL.INTEGER,
@@ -83,16 +83,6 @@ const createStore = () => {
     token: SQL.STRING,
   });
 
-  // const CREATE_TRIPS_QUERY = `CREATE TABLE IF NOT EXISTS trips(
-  //   id INTEGER PRIMARY KEY AUTOINCREMENT,
-  //   createdAt DATETIME,
-  //   updatedAt DATETIME,
-  //   launchId INTEGER,
-  //   userId INTEGER
-  // )`;
-
-  // db.query(CREATE_TRIPS_QUERY);
-
   const trips = db.define('trip', {
     id: {
       type: SQL.INTEGER,
@@ -104,9 +94,6 @@ const createStore = () => {
     launchId: SQL.INTEGER,
     userId: SQL.INTEGER,
   });
-
-  // users.create({ email: 'a@a.a'});
-  // trips.create({ launchId: 1, userId: 1})
 
   // XXX run these to generate tables
   // users.sync({ alter: true, force: true });
