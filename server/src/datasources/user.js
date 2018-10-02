@@ -33,7 +33,7 @@ class UserAPI extends DataSource {
 
   async getLaunchIdsByUser({ userId }) {
     const found = await this.store.trips.findAll({
-      where: { userId: +userId },
+      where: { userId: userId },
     });
     return found && found.length
       ? found.map(l => l.dataValues.launchId).filter(l => !!l)
@@ -42,7 +42,7 @@ class UserAPI extends DataSource {
 
   async getUsersByLaunch({ launchId }) {
     const found = await this.store.trips.findAll({
-      where: { launchId: +launchId },
+      where: { launchId: launchId },
     });
     const userIds =
       found && found.length ? found.map(l => l.dataValues.userId) : [];
