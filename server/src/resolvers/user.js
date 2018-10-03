@@ -1,6 +1,6 @@
 module.exports = {
   User: {
-    trips: async (user, _, { dataSources, user: { id } }) => {
+    trips: async (_, __, { dataSources, user: { id } }) => {
       // get ids of launches by user
       const launchIds = await dataSources.userAPI.getLaunchIdsByUser({
         userId: id,
