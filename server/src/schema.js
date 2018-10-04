@@ -46,7 +46,6 @@ const typeDefs = gql`
   type User {
     id: ID!
     email: String!
-    avatar: String
     trips: [Launch]!
   }
 
