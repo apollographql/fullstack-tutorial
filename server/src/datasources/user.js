@@ -8,19 +8,10 @@ class UserAPI extends DataSource {
     this.store = createStore();
   }
 
-  // leaving this inside the class to make the class easier to test
-  userReducer(user) {
-    return {
-      id: user.id,
-      email: user.email,
-      avatar: user.avatar,
-    };
-  }
-
   async findOrCreateUser({ email }) {
     if (!isEmail.validate(email)) return null;
     const users = await this.store.users.findOrCreate({ where: { email } });
-    return users && users[0] ? this.userReducer(users[0]) : null;
+    return users && users[0] ? users[0] : null;
   }
 
   async bookTrip({ userId, launchId }) {
@@ -53,7 +44,7 @@ class UserAPI extends DataSource {
     });
     if (!foundUsers || !foundUsers.length) return [];
 
-    return foundUsers.map(u => this.userReducer(u));
+    return foundUsers;
   }
 }
 

@@ -1,4 +1,4 @@
-const resolvers = require('../query');
+const resolvers = require('../resolvers');
 
 describe('[Query.launches]', () => {
   const mockContext = {

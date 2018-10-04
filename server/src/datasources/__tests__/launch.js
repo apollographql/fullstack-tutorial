@@ -70,10 +70,9 @@ const mockLaunch = {
   cursor: '1-FalconSat',
   mission: {
     name: 'FalconSat',
-    patch: null,
+    patch: 'https://images2.imgbox.com/3c/0e/T8iJcSN3_o.png',
   },
   year: '2006',
-  date: 1143239400,
   rocket: {
     id: 'falcon1',
     name: 'Falcon 1',

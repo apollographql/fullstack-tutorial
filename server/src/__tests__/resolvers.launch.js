@@ -1,4 +1,4 @@
-const resolvers = require('../launch');
+const resolvers = require('../resolvers');
 
 describe('[Launch.passengers]', () => {
   const mockLaunch = { id: 1 };
