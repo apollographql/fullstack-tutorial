@@ -1,4 +1,4 @@
-const resolvers = require('../mutation');
+const resolvers = require('../resolvers');
 
 const mockContext = {
   dataSources: {

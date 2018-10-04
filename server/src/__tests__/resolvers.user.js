@@ -1,4 +1,4 @@
-const resolvers = require('../user');
+const resolvers = require('../resolvers');
 
 describe('[User.trips]', () => {
   const mockContext = {
