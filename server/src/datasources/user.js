@@ -33,7 +33,7 @@ class UserAPI extends DataSource {
 
   async getLaunchIdsByUser({ userId }) {
     const found = await this.store.trips.findAll({
-      where: { userId: userId },
+      where: { userId },
     });
     return found && found.length
       ? found.map(l => l.dataValues.launchId).filter(l => !!l)
