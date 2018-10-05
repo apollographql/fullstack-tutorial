@@ -12,8 +12,8 @@ const mockStore = {
   },
 };
 
-const ds = new UserAPI();
-ds.store = mockStore;
+const ds = new UserAPI({ store: mockStore });
+ds.initialize({ context: { user: { id: 1, email: 'a@a.a' } } });
 
 describe('[UserAPI.findOrCreateUser]', () => {
   it('returns null for invalid emails', async () => {
@@ -50,7 +50,7 @@ describe('[UserAPI.bookTrip]', () => {
 
     // check the result of the fn
     const res = await ds.bookTrip(args);
-    expect(res).toEqual('heya');
+    expect(res).toEqual(true);
 
     // make sure store is called properly
     expect(mockStore.trips.findOrCreate).toBeCalledWith({ where: args });
@@ -64,7 +64,7 @@ describe('[UserAPI.cancelTrip]', () => {
 
     // check the result of the fn
     const res = await ds.cancelTrip(args);
-    expect(res).toEqual('heya');
+    expect(res).toEqual(true);
 
     // make sure store is called properly
     expect(mockStore.trips.destroy).toBeCalledWith({ where: args });
@@ -95,38 +95,6 @@ describe('[UserAPI.getLaunchIdsByUser]', () => {
 
     // check the result of the fn
     const res = await ds.getLaunchIdsByUser(args);
-    expect(res).toEqual([]);
-  });
-});
-
-describe('[UserAPI.getUsersByLaunch]', () => {
-  it('looks up trips, then users from store', async () => {
-    const args = { launchId: 1 };
-    const launches = [
-      { dataValues: { userId: 1 } },
-      { dataValues: { userId: 2 } },
-    ];
-    const users = [{ id: 1 }, { id: 2 }];
-    // const users = [{ dataValues: { id: 1 } }, { dataValues: { id: 2 } }];
-    mockStore.trips.findAll.mockReturnValueOnce(launches);
-    mockStore.users.findAll.mockReturnValueOnce(users);
-
-    // check the result of the fn
-    const res = await ds.getUsersByLaunch(args);
-    expect(res).toEqual([{ id: 1 }, { id: 2 }]);
-
-    // make sure store is called properly
-    expect(mockStore.trips.findAll).toBeCalledWith({ where: args });
-    expect(mockStore.users.findAll).toBeCalledWith({
-      where: { id: { $in: [1, 2] } },
-    });
-  });
-
-  it('returns empty array when no users are found', async () => {
-    const args = { launchId: 1 };
-
-    // check the result of the fn
-    const res = await ds.getUsersByLaunch(args);
     expect(res).toEqual([]);
   });
 });

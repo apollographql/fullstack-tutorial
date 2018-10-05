@@ -2,10 +2,10 @@
   "name": "fullstack-tutorial-server",
   "version": "1.0.0",
   "description": "",
-  "main": "src/server.js",
+  "main": "src/index.js",
   "scripts": {
     "test": "jest",
-    "start": "nodemon src/server.js"
+    "start": "nodemon src/index.js"
   },
   "author": "",
   "license": "ISC",

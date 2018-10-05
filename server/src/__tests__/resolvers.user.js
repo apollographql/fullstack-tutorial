@@ -20,7 +20,7 @@ describe('[User.trips]', () => {
     expect(res).toEqual([{ id: 999 }]);
 
     // make sure the dataSources were called properly
-    expect(getLaunchIdsByUser).toBeCalledWith({ userId: 1 });
+    expect(getLaunchIdsByUser).toBeCalled();
     expect(getLaunchesByIds).toBeCalledWith({ launchIds: [999] });
   });
 

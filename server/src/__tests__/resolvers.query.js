@@ -9,15 +9,21 @@ describe('[Query.launches]', () => {
   const { getAllLaunches } = mockContext.dataSources.launchAPI;
 
   it('calls lookup from launch api', async () => {
-    getAllLaunches.mockReturnValueOnce([{ id: 999 }]);
+    getAllLaunches.mockReturnValueOnce([{ id: 999, cursor: 'foo' }]);
 
     // check the resolver response
     const res = await resolvers.Query.launches(null, {}, mockContext);
-    expect(res).toEqual([{ id: 999 }]);
+    expect(res).toEqual({
+      cursor: 'foo',
+      launches: [{ id: 999, cursor: 'foo' }],
+    });
   });
 
   it('respects pageSize arg', async () => {
-    getAllLaunches.mockReturnValue([{ id: 1 }, { id: 999 }]);
+    getAllLaunches.mockReturnValue([
+      { id: 1, cursor: 'foo' },
+      { id: 999, cursor: 'bar' },
+    ]);
 
     // check the resolver response
     const res = await resolvers.Query.launches(
@@ -30,11 +36,17 @@ describe('[Query.launches]', () => {
       { pageSize: 2 },
       mockContext,
     );
-    expect(res).toEqual([{ id: 1 }]);
-    expect(res2).toEqual([{ id: 1 }, { id: 999 }]);
+    expect(res).toEqual({
+      cursor: 'foo',
+      launches: [{ id: 1, cursor: 'foo' }],
+    });
+    expect(res2).toEqual({
+      cursor: 'bar',
+      launches: [{ id: 1, cursor: 'foo' }, { id: 999, cursor: 'bar' }],
+    });
   });
 
-  it('respects cursor arg', async () => {
+  fit('respects cursor arg', async () => {
     getAllLaunches.mockReturnValue([
       { id: 1, cursor: 'a' },
       { id: 999, cursor: 'b' },
@@ -51,8 +63,12 @@ describe('[Query.launches]', () => {
       { after: 'b' },
       mockContext,
     );
-    expect(res).toEqual([{ id: 999, cursor: 'b' }]);
-    expect(res2).toEqual([]);
+    expect(res).toEqual({
+      hasMore: false,
+      cursor: 'b',
+      launches: [{ id: 999, cursor: 'b' }],
+    });
+    expect(res2).toEqual({ hasMore: false, cursor: null, launches: [] });
   });
 
   it('respects both pageSize and cursor', async () => {

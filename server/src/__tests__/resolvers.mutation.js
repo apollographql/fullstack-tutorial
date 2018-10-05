@@ -26,7 +26,7 @@ describe('[Mutation.bookTrip]', () => {
     expect(res).toEqual(true);
 
     // check if the dataSource was called with correct args
-    expect(bookTrip).toBeCalledWith({ launchId: 123, userId: 1 });
+    expect(bookTrip).toBeCalledWith({ launchId: 123 });
   });
 
   it('returns false if booking fails', async () => {
@@ -57,7 +57,7 @@ describe('[Mutation.cancelTrip]', () => {
     expect(res).toEqual(true);
 
     // check if the dataSource was called with correct args
-    expect(cancelTrip).toBeCalledWith({ launchId: 123, userId: 1 });
+    expect(cancelTrip).toBeCalledWith({ launchId: 123 });
   });
 
   it('returns false if cancelling fails', async () => {

@@ -67,7 +67,7 @@ describe('[LaunchAPI.getLaunchesByIds]', () => {
 // properly transformed launch
 const mockLaunch = {
   id: 1,
-  cursor: '1-FalconSat',
+  cursor: '1143239400',
   mission: {
     name: 'FalconSat',
     patch: 'https://images2.imgbox.com/3c/0e/T8iJcSN3_o.png',
