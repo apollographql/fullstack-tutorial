@@ -15,6 +15,7 @@ describe('[Query.launches]', () => {
     const res = await resolvers.Query.launches(null, {}, mockContext);
     expect(res).toEqual({
       cursor: 'foo',
+      hasMore: false,
       launches: [{ id: 999, cursor: 'foo' }],
     });
   });
@@ -38,15 +39,17 @@ describe('[Query.launches]', () => {
     );
     expect(res).toEqual({
       cursor: 'foo',
+      hasMore: true,
       launches: [{ id: 1, cursor: 'foo' }],
     });
     expect(res2).toEqual({
       cursor: 'bar',
+      hasMore: false,
       launches: [{ id: 1, cursor: 'foo' }, { id: 999, cursor: 'bar' }],
     });
   });
 
-  fit('respects cursor arg', async () => {
+  it('respects cursor arg', async () => {
     getAllLaunches.mockReturnValue([
       { id: 1, cursor: 'a' },
       { id: 999, cursor: 'b' },
@@ -85,7 +88,11 @@ describe('[Query.launches]', () => {
       mockContext,
     );
 
-    expect(res).toEqual([{ id: 999, cursor: 'b' }, { id: 123, cursor: 'c' }]);
+    expect(res).toEqual({
+      cursor: 'c',
+      hasMore: false,
+      launches: [{ id: 999, cursor: 'b' }, { id: 123, cursor: 'c' }],
+    });
   });
 });
 
@@ -120,7 +127,7 @@ describe('[Query.me]', () => {
   };
 
   it('returns null if no user in context', async () => {
-    expect(await resolvers.Query.me(null, null, mockContext)).toEqual(null);
+    expect(await resolvers.Query.me(null, null, mockContext)).toBeFalsy();
   });
 
   it('returns user from userAPI', async () => {
@@ -133,8 +140,5 @@ describe('[Query.me]', () => {
     expect(res).toEqual({
       id: 999,
     });
-
-    // make sure dataSource is called with the email
-    expect(findOrCreateUser).toBeCalledWith({ email: mockContext.user.email });
   });
 });
