@@ -2,14 +2,24 @@
   "name": "fullstack-tutorial-server",
   "version": "1.0.0",
   "description": "",
-  "main": "src/server.js",
+  "main": "src/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node src/server.js"
+    "test": "jest",
+    "start": "nodemon src/index.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "apollo-server": "^2.1.0"
+    "apollo-datasource": "^0.1.3",
+    "apollo-datasource-rest": "^0.1.5",
+    "apollo-server": "^2.1.0",
+    "graphql": "^14.0.2",
+    "isemail": "^3.1.3",
+    "nodemon": "^1.18.4",
+    "sequelize": "^4.39.0",
+    "sqlite3": "^4.0.2"
+  },
+  "devDependencies": {
+    "jest": "^23.6.0"
   }
 }
