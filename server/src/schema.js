@@ -18,12 +18,23 @@ const typeDefs = gql`
 
   type Mutation {
     # if false, signup failed -- check errors
-    bookTrip(launchId: ID!): Boolean!
+    bookTrip(launchId: ID!): TripUpdateResponse!
 
     # if false, cancellation failed -- check errors
-    cancelTrip(launchId: ID!): Boolean!
+    cancelTrip(launchId: ID!): TripUpdateResponse!
 
     login(email: String): String # login token
+  }
+
+  interface MutationResponse {
+    success: Boolean!
+    message: String
+  }
+
+  type TripUpdateResponse implements MutationResponse {
+    success: Boolean!
+    message: String
+    launch: Launch
   }
 
   """
@@ -43,6 +54,7 @@ const typeDefs = gql`
     mission: Mission!
     rocket: Rocket!
     launchSuccess: Boolean
+    isBooked: Boolean!
   }
 
   type Rocket {
