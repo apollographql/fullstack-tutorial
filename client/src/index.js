@@ -2,18 +2,33 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 
-import ApolloClient from 'apollo-boost';
+import { ApolloClient } from 'apollo-client';
+import { InMemoryCache } from 'apollo-cache-inmemory';
+import { HttpLink } from 'apollo-link-http';
 import { ApolloProvider } from 'react-apollo';
 
 import { Router } from '@reach/router';
 
 import Home from './pages/home';
 import Login from './pages/login';
+import Header from './components/header';
 
 // Set up our apollo-client to point at the server we created
 // this can be local or a remote endpoint
+const cache = new InMemoryCache();
 const client = new ApolloClient({
-  uri: 'https://apollo-launchpad.glitch.me/',
+  cache,
+  link: new HttpLink({
+    uri: 'http://localhost:3000/graphql',
+    headers: {
+      authorization: localStorage.getItem('token'),
+    },
+  }),
+  localState: {
+    initializers: {
+      isLoggedIn: () => !!localStorage.getItem('token'),
+    },
+  },
 });
 
 /**
@@ -27,6 +42,7 @@ const client = new ApolloClient({
  */
 ReactDOM.render(
   <ApolloProvider client={client}>
+    <Header />
     <Router>
       <Home path="/" />
       <Login path="login" />
