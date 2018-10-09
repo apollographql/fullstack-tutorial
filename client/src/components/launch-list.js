@@ -1,6 +1,7 @@
 import React from 'react';
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
+import styled from 'react-emotion';
 
 import LaunchTile from './launch-tile';
 
@@ -48,7 +49,7 @@ export default class LaunchList extends React.Component {
           if (error) return <p>ERROR</p>;
 
           return (
-            <div>
+            <Container>
               {data.launches && data.launches.launches
                 ? data.launches.launches.map(l => (
                     <LaunchTile
@@ -59,23 +60,55 @@ export default class LaunchList extends React.Component {
                   ))
                 : null}
               {data.launches && data.launches.hasMore ? (
-                <button
+                <LoadMoreButton
                   onClick={() =>
                     fetchMore({
                       variables: {
                         after: data.launches.cursor,
                       },
-                      updateQuery: this.updateQuery,
+                      updateQuery: (prev, { fetchMoreResult, ...rest }) => {
+                        console.log({ ...rest });
+                        if (!fetchMoreResult) return prev;
+                        return {
+                          ...fetchMoreResult,
+                          launches: {
+                            ...fetchMoreResult.launches,
+                            launches: [
+                              ...prev.launches.launches,
+                              ...fetchMoreResult.launches.launches,
+                            ],
+                          },
+                        };
+                      },
                     })
                   }
                 >
                   Load More
-                </button>
+                </LoadMoreButton>
               ) : null}
-            </div>
+            </Container>
           );
         }}
       </Query>
     );
   }
 }
+
+/**
+ * STYLED COMPONENTS USED IN THIS FILE ARE BELOW HERE
+ */
+
+const Container = styled('div')({
+  marginBottom: '16px',
+});
+
+const LoadMoreButton = styled('button')({
+  backgroundColor: '#4CAF50',
+  border: 'none',
+  color: 'white',
+  padding: '15px 32px',
+  textAlign: 'center',
+  textDecoration: 'none',
+  display: 'inline-block',
+  fontSize: '16px',
+});

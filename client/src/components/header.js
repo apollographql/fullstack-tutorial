@@ -44,13 +44,14 @@ export default class Header extends React.Component {
             <h1>Launches</h1>
           </StyledLink>
           <Query query={IS_LOGGED_IN}>
-            {({ data: { isLoggedIn }, loading, error, client }) =>
-              !loading && !error && isLoggedIn ? (
-                <button onClick={this.logout(client)}>Log Out</button>
+            {({ data: { isLoggedIn }, loading, error, client }) => {
+              console.log({ isLoggedIn, loading, error, client });
+              return !loading && !error && isLoggedIn ? (
+                <button onClick={() => this.logout(client)}>Log Out</button>
               ) : (
                 <StyledLink to="/login">Log In</StyledLink>
-              )
-            }
+              );
+            }}
           </Query>
         </Container>
       </FullWidthContainer>
