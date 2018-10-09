@@ -23,6 +23,12 @@ const LIST_LAUNCHES = gql`
         }
       }
     }
+    me {
+      id
+      trips {
+        id
+      }
+    }
   }
 `;
 
@@ -56,6 +62,13 @@ export default class LaunchList extends React.Component {
                       key={l.id}
                       launch={l}
                       isLoggedIn={data.isLoggedIn}
+                      isBooked={
+                        !!(
+                          data.me &&
+                          data.me.trips &&
+                          data.me.trips.find(t => t.id === l.id)
+                        )
+                      }
                     />
                   ))
                 : null}
@@ -100,10 +113,11 @@ export default class LaunchList extends React.Component {
 
 const Container = styled('div')({
   marginBottom: '16px',
+  width: '100%',
 });
 
 const LoadMoreButton = styled('button')({
-  backgroundColor: '#4CAF50',
+  backgroundColor: '#00194b',
   border: 'none',
   color: 'white',
   padding: '15px 32px',

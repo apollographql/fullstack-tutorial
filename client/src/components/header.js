@@ -4,26 +4,6 @@ import { Link } from '@reach/router';
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
 
-const Container = styled('header')({
-  maxWidth: '720px',
-  width: '100%',
-  height: '48px',
-  display: 'flex',
-  justifyContent: 'space-between',
-  alignItems: 'center',
-});
-
-const FullWidthContainer = styled('div')({
-  backgroundColor: '#00194b',
-  color: '#fff',
-  margin: '0',
-  width: '100%',
-  display: 'flex',
-  justifyContent: 'center',
-});
-
-const StyledLink = styled(Link)({ textDecoration: 'none', color: 'white' });
-
 const IS_LOGGED_IN = gql`
   query isLoggedIn {
     isLoggedIn @client
@@ -47,7 +27,9 @@ export default class Header extends React.Component {
             {({ data: { isLoggedIn }, loading, error, client }) => {
               console.log({ isLoggedIn, loading, error, client });
               return !loading && !error && isLoggedIn ? (
-                <button onClick={() => this.logout(client)}>Log Out</button>
+                <LogoutButton onClick={() => this.logout(client)}>
+                  Log Out
+                </LogoutButton>
               ) : (
                 <StyledLink to="/login">Log In</StyledLink>
               );
@@ -58,3 +40,36 @@ export default class Header extends React.Component {
     );
   }
 }
+
+/**
+ * STYLED COMPONENTS USED IN THIS FILE ARE BELOW HERE
+ */
+
+const Container = styled('header')({
+  maxWidth: '720px',
+  width: '100%',
+  height: '48px',
+  display: 'flex',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+  padding: '0 8px',
+});
+
+const FullWidthContainer = styled('div')({
+  backgroundColor: '#00194b',
+  color: '#fff',
+  margin: '0',
+  width: '100%',
+  display: 'flex',
+  justifyContent: 'center',
+});
+
+const LogoutButton = styled('button')({
+  backgroundColor: 'transparent',
+  border: 'none',
+  color: 'white',
+  padding: '0',
+  fontSize: '16px',
+});
+
+const StyledLink = styled(Link)({ textDecoration: 'none', color: 'white' });

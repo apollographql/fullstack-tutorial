@@ -40,6 +40,7 @@ const client = new ApolloClient({
  *    The router chooses between which component to render, depending on the url path.
  *    ex: localhost:3000/login will render only the `Login` component
  */
+
 ReactDOM.render(
   <ApolloProvider client={client}>
     <Header />
