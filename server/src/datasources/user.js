@@ -50,6 +50,14 @@ class UserAPI extends DataSource {
       ? found.map(l => l.dataValues.launchId).filter(l => !!l)
       : [];
   }
+
+  async isBookedOnLaunch({ launchId }) {
+    const userId = this.context.user.id;
+    const found = await this.store.trips.findAll({
+      where: { userId, launchId },
+    });
+    return found && found.length > 0;
+  }
 }
 
 module.exports = UserAPI;

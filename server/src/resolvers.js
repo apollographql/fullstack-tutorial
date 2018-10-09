@@ -4,6 +4,9 @@ module.exports = {
   Query: {
     launches: async (root, { pageSize = 20, after }, { dataSources }) => {
       const allLaunches = await dataSources.launchAPI.getAllLaunches();
+      // we want these in reverse chronological order
+      allLaunches.reverse();
+
       const launches = paginateResults({
         after,
         pageSize,
@@ -27,15 +30,46 @@ module.exports = {
       dataSources.userAPI.findOrCreateUser(),
   },
   Mutation: {
-    bookTrip: async (root, { launchId }, { dataSources }) =>
-      dataSources.userAPI.bookTrip({ launchId }),
-    cancelTrip: async (root, { launchId }, { dataSources }) =>
-      dataSources.userAPI.cancelTrip({ launchId }),
+    bookTrip: async (root, { launchId }, { dataSources }) => {
+      const result = await dataSources.userAPI.bookTrip({ launchId });
+      if (!result)
+        return {
+          success: false,
+          message: 'failed to book trip',
+        };
+
+      const launch = await dataSources.launchAPI.getLaunchById({ launchId });
+      return {
+        success: true,
+        message: 'trip booked',
+        launch,
+      };
+    },
+    cancelTrip: async (root, { launchId }, { dataSources }) => {
+      const result = dataSources.userAPI.cancelTrip({ launchId });
+
+      if (!result)
+        return {
+          success: false,
+          message: 'failed to cancel trip',
+        };
+
+      const launch = await dataSources.launchAPI.getLaunchById({ launchId });
+      return {
+        success: true,
+        message: 'trip cancelled',
+        launch,
+      };
+    },
     login: async (root, { email }, { dataSources }) => {
       const user = await dataSources.userAPI.findOrCreateUser({ email });
       if (user) return new Buffer(email).toString('base64');
       return false;
     },
+  },
+  Launch: {
+    isBooked: async (launch, _, { dataSources }) =>
+      dataSources.userAPI.isBookedOnLaunch({ launchId: launch.id }),
   },
   User: {
     trips: async (_, __, { dataSources }) => {
@@ -51,5 +85,10 @@ module.exports = {
         }) || []
       );
     },
+  },
+  // there's only one type that uses the MutationResponse,
+  // so it will always resolve to a 'TripUpdateResponse'
+  MutationResponse: {
+    __resolveType: () => 'TripUpdateResponse',
   },
 };
