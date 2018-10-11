@@ -2,7 +2,7 @@ const { paginateResults } = require('./utils');
 
 module.exports = {
   Query: {
-    launches: async (root, { pageSize = 20, after }, { dataSources }) => {
+    launches: async (_, { pageSize = 20, after }, { dataSources }) => {
       const allLaunches = await dataSources.launchAPI.getAllLaunches();
       // we want these in reverse chronological order
       allLaunches.reverse();
@@ -24,13 +24,13 @@ module.exports = {
           : false,
       };
     },
-    launch: (root, { id }, { dataSources }) =>
+    launch: (_, { id }, { dataSources }) =>
       dataSources.launchAPI.getLaunchById({ launchId: id }),
     me: async (_, __, { dataSources }) =>
       dataSources.userAPI.findOrCreateUser(),
   },
   Mutation: {
-    bookTrip: async (root, { launchId }, { dataSources }) => {
+    bookTrip: async (_, { launchId }, { dataSources }) => {
       const result = await dataSources.userAPI.bookTrip({ launchId });
       if (!result)
         return {
@@ -45,7 +45,7 @@ module.exports = {
         launch,
       };
     },
-    cancelTrip: async (root, { launchId }, { dataSources }) => {
+    cancelTrip: async (_, { launchId }, { dataSources }) => {
       const result = dataSources.userAPI.cancelTrip({ launchId });
 
       if (!result)
@@ -61,7 +61,7 @@ module.exports = {
         launch,
       };
     },
-    login: async (root, { email }, { dataSources }) => {
+    login: async (_, { email }, { dataSources }) => {
       const user = await dataSources.userAPI.findOrCreateUser({ email });
       if (user) return new Buffer(email).toString('base64');
       return false;
