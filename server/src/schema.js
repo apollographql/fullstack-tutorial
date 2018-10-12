@@ -50,17 +50,17 @@ const typeDefs = gql`
 
   type Launch {
     id: ID!
-    year: String!
-    mission: Mission!
-    rocket: Rocket!
+    year: String
+    mission: Mission
+    rocket: Rocket
     launchSuccess: Boolean
     isBooked: Boolean!
   }
 
   type Rocket {
     id: ID!
-    name: String!
-    type: String!
+    name: String
+    type: String
   }
 
   type User {
@@ -70,7 +70,7 @@ const typeDefs = gql`
   }
 
   type Mission {
-    name: String!
+    name: String
     missionPatch: String
   }
 `;
