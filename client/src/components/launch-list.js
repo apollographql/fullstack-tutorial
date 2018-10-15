@@ -12,6 +12,7 @@ const LIST_LAUNCHES = gql`
       cursor
       hasMore
       launches {
+        isBooked
         id
         year
         rocket {
@@ -21,12 +22,6 @@ const LIST_LAUNCHES = gql`
           name
           missionPatch
         }
-      }
-    }
-    me {
-      id
-      trips {
-        id
       }
     }
   }
@@ -62,13 +57,6 @@ export default class LaunchList extends React.Component {
                       key={l.id}
                       launch={l}
                       isLoggedIn={data.isLoggedIn}
-                      isBooked={
-                        !!(
-                          data.me &&
-                          data.me.trips &&
-                          data.me.trips.find(t => t.id === l.id)
-                        )
-                      }
                     />
                   ))
                 : null}
