@@ -50,6 +50,7 @@ const typeDefs = gql`
     rocket: Rocket
     launchSuccess: Boolean
     isBooked: Boolean!
+    test: String
   }
 
   type Rocket {
