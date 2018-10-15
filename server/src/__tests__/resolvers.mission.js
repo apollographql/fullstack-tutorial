@@ -1,13 +1,5 @@
 const resolvers = require('../resolvers');
 
-// Mission: {
-//   missionPatch: (mission, { size }) => {
-//     return size === 'SMALL'
-//       ? mission.missionPatchSmall
-//       : mission.missionPatchLarge;
-//   },
-// },
-
 const mockMission = {
   name: 'foo',
   missionPatchLarge: 'LG',
@@ -17,6 +9,8 @@ const mockMission = {
 describe('[Mission.missionPatch]', () => {
   it('chooses the right sized patch', () => {
     const { missionPatch } = resolvers.Mission;
+
+    // default -- no arg passed
     const resDefault = missionPatch(mockMission);
     const resSmall = missionPatch(mockMission, { size: 'SMALL' });
     const resLarge = missionPatch(mockMission, { size: 'LARGE' });
