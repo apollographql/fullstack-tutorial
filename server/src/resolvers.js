@@ -72,9 +72,12 @@ module.exports = {
       dataSources.userAPI.isBookedOnLaunch({ launchId: launch.id }),
   },
   Mission: {
-    missionPatch: (launch, { size }) => {
-      return size === 'SMALL' ? launch.mission.missionPatchSmall : launch.missionPatchLarge;
-    }
+    // make sure the default size is 'large' in case user doesn't specify
+    missionPatch: (mission, { size } = { size: 'LARGE' }) => {
+      return size === 'SMALL'
+        ? mission.missionPatchSmall
+        : mission.missionPatchLarge;
+    },
   },
   User: {
     trips: async (_, __, { dataSources }) => {
