@@ -13,10 +13,9 @@ jobs:
 
       # Start the GraphQL server.  If a different command is used to
       # start the server, use it in place of `npm start` here.
-      - run: cd server
       - run:
           name: Starting server
-          command: npm run start:ci
+          command: cd server && npm run start:ci
           background: true
 
       # make sure the server has enough time to start up before running
