@@ -70,7 +70,8 @@ const mockLaunch = {
   cursor: '1143239400',
   mission: {
     name: 'FalconSat',
-    missionPatch: 'https://images2.imgbox.com/3c/0e/T8iJcSN3_o.png',
+    missionPatchSmall: 'https://images2.imgbox.com/3c/0e/T8iJcSN3_o.png',
+    missionPatchLarge: 'https://images2.imgbox.com/40/e3/GypSkayF_o.png',
   },
   year: '2006',
   rocket: {
