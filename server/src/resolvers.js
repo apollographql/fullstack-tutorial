@@ -73,9 +73,9 @@ module.exports = {
   },
   Mission: {
     missionPatch: (launch, { size }) => {
-      return size === 'SMALL' ? launch.links.mission_patch_small : launch.links.mission_patch;
+      return size === 'SMALL' ? launch.mission.missionPatchSmall : launch.missionPatchLarge;
     }
-  }
+  },
   User: {
     trips: async (_, __, { dataSources }) => {
       // get ids of launches by user
