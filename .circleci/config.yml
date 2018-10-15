@@ -8,8 +8,8 @@ jobs:
     steps:
       - checkout
 
-      - run: npm ci
-      - run: npm test
+      # - run: npm ci
+      # - run: npm test
 
       # Start the GraphQL server.  If a different command is used to
       # start the server, use it in place of `npm start` here.
