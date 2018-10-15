@@ -7,15 +7,20 @@ const mockContext = {
       cancelTrip: jest.fn(),
       findOrCreateUser: jest.fn(),
     },
+    launchAPI: {
+      getLaunchById: jest.fn(),
+    },
   },
   user: { id: 1, email: 'a@a.a' },
 };
 
 describe('[Mutation.bookTrip]', () => {
   const { bookTrip } = mockContext.dataSources.userAPI;
+  const { getLaunchById } = mockContext.dataSources.launchAPI;
 
   it('returns true if booking succeeds', async () => {
     bookTrip.mockReturnValueOnce(true);
+    getLaunchById.mockReturnValueOnce({ id: 999, cursor: 'foo' });
 
     // check the resolver response
     const res = await resolvers.Mutation.bookTrip(
@@ -23,7 +28,11 @@ describe('[Mutation.bookTrip]', () => {
       { launchId: 123 },
       mockContext,
     );
-    expect(res).toEqual(true);
+    expect(res).toEqual({
+      launch: { cursor: 'foo', id: 999 },
+      message: 'trip booked',
+      success: true,
+    });
 
     // check if the dataSource was called with correct args
     expect(bookTrip).toBeCalledWith({ launchId: 123 });
@@ -38,15 +47,19 @@ describe('[Mutation.bookTrip]', () => {
       { launchId: 123 },
       mockContext,
     );
-    expect(res).toEqual(false);
+
+    expect(res.message).toBeDefined();
+    expect(res.success).toBeFalsy();
   });
 });
 
 describe('[Mutation.cancelTrip]', () => {
   const { cancelTrip } = mockContext.dataSources.userAPI;
+  const { getLaunchById } = mockContext.dataSources.launchAPI;
 
   it('returns true if cancelling succeeds', async () => {
     cancelTrip.mockReturnValueOnce(true);
+    getLaunchById.mockReturnValueOnce({ id: 999, cursor: 'foo' });
 
     // check the resolver response
     const res = await resolvers.Mutation.cancelTrip(
@@ -54,7 +67,11 @@ describe('[Mutation.cancelTrip]', () => {
       { launchId: 123 },
       mockContext,
     );
-    expect(res).toEqual(true);
+    expect(res).toEqual({
+      success: true,
+      message: 'trip cancelled',
+      launch: { id: 999, cursor: 'foo' },
+    });
 
     // check if the dataSource was called with correct args
     expect(cancelTrip).toBeCalledWith({ launchId: 123 });
@@ -69,7 +86,8 @@ describe('[Mutation.cancelTrip]', () => {
       { launchId: 123 },
       mockContext,
     );
-    expect(res).toEqual(false);
+    expect(res.message).toBeDefined();
+    expect(res.success).toBeFalsy();
   });
 });
 
