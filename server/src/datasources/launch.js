@@ -13,7 +13,6 @@ class LaunchAPI extends RESTDataSource {
       cursor: `${launch.launch_date_unix}`,
       mission: {
         name: launch.mission_name,
-        missionPatch: launch.links.mission_patch_small,
       },
       year: launch.launch_year,
       rocket: {
