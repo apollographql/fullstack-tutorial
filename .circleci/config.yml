@@ -15,7 +15,7 @@ jobs:
       # start the server, use it in place of `npm start` here.
       - run:
           name: Starting server
-          command: cd server && npm start
+          command: cd server && npm start:ci
           background: true
 
       # make sure the server has enough time to start up before running
