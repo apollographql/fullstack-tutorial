@@ -66,7 +66,12 @@ const typeDefs = gql`
 
   type Mission {
     name: String
-    missionPatch: String
+    missionPatch(size: PatchSize): String
+  }
+
+  enum PatchSize {
+    SMALL
+    LARGE
   }
 `;
 

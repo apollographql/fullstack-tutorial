@@ -71,6 +71,11 @@ module.exports = {
     isBooked: async (launch, _, { dataSources }) =>
       dataSources.userAPI.isBookedOnLaunch({ launchId: launch.id }),
   },
+  Mission: {
+    missionPatch: (launch, { size }) => {
+      return size === 'SMALL' ? launch.mission.missionPatchSmall : launch.missionPatchLarge;
+    }
+  },
   User: {
     trips: async (_, __, { dataSources }) => {
       // get ids of launches by user
