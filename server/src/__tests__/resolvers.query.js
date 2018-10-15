@@ -6,9 +6,11 @@ describe('[Query.launches]', () => {
       launchAPI: { getAllLaunches: jest.fn() },
     },
   };
+  // just for easy access
   const { getAllLaunches } = mockContext.dataSources.launchAPI;
 
   it('calls lookup from launch api', async () => {
+    // NOTE: these results get reversed in the resolver
     getAllLaunches.mockReturnValueOnce([{ id: 999, cursor: 'foo' }]);
 
     // check the resolver response
@@ -21,6 +23,7 @@ describe('[Query.launches]', () => {
   });
 
   it('respects pageSize arg', async () => {
+    // NOTE: these results get reversed in the resolver
     getAllLaunches.mockReturnValue([
       { id: 1, cursor: 'foo' },
       { id: 999, cursor: 'bar' },
@@ -32,25 +35,16 @@ describe('[Query.launches]', () => {
       { pageSize: 1 },
       mockContext,
     );
-    const res2 = await resolvers.Query.launches(
-      null,
-      { pageSize: 2 },
-      mockContext,
-    );
     expect(res).toEqual({
-      cursor: 'foo',
-      hasMore: true,
-      launches: [{ id: 1, cursor: 'foo' }],
-    });
-    expect(res2).toEqual({
       cursor: 'bar',
-      hasMore: false,
-      launches: [{ id: 1, cursor: 'foo' }, { id: 999, cursor: 'bar' }],
+      hasMore: true,
+      launches: [{ id: 999, cursor: 'bar' }],
     });
   });
 
   it('respects cursor arg', async () => {
-    getAllLaunches.mockReturnValue([
+    // NOTE: these results get reversed in the resolver
+    getAllLaunches.mockReturnValueOnce([
       { id: 1, cursor: 'a' },
       { id: 999, cursor: 'b' },
     ]);
@@ -58,23 +52,19 @@ describe('[Query.launches]', () => {
     // check the resolver response
     const res = await resolvers.Query.launches(
       null,
-      { after: 'a' },
-      mockContext,
-    );
-    const res2 = await resolvers.Query.launches(
-      null,
       { after: 'b' },
       mockContext,
     );
+
     expect(res).toEqual({
       hasMore: false,
-      cursor: 'b',
-      launches: [{ id: 999, cursor: 'b' }],
+      cursor: 'a',
+      launches: [{ id: 1, cursor: 'a' }],
     });
-    expect(res2).toEqual({ hasMore: false, cursor: null, launches: [] });
   });
 
   it('respects both pageSize and cursor', async () => {
+    // NOTE: these results get reversed in the resolver
     getAllLaunches.mockReturnValue([
       { id: 1, cursor: 'a' },
       { id: 999, cursor: 'b' },
@@ -84,14 +74,14 @@ describe('[Query.launches]', () => {
     // check the resolver response
     const res = await resolvers.Query.launches(
       null,
-      { after: 'a', pageSize: 2 },
+      { after: 'c', pageSize: 1 },
       mockContext,
     );
 
     expect(res).toEqual({
-      cursor: 'c',
-      hasMore: false,
-      launches: [{ id: 999, cursor: 'b' }, { id: 123, cursor: 'c' }],
+      cursor: 'b',
+      hasMore: true,
+      launches: [{ id: 999, cursor: 'b' }],
     });
   });
 });
