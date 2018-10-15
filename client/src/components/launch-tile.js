@@ -5,20 +5,33 @@ import gql from 'graphql-tag';
 
 const BOOK_TRIP = gql`
   mutation book($launchId: ID!) {
-    bookTrip(launchId: $launchId)
+    bookTrip(launchId: $launchId) {
+      success
+      message
+      launch {
+        id
+        isBooked
+      }
+    }
   }
 `;
 
 const CANCEL_TRIP = gql`
   mutation cancel($launchId: ID!) {
-    cancelTrip(launchId: $launchId)
+    cancelTrip(launchId: $launchId) {
+      success
+      message
+      launch {
+        id
+        isBooked
+      }
+    }
   }
 `;
 
 export default ({
-  launch: { id, mission, rocket, year },
+  launch: { id, mission, rocket, year, isBooked },
   isLoggedIn,
-  isBooked,
 }) => {
   return (
     <Container>
@@ -36,15 +49,36 @@ export default ({
         </Description>
 
         {isLoggedIn ? (
-          <Mutation mutation={isBooked ? CANCEL_TRIP : BOOK_TRIP}>
-            {(book, { data }) => (
-              <BookButton
-                isBooked={isBooked}
-                onClick={() => book({ variables: { launchId: id } })}
-              >
-                {isBooked ? 'Cancel Trip' : 'Book Trip'}
-              </BookButton>
-            )}
+          <Mutation
+            mutation={isBooked ? CANCEL_TRIP : BOOK_TRIP}
+            update={(cache, { data: { bookTrip, cancelTrip } }) => {
+              // if there was an error making the query, cancel early
+              if (
+                (bookTrip && bookTrip.success) ||
+                (cancelTrip && cancelTrip.success)
+              )
+                return;
+
+              // find the updated launch from either the bookTrip or cancelTrip mutation
+              const launch = (bookTrip || cancelTrip).launch;
+              if (!launch) return;
+
+              // update the launch in cache with the latest isBooked value
+              cache.writeData({ data: { ...launch } });
+            }}
+          >
+            {(book, { data, loading, error }) => {
+              if (error) return <p>{error.message}</p>;
+              if (loading) return <p>Loading...</p>;
+              return (
+                <BookButton
+                  isBooked={isBooked}
+                  onClick={() => book({ variables: { launchId: id } })}
+                >
+                  {isBooked ? 'Cancel Trip' : 'Book Trip'}
+                </BookButton>
+              );
+            }}
           </Mutation>
         ) : null}
       </Content>
@@ -68,6 +102,7 @@ const BookButton = styled('button')(({ isBooked }) => ({
   display: 'inline-block',
   fontSize: '14px',
   marginTop: '16px',
+  width: '100px',
   ':hover': {
     backgroundColor: isBooked ? '#eb193e' : '#00194b',
     color: 'white',
@@ -77,12 +112,14 @@ const BookButton = styled('button')(({ isBooked }) => ({
 const Container = styled('div')({
   border: '1px solid #ccc',
   borderRadius: '3px',
-  // borderBottom: '2px solid #eb193e',
   margin: '32px 0',
   display: 'flex',
   flexDirection: 'row',
   padding: '16px',
-  boxShadow: '0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23)',
+  boxShadow: '0 1px 2px rgba(0,0,0,0.16), 0 1px 2px rgba(0,0,0,0.23)',
+  ':hover': {
+    boxShadow: '0 3px 2px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23)',
+  },
 });
 
 const Title = styled('p')({
