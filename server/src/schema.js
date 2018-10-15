@@ -26,12 +26,7 @@ const typeDefs = gql`
     login(email: String): String # login token
   }
 
-  interface MutationResponse {
-    success: Boolean!
-    message: String
-  }
-
-  type TripUpdateResponse implements MutationResponse {
+  type TripUpdateResponse {
     success: Boolean!
     message: String
     launch: Launch
@@ -50,17 +45,17 @@ const typeDefs = gql`
 
   type Launch {
     id: ID!
-    year: String!
-    mission: Mission!
-    rocket: Rocket!
+    year: String
+    mission: Mission
+    rocket: Rocket
     launchSuccess: Boolean
     isBooked: Boolean!
   }
 
   type Rocket {
     id: ID!
-    name: String!
-    type: String!
+    name: String
+    type: String
   }
 
   type User {
@@ -70,7 +65,7 @@ const typeDefs = gql`
   }
 
   type Mission {
-    name: String!
+    name: String
     missionPatch: String
   }
 `;

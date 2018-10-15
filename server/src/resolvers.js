@@ -86,9 +86,4 @@ module.exports = {
       );
     },
   },
-  // there's only one type that uses the MutationResponse,
-  // so it will always resolve to a 'TripUpdateResponse'
-  MutationResponse: {
-    __resolveType: () => 'TripUpdateResponse',
-  },
 };
