@@ -40,7 +40,6 @@ module.exports.createStore = () => {
     dialect: 'sqlite',
     storage: './store.sqlite',
     operatorsAliases,
-    define: { raw: true },
   });
 
   const users = db.define('user', {
