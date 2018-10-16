@@ -3,48 +3,49 @@ const resolvers = require('../resolvers');
 const mockContext = {
   dataSources: {
     userAPI: {
-      bookTrip: jest.fn(),
+      bookTrips: jest.fn(),
       cancelTrip: jest.fn(),
       findOrCreateUser: jest.fn(),
     },
     launchAPI: {
+      getLaunchesByIds: jest.fn(),
       getLaunchById: jest.fn(),
     },
   },
   user: { id: 1, email: 'a@a.a' },
 };
 
-describe('[Mutation.bookTrip]', () => {
-  const { bookTrip } = mockContext.dataSources.userAPI;
-  const { getLaunchById } = mockContext.dataSources.launchAPI;
+describe('[Mutation.bookTrips]', () => {
+  const { bookTrips } = mockContext.dataSources.userAPI;
+  const { getLaunchesByIds } = mockContext.dataSources.launchAPI;
 
   it('returns true if booking succeeds', async () => {
-    bookTrip.mockReturnValueOnce(true);
-    getLaunchById.mockReturnValueOnce({ id: 999, cursor: 'foo' });
+    bookTrips.mockReturnValueOnce([{ launchId: 999 }]);
+    getLaunchesByIds.mockReturnValueOnce([{ id: 999, cursor: 'foo' }]);
 
     // check the resolver response
-    const res = await resolvers.Mutation.bookTrip(
+    const res = await resolvers.Mutation.bookTrips(
       null,
-      { launchId: 123 },
+      { launchIds: [123] },
       mockContext,
     );
     expect(res).toEqual({
-      launch: { cursor: 'foo', id: 999 },
-      message: 'trip booked',
+      launches: [{ cursor: 'foo', id: 999 }],
+      message: 'trips booked successfully',
       success: true,
     });
 
     // check if the dataSource was called with correct args
-    expect(bookTrip).toBeCalledWith({ launchId: 123 });
+    expect(bookTrips).toBeCalledWith({ launchIds: [123] });
   });
 
   it('returns false if booking fails', async () => {
-    bookTrip.mockReturnValueOnce(false);
+    bookTrips.mockReturnValueOnce([]);
 
     // check the resolver response
-    const res = await resolvers.Mutation.bookTrip(
+    const res = await resolvers.Mutation.bookTrips(
       null,
-      { launchId: 123 },
+      { launchIds: [123] },
       mockContext,
     );
 
@@ -70,7 +71,7 @@ describe('[Mutation.cancelTrip]', () => {
     expect(res).toEqual({
       success: true,
       message: 'trip cancelled',
-      launch: { id: 999, cursor: 'foo' },
+      launches: [{ id: 999, cursor: 'foo' }],
     });
 
     // check if the dataSource was called with correct args
