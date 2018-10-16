@@ -45,15 +45,26 @@ describe('[UserAPI.findOrCreateUser]', () => {
 
 describe('[UserAPI.bookTrip]', () => {
   it('calls store creator and returns result', async () => {
-    const args = { userId: 1, launchId: 1 };
-    mockStore.trips.findOrCreate.mockReturnValueOnce('heya');
+    mockStore.trips.findOrCreate.mockReturnValueOnce([{ get: () => 'heya' }]);
 
     // check the result of the fn
-    const res = await ds.bookTrip(args);
-    expect(res).toEqual(true);
+    const res = await ds.bookTrip({ launchId: 1 });
+    expect(res).toBeTruthy();
 
     // make sure store is called properly
-    expect(mockStore.trips.findOrCreate).toBeCalledWith({ where: args });
+    expect(mockStore.trips.findOrCreate).toBeCalledWith({
+      where: { launchId: 1, userId: 1 },
+    });
+  });
+});
+
+describe('[UserAPI.bookTrips]', () => {
+  it('returns multiple lookups from bookTrip', async () => {
+    mockStore.trips.findOrCreate.mockReturnValueOnce([{ get: () => 'heya' }]);
+    mockStore.trips.findOrCreate.mockReturnValueOnce([{ get: () => 'okay' }]);
+
+    const res = await ds.bookTrips({ launchIds: [1, 2] });
+    expect(res).toEqual(['heya', 'okay']);
   });
 });
 
