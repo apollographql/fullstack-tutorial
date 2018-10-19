@@ -4,15 +4,11 @@ import gql from 'graphql-tag';
 import { Redirect } from '@reach/router';
 import styled from 'react-emotion';
 
+import IsLoggedIn from '../components/logged-in';
+
 const LOGIN_MUTATION = gql`
   mutation login($email: String!) {
     login(email: $email)
-  }
-`;
-
-const IS_LOGGED_IN = gql`
-  {
-    isLoggedIn @client
   }
 `;
 
@@ -30,7 +26,7 @@ export default class Login extends React.Component {
   render() {
     return (
       <Container>
-        <Query query={IS_LOGGED_IN}>
+        <IsLoggedIn>
           {({ data, client }) =>
             data.isLoggedIn ? (
               <Redirect to="/" />
@@ -66,7 +62,7 @@ export default class Login extends React.Component {
               </Mutation>
             )
           }
-        </Query>
+        </IsLoggedIn>
       </Container>
     );
   }
