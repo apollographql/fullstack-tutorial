@@ -6,11 +6,10 @@ import { ApolloClient } from 'apollo-client';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { HttpLink } from 'apollo-link-http';
 import { ApolloProvider } from 'react-apollo';
-
+import gql from 'graphql-tag';
 import { Router } from '@reach/router';
 
-import Home from './pages/home';
-import Login from './pages/login';
+import { Home, Login, Launch, Cart } from './pages';
 import Header from './components/header';
 
 // Set up our apollo-client to point at the server we created
@@ -27,6 +26,27 @@ const client = new ApolloClient({
   localState: {
     initializers: {
       isLoggedIn: () => !!localStorage.getItem('token'),
+      cartItems: () => [1],
+    },
+    resolvers: {
+      Mutation: {
+        addToCart: (_, { id }, { cache }) => {
+          const query = gql`
+            query Cart {
+              cartItems @client
+            }
+          `;
+
+          const cart = cache.readQuery({ query });
+          const data = {
+            cartItems: cart.cartItems.includes(id)
+              ? cart.cartItems.filter(i => !i)
+              : [...cart.cartItems, id],
+          };
+          cache.writeQuery({ query, data });
+          return cart.cartItems;
+        },
+      },
     },
   },
 });
@@ -47,6 +67,8 @@ ReactDOM.render(
     <Router>
       <Home path="/" />
       <Login path="login" />
+      <Launch path="launch/:launchId" />
+      <Cart path="cart" />
     </Router>
   </ApolloProvider>,
   document.getElementById('root'),
