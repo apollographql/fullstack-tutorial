@@ -29,6 +29,23 @@ const client = new ApolloClient({
       cartItems: () => [1],
     },
     resolvers: {
+      Launch: {
+        isInCart: (launch, _, { cache }) => {
+          return false;
+          // const query = gql`
+          //   query Cart {
+          //     cartItems @client
+          //   }
+          // `;
+          // console.log({ launch });
+
+          // const { cartItems } = cache.readQuery({ query });
+
+          // console.log({ cartItems });
+
+          // return cartItems.includes(launch.id);
+        },
+      },
       Mutation: {
         addToCart: (_, { id }, { cache }) => {
           const query = gql`
@@ -37,14 +54,14 @@ const client = new ApolloClient({
             }
           `;
 
-          const cart = cache.readQuery({ query });
+          const { cartItems } = cache.readQuery({ query });
           const data = {
-            cartItems: cart.cartItems.includes(id)
-              ? cart.cartItems.filter(i => !i)
-              : [...cart.cartItems, id],
+            cartItems: cartItems.includes(id)
+              ? cartItems.filter(i => !i)
+              : [...cartItems, id],
           };
           cache.writeQuery({ query, data });
-          return cart.cartItems;
+          return data.cartItems;
         },
       },
     },
