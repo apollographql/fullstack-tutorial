@@ -12,6 +12,7 @@ const LIST_LAUNCHES = gql`
       cursor
       hasMore
       launches {
+        isInCart @client
         isBooked
         id
         year
@@ -46,6 +47,7 @@ export default class LaunchList extends React.Component {
     return (
       <Query query={LIST_LAUNCHES}>
         {({ data, loading, error, fetchMore }) => {
+          console.log({ data });
           if (loading) return <p>Loading...</p>;
           if (error) return <p>ERROR</p>;
 
