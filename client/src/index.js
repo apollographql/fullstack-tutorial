@@ -31,6 +31,7 @@ const client = new ApolloClient({
     resolvers: {
       Launch: {
         isInCart: (launch, _, { cache }) => {
+          console.log('hey');
           return false;
           // const query = gql`
           //   query Cart {
