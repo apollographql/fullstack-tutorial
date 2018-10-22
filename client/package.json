@@ -5,7 +5,7 @@
   "dependencies": {
     "@reach/router": "^1.2.1",
     "apollo-cache-inmemory": "^1.3.5",
-    "apollo-client": "^2.4.3-local-state-alpha.8",
+    "apollo-client": "^2.4.3-local-state-alpha.9",
     "apollo-link-http": "^1.5.5",
     "emotion": "^9.2.12",
     "graphql": "^14.0.2",

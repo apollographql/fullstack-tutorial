@@ -47,7 +47,6 @@ export default class LaunchList extends React.Component {
     return (
       <Query query={LIST_LAUNCHES}>
         {({ data, loading, error, fetchMore }) => {
-          console.log({ data });
           if (loading) return <p>Loading...</p>;
           if (error) return <p>ERROR</p>;
 
@@ -70,7 +69,6 @@ export default class LaunchList extends React.Component {
                         after: data.launches.cursor,
                       },
                       updateQuery: (prev, { fetchMoreResult, ...rest }) => {
-                        console.log({ ...rest });
                         if (!fetchMoreResult) return prev;
                         return {
                           ...fetchMoreResult,
