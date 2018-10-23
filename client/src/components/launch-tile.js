@@ -5,7 +5,7 @@ import gql from 'graphql-tag';
 import { Link } from '@reach/router';
 
 export default ({ launch, isLoggedIn }) => {
-  const { id, mission, rocket, year, isBooked } = launch;
+  const { id, mission, rocket, isBooked } = launch;
   return (
     <StyledLink to={`/launch/${id}`}>
       <Container>
@@ -14,9 +14,7 @@ export default ({ launch, isLoggedIn }) => {
           style={{ height: '50px' }}
           alt={`Mission patch for ${mission.name}`}
         />
-        <Title>
-          {mission.name}, <em>{year}</em>
-        </Title>
+        <Title>{mission.name}</Title>
 
         {/* {isLoggedIn ? ( */}
         {/* <Mutation

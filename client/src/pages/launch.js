@@ -26,7 +26,8 @@ const ADD_TO_CART_MUTATION = gql`
 const LAUNCH_DETAILS_QUERY = gql`
   query LaunchDetails($launchId: ID!) {
     launch(id: $launchId) {
-      year
+      id
+      site
       mission {
         name
         missionPatch
@@ -36,8 +37,8 @@ const LAUNCH_DETAILS_QUERY = gql`
         name
         type
       }
-      launchSuccess
       isBooked
+      # isInCart @client
     }
   }
 `;
@@ -51,13 +52,7 @@ export default ({ launchId }) => {
           if (loading) return <p>Loading...</p>;
           if (error) return <p>ERROR: {error.message}</p>;
 
-          const {
-            mission,
-            rocket,
-            launchSuccess,
-            isBooked,
-            year,
-          } = data.launch;
+          const { mission, rocket, isBooked, site, isInCart } = data.launch;
 
           return (
             <div style={{ width: '100%', justifyContent: 'center' }}>
@@ -67,7 +62,8 @@ export default ({ launchId }) => {
                 alt={`Mission patch for ${mission.name}`}
               />
               <h2>{mission.name}</h2>
-              <p>{year}</p>
+              <h3>Site</h3>
+              <p>{site}</p>
 
               <h3>Rocket</h3>
               <p>
@@ -86,7 +82,11 @@ export default ({ launchId }) => {
                   console.log(data);
                   return (
                     <BookButton onClick={book}>
-                      {isBooked ? 'Cancel This Trip' : 'Add to Cart'}
+                      {isBooked
+                        ? 'Cancel This Trip'
+                        : isInCart
+                          ? 'Remove from Cart'
+                          : 'Add to Cart'}
                     </BookButton>
                   );
                 }}
