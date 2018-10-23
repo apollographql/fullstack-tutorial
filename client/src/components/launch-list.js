@@ -15,7 +15,6 @@ const LIST_LAUNCHES = gql`
         isInCart @client
         isBooked
         id
-        year
         rocket {
           name
         }

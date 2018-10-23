@@ -29,6 +29,11 @@ const client = new ApolloClient({
       cartItems: () => [1],
     },
     resolvers: {
+      Query: {
+        isLoggedIn: async () => {
+          return await !!localStorage.getItem('token');
+        },
+      },
       Launch: {
         isInCart: (launch, _, { cache }) => {
           console.log('hey');
