@@ -1,5 +1,4 @@
 import React from 'react';
-
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
 
@@ -30,7 +29,7 @@ const PROFILE_QUERY = gql`
 
 export default () => (
   <PageContainer>
-    <Query query={PROFILE_QUERY}>
+    <Query query={PROFILE_QUERY} fetchPolicy="network-only">
       {({ data, loading, error }) => {
         if (loading) return <p>Loading...</p>;
         if (error) return <p>ERROR: {error.message}</p>;
