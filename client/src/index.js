@@ -23,52 +23,50 @@ const client = new ApolloClient({
       authorization: localStorage.getItem('token'),
     },
   }),
-  localState: {
-    initializers: {
-      isLoggedIn: () => !!localStorage.getItem('token'),
-      cartItems: () => [1],
+  storeInitializers: {
+    isLoggedIn: () => !!localStorage.getItem('token'),
+    cartItems: () => [1],
+  },
+  resolvers: {
+    Query: {
+      isLoggedIn: async () => {
+        return await !!localStorage.getItem('token');
+      },
     },
-    resolvers: {
-      Query: {
-        isLoggedIn: async () => {
-          return await !!localStorage.getItem('token');
-        },
+    Launch: {
+      isInCart: (launch, _, { cache }) => {
+        console.log('hey');
+        return false;
+        // const query = gql`
+        //   query Cart {
+        //     cartItems @client
+        //   }
+        // `;
+        // console.log({ launch });
+
+        // const { cartItems } = cache.readQuery({ query });
+
+        // console.log({ cartItems });
+
+        // return cartItems.includes(launch.id);
       },
-      Launch: {
-        isInCart: (launch, _, { cache }) => {
-          console.log('hey');
-          return false;
-          // const query = gql`
-          //   query Cart {
-          //     cartItems @client
-          //   }
-          // `;
-          // console.log({ launch });
+    },
+    Mutation: {
+      addToCart: (_, { id }, { cache }) => {
+        const query = gql`
+          query Cart {
+            cartItems @client
+          }
+        `;
 
-          // const { cartItems } = cache.readQuery({ query });
-
-          // console.log({ cartItems });
-
-          // return cartItems.includes(launch.id);
-        },
-      },
-      Mutation: {
-        addToCart: (_, { id }, { cache }) => {
-          const query = gql`
-            query Cart {
-              cartItems @client
-            }
-          `;
-
-          const { cartItems } = cache.readQuery({ query });
-          const data = {
-            cartItems: cartItems.includes(id)
-              ? cartItems.filter(i => !i)
-              : [...cartItems, id],
-          };
-          cache.writeQuery({ query, data });
-          return data.cartItems;
-        },
+        const { cartItems } = cache.readQuery({ query });
+        const data = {
+          cartItems: cartItems.includes(id)
+            ? cartItems.filter(i => !i)
+            : [...cartItems, id],
+        };
+        cache.writeQuery({ query, data });
+        return data.cartItems;
       },
     },
   },
