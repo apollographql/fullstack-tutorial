@@ -2,26 +2,27 @@ import React from 'react';
 import styled from 'react-emotion';
 import { Query, Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
+import { Link } from '@reach/router';
 import PageContainer from '../components/page-container';
 
-const ADD_TO_CART_MUTATION = gql`
-  mutation addToCart($launchId: ID!) {
-    addToCart(id: $launchId) @client
+const TOGGLE_CART_MUTATION = gql`
+  mutation addOrRemoveFromCart($launchId: ID!) {
+    addOrRemoveFromCart(id: $launchId) @client
   }
 `;
 
-// const CANCEL_TRIP = gql`
-//   mutation cancel($launchId: ID!) {
-//     cancelTrip(launchId: $launchId) {
-//       success
-//       message
-//       launch {
-//         id
-//         isBooked
-//       }
-//     }
-//   }
-// `;
+const CANCEL_TRIP = gql`
+  mutation cancel($launchId: ID!) {
+    cancelTrip(launchId: $launchId) {
+      success
+      message
+      launches {
+        id
+        isBooked
+      }
+    }
+  }
+`;
 
 const LAUNCH_DETAILS_QUERY = gql`
   query LaunchDetails($launchId: ID!) {
@@ -38,7 +39,7 @@ const LAUNCH_DETAILS_QUERY = gql`
         type
       }
       isBooked
-      # isInCart @client
+      isInCart @client
     }
   }
 `;
@@ -75,19 +76,31 @@ export default ({ launchId }) => {
 
               <hr />
               <Mutation
-                mutation={ADD_TO_CART_MUTATION}
+                mutation={isBooked ? CANCEL_TRIP : TOGGLE_CART_MUTATION}
                 variables={{ launchId }}
+                refetchQueries={[
+                  {
+                    query: LAUNCH_DETAILS_QUERY,
+                    variables: { launchId },
+                  },
+                ]}
               >
-                {(book, { data, loading, error }) => {
-                  console.log(data);
+                {(mutate, { data, loading, error }) => {
                   return (
-                    <BookButton onClick={book}>
-                      {isBooked
-                        ? 'Cancel This Trip'
-                        : isInCart
-                          ? 'Remove from Cart'
-                          : 'Add to Cart'}
-                    </BookButton>
+                    <div>
+                      <Button onClick={mutate}>
+                        {isBooked
+                          ? 'Cancel This Trip'
+                          : isInCart
+                            ? 'Remove from Cart'
+                            : 'Add to Cart'}
+                      </Button>
+                      {isInCart ? (
+                        <Link to="/cart" style={{ marginLeft: '16px' }}>
+                          Go to Cart
+                        </Link>
+                      ) : null}
+                    </div>
                   );
                 }}
               </Mutation>
@@ -103,7 +116,7 @@ export default ({ launchId }) => {
  * STYLED COMPONENTS USED IN THIS FILE ARE BELOW HERE
  */
 
-const BookButton = styled('button')(({ isBooked }) => ({
+const Button = styled('button')(({ isBooked }) => ({
   backgroundColor: 'white',
   border: isBooked ? '1px solid #eb193e' : '1px solid #00194b',
   color: isBooked ? '#eb193e' : '#00194b',

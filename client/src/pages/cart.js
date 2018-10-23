@@ -1,5 +1,4 @@
 import React from 'react';
-import styled from 'react-emotion';
 import PageContainer from '../components/page-container';
 import { Query, Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
@@ -18,8 +17,8 @@ const LAUNCH_QUERY = gql`
     launch(id: $launchId) {
       id
       isBooked
-      year
       rocket {
+        id
         name
       }
       mission {
@@ -46,18 +45,22 @@ const BOOK_TRIPS_MUTATION = gql`
 export default () => (
   <PageContainer>
     <Query query={CART_ITEMS_QUERY}>
-      {({ data: cartData, loading: cartLoading, error: cartError, client }) => {
+      {({ data: cartData, loading: cartLoading, error: cartError }) => {
         if (cartLoading) return <p>Loading...</p>;
         if (cartError) return <p>ERROR: {cartError.message}</p>;
-        if (!cartData.cartItems || !cartData.cartItems.length)
+        if (!cartData.cartItems || !cartData.cartItems.length) {
           return <Redirect to="/" />;
+          // return <p>Cart is empty</p>;
+        }
 
         return cartData.cartItems.map(launchId => {
           return (
             <div style={{ width: '100%' }}>
               <Query query={LAUNCH_QUERY} variables={{ launchId }}>
                 {({ data, loading, error }) => {
-                  return !loading && !error && data ? (
+                  if (loading) return <p>Loading...</p>;
+                  if (error) return <p>ERROR: {error.message}</p>;
+                  return data ? (
                     <LaunchTile launch={data.launch} isLoggedIn={true} />
                   ) : null;
                 }}
@@ -65,9 +68,12 @@ export default () => (
               <Mutation
                 mutation={BOOK_TRIPS_MUTATION}
                 variables={{ launchIds: cartData.cartItems }}
-                onCompleted={data => {
-                  if (!data.bookTrips.success) return;
-                  client.writeData({ data: { cartItems: [] } });
+                refetchQueries={cartData.cartItems.map(launchId => ({
+                  query: LAUNCH_QUERY,
+                  variables: { launchId },
+                }))}
+                update={cache => {
+                  cache.writeData({ data: { cartItems: [] } });
                 }}
               >
                 {(bookTrips, { data, loading, error }) =>

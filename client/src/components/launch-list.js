@@ -16,6 +16,7 @@ const LIST_LAUNCHES = gql`
         isBooked
         id
         rocket {
+          id
           name
         }
         mission {

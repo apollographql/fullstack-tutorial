@@ -26,9 +26,13 @@ export default class Header extends React.Component {
           <Query query={IS_LOGGED_IN}>
             {({ data: { isLoggedIn }, loading, error, client }) => {
               return !loading && !error && isLoggedIn ? (
-                <LogoutButton onClick={() => this.logout(client)}>
-                  Log Out
-                </LogoutButton>
+                <div>
+                  <StyledLink to="/profile">Profile</StyledLink>
+                  <StyledLink to="/cart">Cart</StyledLink>
+                  <LogoutButton onClick={() => this.logout(client)}>
+                    Log Out
+                  </LogoutButton>
+                </div>
               ) : (
                 <StyledLink to="/login">Log In</StyledLink>
               );
@@ -69,6 +73,11 @@ const LogoutButton = styled('button')({
   color: 'white',
   padding: '0',
   fontSize: '16px',
+  marginLeft: '16px',
 });
 
-const StyledLink = styled(Link)({ textDecoration: 'none', color: 'white' });
+const StyledLink = styled(Link)({
+  textDecoration: 'none',
+  color: 'white',
+  marginLeft: '16px',
+});

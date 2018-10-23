@@ -9,7 +9,7 @@ import { ApolloProvider } from 'react-apollo';
 import gql from 'graphql-tag';
 import { Router } from '@reach/router';
 
-import { Home, Login, Launch, Cart } from './pages';
+import { Home, Login, Launch, Cart, Profile } from './pages';
 import Header from './components/header';
 
 // Set up our apollo-client to point at the server we created
@@ -25,7 +25,7 @@ const client = new ApolloClient({
   }),
   storeInitializers: {
     isLoggedIn: () => !!localStorage.getItem('token'),
-    cartItems: () => [1],
+    cartItems: () => [],
   },
   resolvers: {
     Query: {
@@ -35,24 +35,18 @@ const client = new ApolloClient({
     },
     Launch: {
       isInCart: (launch, _, { cache }) => {
-        console.log('hey');
-        return false;
-        // const query = gql`
-        //   query Cart {
-        //     cartItems @client
-        //   }
-        // `;
-        // console.log({ launch });
+        const query = gql`
+          query Cart {
+            cartItems @client
+          }
+        `;
 
-        // const { cartItems } = cache.readQuery({ query });
-
-        // console.log({ cartItems });
-
-        // return cartItems.includes(launch.id);
+        const { cartItems } = cache.readQuery({ query });
+        return cartItems.includes(launch.id);
       },
     },
     Mutation: {
-      addToCart: (_, { id }, { cache }) => {
+      addOrRemoveFromCart: (_, { id }, { cache }) => {
         const query = gql`
           query Cart {
             cartItems @client
@@ -90,6 +84,7 @@ ReactDOM.render(
       <Login path="login" />
       <Launch path="launch/:launchId" />
       <Cart path="cart" />
+      <Profile path="profile" />
     </Router>
   </ApolloProvider>,
   document.getElementById('root'),

@@ -1,11 +1,9 @@
 import React from 'react';
 import styled from 'react-emotion';
-import { Mutation } from 'react-apollo';
-import gql from 'graphql-tag';
 import { Link } from '@reach/router';
 
 export default ({ launch, isLoggedIn }) => {
-  const { id, mission, rocket, isBooked } = launch;
+  const { id, mission } = launch;
   return (
     <StyledLink to={`/launch/${id}`}>
       <Container>
@@ -15,40 +13,6 @@ export default ({ launch, isLoggedIn }) => {
           alt={`Mission patch for ${mission.name}`}
         />
         <Title>{mission.name}</Title>
-
-        {/* {isLoggedIn ? ( */}
-        {/* <Mutation
-            mutation={isBooked ? CANCEL_TRIP : BOOK_TRIP}
-            update={(cache, { data: { bookTrip, cancelTrip } }) => {
-              // if there was an error making the query, cancel early
-              if (
-                (bookTrip && bookTrip.success) ||
-                (cancelTrip && cancelTrip.success)
-              )
-                return;
-
-              // find the updated launch from either the bookTrip or cancelTrip mutation
-              const launch = (bookTrip || cancelTrip).launch;
-              if (!launch) return;
-
-              // update the launch in cache with the latest isBooked value
-              cache.writeData({ data: { ...launch } });
-            }}
-          >
-            {(book, { data, loading, error }) => {
-              if (error) return <p>{error.message}</p>;
-              if (loading) return <p>Loading...</p>;
-              return (
-                <BookButton
-                  isBooked={isBooked}
-                  onClick={() => book({ variables: { launchId: id } })}
-                >
-                  {isBooked ? 'Cancel Trip' : 'Book Trip'}
-                </BookButton>
-              );
-            }}
-          </Mutation>
-        ) : null} */}
       </Container>
     </StyledLink>
   );
