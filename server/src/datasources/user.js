@@ -71,6 +71,7 @@ class UserAPI extends DataSource {
   }
 
   async isBookedOnLaunch({ launchId }) {
+    if (!this.context || !this.context.user) return false;
     const userId = this.context.user.id;
     const found = await this.store.trips.findAll({
       where: { userId, launchId },

@@ -2,18 +2,68 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 
-import ApolloClient from 'apollo-boost';
+import { ApolloClient } from 'apollo-client';
+import { InMemoryCache } from 'apollo-cache-inmemory';
+import { HttpLink } from 'apollo-link-http';
 import { ApolloProvider } from 'react-apollo';
-
+import gql from 'graphql-tag';
 import { Router } from '@reach/router';
 
-import Home from './pages/home';
-import Login from './pages/login';
+import { Home, Login, Launch, Cart, Profile } from './pages';
+import Header from './components/header';
 
 // Set up our apollo-client to point at the server we created
 // this can be local or a remote endpoint
+const cache = new InMemoryCache();
 const client = new ApolloClient({
-  uri: 'https://apollo-launchpad.glitch.me/',
+  cache,
+  link: new HttpLink({
+    uri: 'http://localhost:4000/graphql',
+    headers: {
+      authorization: localStorage.getItem('token'),
+    },
+  }),
+  storeInitializers: {
+    isLoggedIn: () => !!localStorage.getItem('token'),
+    cartItems: () => [],
+  },
+  resolvers: {
+    Query: {
+      isLoggedIn: async () => {
+        return await !!localStorage.getItem('token');
+      },
+    },
+    Launch: {
+      isInCart: (launch, _, { cache }) => {
+        const query = gql`
+          query Cart {
+            cartItems @client
+          }
+        `;
+
+        const { cartItems } = cache.readQuery({ query });
+        return cartItems.includes(launch.id);
+      },
+    },
+    Mutation: {
+      addOrRemoveFromCart: (_, { id }, { cache }) => {
+        const query = gql`
+          query Cart {
+            cartItems @client
+          }
+        `;
+
+        const { cartItems } = cache.readQuery({ query });
+        const data = {
+          cartItems: cartItems.includes(id)
+            ? cartItems.filter(i => !i)
+            : [...cartItems, id],
+        };
+        cache.writeQuery({ query, data });
+        return data.cartItems;
+      },
+    },
+  },
 });
 
 /**
@@ -25,11 +75,16 @@ const client = new ApolloClient({
  *    The router chooses between which component to render, depending on the url path.
  *    ex: localhost:3000/login will render only the `Login` component
  */
+
 ReactDOM.render(
   <ApolloProvider client={client}>
+    <Header />
     <Router>
       <Home path="/" />
       <Login path="login" />
+      <Launch path="launch/:launchId" />
+      <Cart path="cart" />
+      <Profile path="profile" />
     </Router>
   </ApolloProvider>,
   document.getElementById('root'),
