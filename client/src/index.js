@@ -6,9 +6,9 @@ import { ApolloClient } from 'apollo-client';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { HttpLink } from 'apollo-link-http';
 import { ApolloProvider } from 'react-apollo';
-import gql from 'graphql-tag';
 import { Router } from '@reach/router';
 
+import resolvers from './resolvers';
 import { Home, Login, Launch, Cart, Profile } from './pages';
 import Header from './components/header';
 
@@ -27,43 +27,7 @@ const client = new ApolloClient({
     isLoggedIn: () => !!localStorage.getItem('token'),
     cartItems: () => [],
   },
-  resolvers: {
-    Query: {
-      isLoggedIn: async () => {
-        return await !!localStorage.getItem('token');
-      },
-    },
-    Launch: {
-      isInCart: (launch, _, { cache }) => {
-        const query = gql`
-          query Cart {
-            cartItems @client
-          }
-        `;
-
-        const { cartItems } = cache.readQuery({ query });
-        return cartItems.includes(launch.id);
-      },
-    },
-    Mutation: {
-      addOrRemoveFromCart: (_, { id }, { cache }) => {
-        const query = gql`
-          query Cart {
-            cartItems @client
-          }
-        `;
-
-        const { cartItems } = cache.readQuery({ query });
-        const data = {
-          cartItems: cartItems.includes(id)
-            ? cartItems.filter(i => !i)
-            : [...cartItems, id],
-        };
-        cache.writeQuery({ query, data });
-        return data.cartItems;
-      },
-    },
-  },
+  resolvers,
 });
 
 /**
