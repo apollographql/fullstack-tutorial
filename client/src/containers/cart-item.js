@@ -1,0 +1,34 @@
+import React from 'react';
+import { Query } from 'react-apollo';
+import gql from 'graphql-tag';
+
+import LaunchTile from '../components/launch-tile';
+
+export const GET_LAUNCH = gql`
+  query LaunchTileQuery($launchId: ID!) {
+    launch(id: $launchId) {
+      id
+      isBooked
+      rocket {
+        id
+        name
+      }
+      mission {
+        name
+        missionPatch
+      }
+    }
+  }
+`;
+
+const CartItem = ({ launchId }) => (
+  <Query query={GET_LAUNCH} variables={{ launchId }}>
+    {({ data, loading, error }) => {
+      if (loading) return <p>Loading...</p>;
+      if (error) return <p>ERROR: {error.message}</p>;
+      return data && <LaunchTile launch={data.launch} isLoggedIn={true} />;
+    }}
+  </Query>
+);
+
+export default CartItem;

@@ -4,7 +4,7 @@ import gql from 'graphql-tag';
 import { Redirect } from '@reach/router';
 import styled from 'react-emotion';
 
-import IsLoggedIn from '../components/logged-in';
+import IsLoggedIn from '../containers/logged-in';
 
 const LOGIN_MUTATION = gql`
   mutation login($email: String!) {
