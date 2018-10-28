@@ -4,7 +4,7 @@ import styled from 'react-emotion';
 
 import { IsLoggedIn, LoginForm } from '../containers/login';
 
-const Login = () => (
+export default () => (
   <Container>
     <IsLoggedIn>
       {({ data, client }) =>
@@ -27,5 +27,3 @@ const Container = styled('div')({
   alignItems: 'center',
   padding: '0 8px',
 });
-
-export default Login;
