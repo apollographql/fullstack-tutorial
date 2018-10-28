@@ -3,7 +3,7 @@ import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
 import styled from 'react-emotion';
 
-import LaunchTile from './launch-tile';
+import LaunchTile from '../components/launch-tile';
 
 const LIST_LAUNCHES = gql`
   query launchList($after: String) {

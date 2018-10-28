@@ -1,14 +1,8 @@
 import React from 'react';
 import styled from 'react-emotion';
 import { Link } from '@reach/router';
-import { Query } from 'react-apollo';
-import gql from 'graphql-tag';
 
-const IS_LOGGED_IN = gql`
-  query isLoggedIn {
-    isLoggedIn @client
-  }
-`;
+import { IsLoggedIn } from './login';
 
 export default class Header extends React.Component {
   logout = client => {
@@ -23,7 +17,7 @@ export default class Header extends React.Component {
           <StyledLink to="/">
             <h1>Launches</h1>
           </StyledLink>
-          <Query query={IS_LOGGED_IN}>
+          <IsLoggedIn>
             {({ data: { isLoggedIn }, loading, error, client }) => {
               return !loading && !error && isLoggedIn ? (
                 <div>
@@ -37,7 +31,7 @@ export default class Header extends React.Component {
                 <StyledLink to="/login">Log In</StyledLink>
               );
             }}
-          </Query>
+          </IsLoggedIn>
         </Container>
       </FullWidthContainer>
     );

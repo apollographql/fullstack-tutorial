@@ -1,11 +1,11 @@
 import React from 'react';
 import styled from 'react-emotion';
 
-import LaunchList from '../components/launch-list';
+import Launches from '../containers/launches';
 
 export default () => (
   <Container>
-    <LaunchList />
+    <Launches />
   </Container>
 );
 

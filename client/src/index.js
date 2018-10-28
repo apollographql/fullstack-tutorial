@@ -10,7 +10,7 @@ import { Router } from '@reach/router';
 
 import resolvers from './resolvers';
 import { Home, Login, Launch, Cart, Profile } from './pages';
-import Header from './components/header';
+import Header from './containers/header';
 
 // Set up our apollo-client to point at the server we created
 // this can be local or a remote endpoint
