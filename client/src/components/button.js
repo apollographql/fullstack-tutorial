@@ -10,7 +10,6 @@ export default styled('button')(({ isBooked }) => {
     borderRadius: 3,
     padding: unit,
     fontSize: 14,
-    marginTop: unit * 2,
     width: 200,
     cursor: 'pointer',
     ':hover': {

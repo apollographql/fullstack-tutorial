@@ -1,10 +1,12 @@
 import React from 'react';
+import styled from 'react-emotion';
+
+import { unit } from '../styles';
 
 const LaunchDetail = ({ mission, site, rocket }) => (
-  <div>
-    <img
+  <Container>
+    <Image
       src={mission.missionPatch}
-      style={{ width: '200px' }}
       alt={`Mission patch for ${mission.name}`}
     />
     <h2>{mission.name}</h2>
@@ -18,7 +20,16 @@ const LaunchDetail = ({ mission, site, rocket }) => (
     <p>
       <strong>Type:</strong> {rocket.type}
     </p>
-  </div>
+    <hr />
+  </Container>
 );
+
+const Container = styled('div')({
+  marginBottom: unit * 2
+});
+
+const Image = styled('img')({
+  width: 200
+});
 
 export default LaunchDetail;

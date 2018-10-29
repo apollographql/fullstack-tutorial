@@ -3,6 +3,7 @@ import styled from 'react-emotion';
 import { Link } from '@reach/router';
 
 import { IsLoggedIn } from './login';
+import { colors, unit, maxWidth } from '../styles';
 
 export default class Header extends React.Component {
   logout = client => {
@@ -43,7 +44,7 @@ export default class Header extends React.Component {
  */
 
 const Container = styled('header')({
-  backgroundColor: '#00194b',
+  backgroundColor: colors.primary,
   color: 'white',
 });
 
@@ -51,9 +52,9 @@ const InnerContainer = styled('div')({
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'center',
-  maxWidth: 720,
+  maxWidth,
   height: 48,
-  padding: '0 8px',
+  padding: `0 ${unit}px`,
   margin: '0 auto',
 });
 
@@ -63,13 +64,13 @@ const LogoutButton = styled('button')({
   color: 'inherit',
   padding: 0,
   fontSize: 16,
-  marginLeft: 16,
+  marginLeft: unit * 2,
 });
 
 const StyledLink = styled(Link)({
   textDecoration: 'none',
   color: 'inherit',
   ':not(:first-child)': {
-    marginLeft: 16,
+    marginLeft: unit * 2,
   }
 });
