@@ -40,6 +40,11 @@ const client = new ApolloClient({
  *    ex: localhost:3000/login will render only the `Login` component
  */
 
+/**
+ * Proposal: let's wrap the Router in a PageContainer, and move most of the
+ * logic from the container components into their respective page component
+ */
+
 ReactDOM.render(
   <ApolloProvider client={client}>
     <Header />
