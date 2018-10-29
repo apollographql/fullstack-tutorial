@@ -12,8 +12,8 @@ export default class Header extends React.Component {
 
   render() {
     return (
-      <FullWidthContainer>
-        <Container>
+      <Container>
+        <InnerContainer>
           <StyledLink to="/">
             <h1>Launches</h1>
           </StyledLink>
@@ -32,8 +32,8 @@ export default class Header extends React.Component {
               );
             }}
           </IsLoggedIn>
-        </Container>
-      </FullWidthContainer>
+        </InnerContainer>
+      </Container>
     );
   }
 }
@@ -43,35 +43,33 @@ export default class Header extends React.Component {
  */
 
 const Container = styled('header')({
-  maxWidth: '720px',
-  width: '100%',
-  height: '48px',
+  backgroundColor: '#00194b',
+  color: 'white',
+});
+
+const InnerContainer = styled('div')({
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'center',
+  maxWidth: 720,
+  height: 48,
   padding: '0 8px',
-});
-
-const FullWidthContainer = styled('div')({
-  backgroundColor: '#00194b',
-  color: '#fff',
-  margin: '0',
-  width: '100%',
-  display: 'flex',
-  justifyContent: 'center',
+  margin: '0 auto',
 });
 
 const LogoutButton = styled('button')({
-  backgroundColor: 'transparent',
+  background: 'none',
   border: 'none',
-  color: 'white',
-  padding: '0',
-  fontSize: '16px',
-  marginLeft: '16px',
+  color: 'inherit',
+  padding: 0,
+  fontSize: 16,
+  marginLeft: 16,
 });
 
 const StyledLink = styled(Link)({
   textDecoration: 'none',
-  color: 'white',
-  marginLeft: '16px',
+  color: 'inherit',
+  ':not(:first-child)': {
+    marginLeft: 16,
+  }
 });
