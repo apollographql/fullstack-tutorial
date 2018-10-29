@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
-import styled from 'react-emotion';
 
 import LaunchTile from '../components/launch-tile';
+import Button from '../components/button';
 
 export const LAUNCH_TILE_DATA = gql`
   fragment LaunchTile on Launch {
@@ -42,7 +42,7 @@ const Launches = () => (
       if (error) return <p>ERROR</p>;
 
       return (
-        <Container>
+        <Fragment>
           {data.launches && data.launches.launches
             ? data.launches.launches.map(l => (
                 <LaunchTile
@@ -53,7 +53,7 @@ const Launches = () => (
               ))
             : null}
           {data.launches && data.launches.hasMore ? (
-            <LoadMoreButton
+            <Button
               onClick={() =>
                 fetchMore({
                   variables: {
@@ -76,32 +76,12 @@ const Launches = () => (
               }
             >
               Load More
-            </LoadMoreButton>
+            </Button>
           ) : null}
-        </Container>
+        </Fragment>
       );
     }}
   </Query>
 );
-
-/**
- * STYLED COMPONENTS USED IN THIS FILE ARE BELOW HERE
- */
-
-const Container = styled('div')({
-  marginBottom: '16px',
-  width: '100%',
-});
-
-const LoadMoreButton = styled('button')({
-  backgroundColor: '#00194b',
-  border: 'none',
-  color: 'white',
-  padding: '15px 32px',
-  textAlign: 'center',
-  textDecoration: 'none',
-  display: 'inline-block',
-  fontSize: '16px',
-});
 
 export default Launches;

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
 
@@ -29,11 +29,10 @@ const Launch = ({ launchId }) => (
       if (error) return <p>ERROR: {error.message}</p>;
 
       return (
-        <div style={{ width: '100%', justifyContent: 'center' }}>
+        <Fragment>
           <LaunchDetail {...data.launch} />
-          <hr />
           <ActionButton {...data.launch} />
-        </div>
+        </Fragment>
       );
     }}
   </Query>

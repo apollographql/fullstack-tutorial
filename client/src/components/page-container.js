@@ -1,10 +1,8 @@
 import styled from 'react-emotion';
+import { unit, maxWidth } from '../styles';
 
 export default styled('div')({
-  display: 'flex',
-  justifyContent: 'space-between',
-  alignItems: 'center',
-  maxWidth: 720,
+  maxWidth,
   margin: '0 auto',
-  padding: '16px 8px',
+  padding: `${unit * 2}px ${unit}px`,
 });

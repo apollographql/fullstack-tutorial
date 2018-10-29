@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'react-emotion';
 import { Link } from '@reach/router';
+import { unit } from '../styles';
 
 export default ({ launch, isLoggedIn }) => {
   const { id, mission } = launch;
@@ -19,12 +20,13 @@ export default ({ launch, isLoggedIn }) => {
  * STYLED COMPONENTS USED IN THIS FILE ARE BELOW HERE
  */
 
+const padding = unit * 2;
 const StyledLink = styled(Link)({
   display: 'flex',
   flexDirection: 'row',
   alignItems: 'center',
-  marginTop: 16,
-  padding: 16,
+  padding,
+  marginTop: padding,
   border: '1px solid #ccc',
   borderRadius: 3,
   color: 'black',
@@ -34,7 +36,7 @@ const StyledLink = styled(Link)({
     boxShadow: '0 3px 2px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23)',
   },
   ':not(:last-child)': {
-    marginBottom: 32,
+    marginBottom: padding * 2,
   },
 });
 
@@ -47,5 +49,5 @@ const Title = styled('p')({
   fontWeight: 400,
   marginTop: 0,
   margin: 0,
-  marginLeft: 16,
+  marginLeft: unit * 2,
 });
