@@ -45,12 +45,12 @@ const Launches = () => (
         <Fragment>
           {data.launches && data.launches.launches
             ? data.launches.launches.map(l => (
-                <LaunchTile
-                  key={l.id}
-                  launch={l}
-                  isLoggedIn={data.isLoggedIn}
-                />
-              ))
+              <LaunchTile
+                key={l.id}
+                launch={l}
+                isLoggedIn={data.isLoggedIn}
+              />
+            ))
             : null}
           {data.launches && data.launches.hasMore ? (
             <Button

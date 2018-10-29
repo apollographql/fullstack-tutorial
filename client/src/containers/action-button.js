@@ -3,7 +3,7 @@ import { Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
 import { Link } from '@reach/router';
 
-import { GET_LAUNCH_DETAILS } from './launch';
+import { GET_LAUNCH_DETAILS } from '../pages/launch';
 import Button from '../components/button';
 
 const TOGGLE_CART_MUTATION = gql`
