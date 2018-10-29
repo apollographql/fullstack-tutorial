@@ -4,7 +4,7 @@ import gql from 'graphql-tag';
 import { Link } from '@reach/router';
 
 import { GET_LAUNCH_DETAILS } from './launch';
-import { StyledActionButton } from '../components/button';
+import Button from '../components/button';
 
 const TOGGLE_CART_MUTATION = gql`
   mutation addOrRemoveFromCart($launchId: ID!) {
@@ -39,13 +39,13 @@ const ActionButton = ({ isBooked, id, isInCart }) => (
     {(mutate, { data, loading, error }) => {
       return (
         <div>
-          <StyledActionButton onClick={mutate} isBooked={isBooked}>
+          <Button onClick={mutate} isBooked={isBooked}>
             {isBooked
               ? 'Cancel This Trip'
               : isInCart
                 ? 'Remove from Cart'
                 : 'Add to Cart'}
-          </StyledActionButton>
+          </Button>
           {isInCart && (
             <Link to="/cart" style={{ marginLeft: '16px' }}>
               Go to Cart
