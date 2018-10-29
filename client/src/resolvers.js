@@ -1,4 +1,4 @@
-import { GET_CART_ITEMS } from './containers/cart-items';
+import { GET_CART_ITEMS } from './pages/cart';
 
 const resolvers = {
   Query: {
