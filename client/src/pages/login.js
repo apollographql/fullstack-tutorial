@@ -8,7 +8,7 @@ export default () => (
   <Container>
     <IsLoggedIn>
       {({ data, client }) =>
-        data.isLoggedIn ? <Redirect to="/" /> : <LoginForm />
+        data.isLoggedIn ? <Redirect to="/" noThrow /> : <LoginForm />
       }
     </IsLoggedIn>
   </Container>

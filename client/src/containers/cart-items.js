@@ -18,7 +18,7 @@ const CartItems = () => (
       if (loading) return <p>Loading...</p>;
       if (error) return <p>ERROR: {error.message}</p>;
       if (!data.cartItems || !data.cartItems.length) {
-        return <Redirect to="/" />;
+        return <Redirect to="/" noThrow />;
       }
 
       return (
