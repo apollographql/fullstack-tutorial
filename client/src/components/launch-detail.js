@@ -24,6 +24,10 @@ const LaunchDetail = ({ mission, site, rocket }) => (
   </Container>
 );
 
+/**
+ * STYLED COMPONENTS USED IN THIS FILE ARE BELOW HERE
+ */
+
 const Container = styled('div')({
   marginBottom: unit * 2
 });
