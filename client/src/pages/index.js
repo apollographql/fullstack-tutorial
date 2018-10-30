@@ -3,7 +3,6 @@ import { Router } from '@reach/router';
 import styled from 'react-emotion';
 
 import Launch from './launch';
-import Login from './login';
 import Launches from './launches';
 import Cart from './cart';
 import Profile from './profile';
@@ -31,10 +30,9 @@ export default function Pages() {
       <Container>
         <Router>
           <Launches path="/" />
-          <Login path="login" />
-          <Launch path="launch/:launchId" />
-          <Cart path="cart" />
-          <Profile path="profile" />
+          <Launch path="/launch/:launchId" />
+          <Cart path="/cart" />
+          <Profile path="/profile" />
         </Router>
       </Container>
       <Footer />
