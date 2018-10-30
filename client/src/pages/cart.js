@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
 import { Redirect } from '@reach/router';
@@ -22,12 +22,12 @@ const Cart = () => (
       }
 
       return (
-        <div style={{ width: '100%' }}>
+        <Fragment>
           {data.cartItems.map(launchId => (
             <CartItem key={launchId} launchId={launchId} />
           ))}
           <BookTrips cartItems={data.cartItems} />
-        </div>
+        </Fragment>
       );
     }}
   </Query>

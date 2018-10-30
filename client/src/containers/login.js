@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { Query, Mutation, ApolloConsumer } from 'react-apollo';
 import gql from 'graphql-tag';
 
@@ -41,7 +41,7 @@ export class LoginForm extends React.Component {
             }}
           >
             {(login, { data }) => (
-              <div>
+              <Fragment>
                 <h1>Login</h1>
                 <form
                   onSubmit={event => {
@@ -59,7 +59,7 @@ export class LoginForm extends React.Component {
                   </label>
                   <input type="submit" value="Login" />
                 </form>
-              </div>
+              </Fragment>
             )}
           </Mutation>
         )}
