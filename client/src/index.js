@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
+import injectStyles from './styles';
 
 import { ApolloClient } from 'apollo-client';
 import { InMemoryCache } from 'apollo-cache-inmemory';
@@ -41,6 +41,7 @@ const client = new ApolloClient({
  *    ex: localhost:3000/login will render only the `Login` component
  */
 
+injectStyles();
 ReactDOM.render(
   <ApolloProvider client={client}>
     <Header />
