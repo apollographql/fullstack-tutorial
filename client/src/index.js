@@ -1,17 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import injectStyles from './styles';
 
 import { ApolloClient } from 'apollo-client';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { HttpLink } from 'apollo-link-http';
 import { ApolloProvider } from 'react-apollo';
-import { Router } from '@reach/router';
 
+import Pages from './pages';
 import resolvers from './resolvers';
-import { Launches, Login, Launch, Cart, Profile } from './pages';
-import Header from './containers/header';
-import PageContainer from './components/page-container';
+import injectStyles from './styles';
 
 // Set up our apollo-client to point at the server we created
 // this can be local or a remote endpoint
@@ -44,16 +41,7 @@ const client = new ApolloClient({
 injectStyles();
 ReactDOM.render(
   <ApolloProvider client={client}>
-    <Header />
-    <PageContainer>
-      <Router>
-        <Launches path="/" />
-        <Login path="login" />
-        <Launch path="launch/:launchId" />
-        <Cart path="cart" />
-        <Profile path="profile" />
-      </Router>
-    </PageContainer>
+    <Pages />
   </ApolloProvider>,
   document.getElementById('root'),
 );

@@ -1,0 +1,73 @@
+<svg width="306px" height="381px" viewBox="0 0 306 381" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Apollo-Rocket" transform="translate(-18.000000, -19.000000)">
+            <g id="Group" transform="translate(85.000000, 295.000000)" fill="#FFFFFF">
+                <path d="M26.9,14.8 L21.9,14.8 L14.7,33.6 L19.2,33.6 L20.4,30.4 L27.2,30.4 L26,26.9 L21.5,26.9 L24.4,18.8 L29.6,33.6 L34.1,33.6 L26.9,14.8 Z M102.9,33.5 L102.9,14.7 L106.9,14.7 L106.9,30 L114.8,30 L114.8,33.5 L102.9,33.5 Z M126.1,33.5 L126.1,14.7 L130.1,14.7 L130.1,30 L138,30 L138,33.5 L126.1,33.5 Z M80.7,18.1 C84,18.1 86.7,20.8 86.7,24.1 C86.7,27.4 84,30.1 80.7,30.1 C77.4,30.1 74.7,27.4 74.7,24.1 C74.6,20.8 77.3,18.1 80.7,18.1 Z M80.7,14.5 C75.3,14.5 71,18.8 71,24.2 C71,29.6 75.3,33.9 80.7,33.9 C86.1,33.9 90.4,29.6 90.4,24.2 C90.4,18.8 86,14.5 80.7,14.5 Z M156.5,18.1 C159.8,18.1 162.5,20.8 162.5,24.1 C162.5,27.4 159.8,30.1 156.5,30.1 C153.2,30.1 150.5,27.4 150.5,24.1 C150.5,20.8 153.2,18.1 156.5,18.1 Z M156.5,14.5 C151.1,14.5 146.8,18.8 146.8,24.2 C146.8,29.6 151.1,33.9 156.5,33.9 C161.9,33.9 166.2,29.6 166.2,24.2 C166.2,18.8 161.9,14.5 156.5,14.5 Z M54.6,14.8 L45.9,14.8 L45.9,33.6 L49.9,33.6 L49.9,27.1 L54.7,27.1 C58,27.1 60.7,24.3 60.7,20.9 C60.6,17.6 57.9,14.8 54.6,14.8 Z M54.6,23.4 L49.8,23.4 L49.8,18.4 L54.6,18.4 C55.9,18.4 57,19.6 57,20.9 C56.9,22.2 55.9,23.4 54.6,23.4 Z" id="Shape" fill-rule="nonzero"></path>
+                <path d="M42.4,39.2 C42.1,39.2 41.7,39.4 41.6,39.6 C41.6,39.6 40.7,40.6 40.2,41.1 C38.1,43.2 35.8,44.8 33.1,45.9 C30.3,47.1 27.4,47.7 24.4,47.7 C21.4,47.7 18.4,47.1 15.7,45.9 C13,44.8 10.6,43.2 8.6,41.1 C6.5,39 4.9,36.7 3.8,34 C2.6,31.2 2,28.3 2,25.3 C2,22.3 2.6,19.3 3.8,16.6 C4.9,13.9 6.5,11.5 8.6,9.5 C10.7,7.4 13,5.8 15.7,4.7 C18.5,3.5 21.4,2.9 24.4,2.9 C27.4,2.9 30.4,3.5 33.1,4.7 C35,5.5 36.8,6.6 38.5,7.9 C38.4,8.2 38.4,8.4 38.4,8.7 C38.4,10.1 39.5,11.2 40.9,11.2 C42.3,11.2 43.4,10.1 43.4,8.7 C43.4,7.3 42.3,6.2 40.9,6.2 C40.6,6.2 40.2,6.3 39.9,6.4 C35.7,2.9 30.3,0.9 24.4,0.9 C10.9,0.9 2.84217094e-14,11.8 2.84217094e-14,25.3 C2.84217094e-14,38.8 10.9,49.7 24.4,49.7 C31.9,49.7 38.7,46.3 43.2,40.9 C43.4,40.7 43.5,40.5 43.5,40.2 C43.4,39.7 42.9,39.2 42.4,39.2 Z" id="Path"></path>
+            </g>
+            <g id="Group"></g>
+            <path d="M184.8,98 C216.2,100.9 244.7,113.4 267.5,132.6" id="Path" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"></path>
+            <path d="M315.8,208.9 C319,221.1 320.7,233.8 320.7,247 C320.7,329.7 253.7,396.7 171,396.7 C88.3,396.7 21.3,329.7 21.3,247 C21.3,169.5 80.2,105.8 155.7,98.1" id="Path" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"></path>
+            <path d="M165.4,277.6 C162.5,283.3 169,290.7 171,291.2 C173.1,290.7 179.5,283.3 176.6,277.6" id="Path" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path>
+            <path d="M142.7,277.6 C140.7,281.5 145.1,286.5 146.5,286.9 C147.9,286.6 152.3,281.5 150.3,277.6" id="Path" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path>
+            <path d="M199.4,277.6 C201.4,281.5 197,286.5 195.6,286.9 C194.2,286.6 189.8,281.5 191.8,277.6" id="Path" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path>
+            <path d="M171,21.3 L171,31.3" id="Path" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path>
+            <path d="M161.2,56.8 L161.2,39.8" id="Path" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"></path>
+            <path d="M180.9,56.8 L161.2,56.8" id="Path" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path>
+            <path d="M180.9,39.8 L180.9,56.8" id="Path" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"></path>
+            <polyline id="Path" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" points="148.1 142.8 156 126.8 186.1 126.8 194 142.8"></polyline>
+            <path d="M148.1,154.8 L148.1,142.8" id="Path" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"></path>
+            <path d="M194,154.8 L148.1,154.8" id="Path" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path>
+            <path d="M194,142.8 L194,154.8" id="Path" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"></path>
+            <path d="M194,154.8 L194,228.2" id="Path" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"></path>
+            <path d="M148.1,227 L148.1,154.8" id="Path" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"></path>
+            <path d="M180.9,56.8 L184.8,97.3" id="Path" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"></path>
+            <path d="M157.3,97.3 L161.2,56.8" id="Path" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"></path>
+            <polyline id="Path" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" points="184.8 97.3 186.1 126.8 156 126.8 157.3 97.3"></polyline>
+            <polyline id="Path" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" points="161.2 39.8 170.4 32.4 171.7 32.4 180.9 39.8"></polyline>
+            <path d="M148.1,200.2 L194,200.2" id="Path" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path>
+            <polygon id="Path" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" points="137.4 255.3 148.1 227.2 158.8 255.3"></polygon>
+            <polygon id="Path" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" points="183.3 255.3 194 227.2 204.7 255.3"></polygon>
+            <polygon id="Path" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" points="160.4 255.3 171 227.2 181.7 255.3"></polygon>
+            <polygon id="Path" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" points="144.2 237.3 129.7 245.1 129.7 250.3 139.3 250.3"></polygon>
+            <polygon id="Path" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" points="197.8 237.3 212.3 245.1 212.3 250.3 202.7 250.3"></polygon>
+            <path d="M159.6,254.7 L159.6,200.2" id="Path" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path>
+            <path d="M182.5,254.7 L182.5,200.2" id="Path" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path>
+            <path d="M140.9,255.3 L201.2,255.3" id="Path" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path>
+            <path d="M149.1,255.6 C152.8,260.5 155.2,265.9 156.1,271.8 L137,271.8 C137.9,266 140.3,260.5 144,255.6" id="Path" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path>
+            <path d="M173.6,255.6 C177.3,260.5 179.7,265.9 180.6,271.8 L161.5,271.8 C162.4,266 164.8,260.5 168.5,255.6" id="Path" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path>
+            <path d="M198.1,255.6 C201.8,260.5 204.2,265.9 205.1,271.8 L186,271.8 C186.9,266 189.3,260.5 193,255.6" id="Path" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path>
+            <circle id="Oval" stroke="#FFFFFF" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" cx="277.4" cy="142.8" r="12.1"></circle>
+            <polygon id="Path" fill="#FFFFFF" opacity="0.2" points="192.7 255.6 170.3 255.6 170.3 34.1 180.9 39.8 186.1 126.8 192.7 142.8 194 229.8 197.8 237.3 212.3 245.1 212.3 250.3 202.7 250.3 204.7 255.3"></polygon>
+            <g id="Group" transform="translate(114.000000, 147.000000)" stroke="#FFFFFF" stroke-linecap="round" stroke-linejoin="round" stroke-width="3">
+                <path d="M5.1,0.8 L5.1,9.1" id="Path"></path>
+                <path d="M0.9,5 L9.3,5" id="Path"></path>
+            </g>
+            <g id="Group" transform="translate(240.000000, 215.000000)" stroke="#FFFFFF" stroke-linecap="round" stroke-linejoin="round" stroke-width="3">
+                <path d="M5.3,0 L5.3,9.3" id="Path"></path>
+                <path d="M0.6,4.7 L9.9,4.7" id="Path"></path>
+            </g>
+            <g id="Group" transform="translate(71.000000, 216.000000)" stroke="#FFFFFF" stroke-linecap="round" stroke-linejoin="round" stroke-width="3">
+                <path d="M3.4,0.6 L3.4,6.7" id="Path"></path>
+                <path d="M0.4,3.7 L6.4,3.7" id="Path"></path>
+            </g>
+            <g id="Group" transform="translate(174.000000, 344.000000)" stroke="#FFFFFF" stroke-linecap="round" stroke-linejoin="round" stroke-width="3">
+                <path d="M3.3,0.7 L3.3,6.8" id="Path"></path>
+                <path d="M0.3,3.8 L6.3,3.8" id="Path"></path>
+            </g>
+            <path d="M279.6,241.2 C279.6,243.5 277.8,245.3 275.5,245.3 C273.2,245.3 271.4,243.5 271.4,241.2 C271.4,238.9 273.2,237.1 275.5,237.1 C277.8,237.1 279.6,239 279.6,241.2 Z" id="Path" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path>
+            <path d="M224.6,152 C224.6,154.5 222.6,156.5 220.1,156.5 C217.6,156.5 215.6,154.5 215.6,152 C215.6,149.5 217.6,147.5 220.1,147.5 C222.6,147.4 224.6,149.5 224.6,152 Z" id="Path" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path>
+            <path d="M148.7,362 C148.7,364.5 146.7,366.5 144.2,366.5 C141.7,366.5 139.7,364.5 139.7,362 C139.7,359.5 141.7,357.5 144.2,357.5 C146.7,357.4 148.7,359.5 148.7,362 Z" id="Path" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path>
+            <circle id="Oval" fill="#FFFFFF" cx="106.6" cy="188.5" r="2.5"></circle>
+            <circle id="Oval" fill="#FFFFFF" cx="212.3" cy="357.5" r="2.5"></circle>
+            <path d="M273.9,278.6 C273.9,280 272.8,281.1 271.4,281.1 C270,281.1 268.9,280 268.9,278.6 C268.9,277.2 270,276.1 271.4,276.1 C272.8,276.1 273.9,277.2 273.9,278.6 Z" id="Path" fill="#FFFFFF"></path>
+            <circle id="Oval" fill="#FFFFFF" cx="227.5" cy="188.5" r="2.5"></circle>
+            <circle id="Oval" fill="#FFFFFF" cx="109.1" cy="227" r="2.5"></circle>
+            <circle id="Oval" fill="#FFFFFF" cx="235.5" cy="260" r="2.5"></circle>
+            <circle id="Oval" fill="#FFFFFF" cx="74.4" cy="260" r="2.5"></circle>
+            <path d="M194,142.8 L148.1,142.8" id="Path" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path>
+            <polygon id="Path" fill="#FFFFFF" opacity="0.2" points="180.4 271.7 171 271.7 171 255.7 176.4 258.7"></polygon>
+            <polygon id="Path" fill="#FFFFFF" opacity="0.2" points="203.9 271.7 186 271.7 193 255.6 199.9 258.7"></polygon>
+        </g>
+    </g>
+</svg>
