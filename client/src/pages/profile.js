@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
 
@@ -25,7 +25,7 @@ const Profile = () => (
       if (error) return <p>ERROR: {error.message}</p>;
 
       return (
-        <div style={{ width: '100%' }}>
+        <Fragment>
           <h3>Email</h3>
           <p>{data.me.email}</p>
           <h3>Trips</h3>
@@ -36,7 +36,7 @@ const Profile = () => (
           ) : (
               <p>You haven't booked any trips</p>
             )}
-        </div>
+        </Fragment>
       );
     }}
   </Query>
