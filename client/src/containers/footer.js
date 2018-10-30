@@ -35,7 +35,7 @@ export default class Footer extends Component {
             {client => (
               <StyledButton onClick={() => this.logout(client)}>
                 <ExitIcon />
-                Log out
+                Logout
               </StyledButton>
             )}
           </ApolloConsumer>
@@ -60,14 +60,16 @@ const Container = styled('footer')({
 
 const InnerContainer = styled('div')({
   display: 'flex',
-  justifyContent: 'space-between',
   alignItems: 'center',
-  maxWidth: 420,
+  maxWidth: 460,
   padding: unit * 2.5,
   margin: '0 auto',
 });
 
 const menuItem = css({
+  flexGrow: 1,
+  width: 0,
+  fontFamily: 'inherit',
   fontSize: 20,
   color: 'inherit',
   letterSpacing: 1.5,
