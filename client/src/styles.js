@@ -11,7 +11,7 @@ export const colors = {
 };
 
 export default () => injectGlobal({
-  [['html', 'body', '#root']]: {
+  [['html', 'body']]: {
     height: '100%',
   },
   body: {
@@ -24,5 +24,6 @@ export default () => injectGlobal({
   '#root': {
     display: 'flex',
     flexDirection: 'column',
+    minHeight: '100%',
   }
 });
