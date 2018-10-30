@@ -1,12 +1,12 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import styled, { css } from 'react-emotion';
 import { Link } from '@reach/router';
+import { ApolloConsumer } from 'react-apollo';
 
 import { ReactComponent as HomeIcon } from '../assets/icons/home.svg';
 import { ReactComponent as CartIcon } from '../assets/icons/cart.svg';
 import { ReactComponent as ProfileIcon } from '../assets/icons/profile.svg';
 import { ReactComponent as ExitIcon } from '../assets/icons/exit.svg';
-import { IsLoggedIn } from './login';
 import { colors, unit } from '../styles';
 
 export default class Footer extends Component {
@@ -23,31 +23,22 @@ export default class Footer extends Component {
             <HomeIcon />
             Home
           </StyledLink>
-          <IsLoggedIn>
-            {({ data: { isLoggedIn }, loading, error, client }) => {
-              return !loading && !error && isLoggedIn ? (
-                <Fragment>
-                  <StyledLink to="/cart">
-                    <CartIcon />
-                    Cart
-                  </StyledLink>
-                  <StyledLink to="/profile">
-                    <ProfileIcon />
-                    Profile
-                  </StyledLink>
-                  <StyledButton onClick={() => this.logout(client)}>
-                    <ExitIcon />
-                    Log out
-                  </StyledButton>
-                </Fragment>
-              ) : (
-                <StyledLink to="/login">
-                  <ProfileIcon />
-                  Log in
-                </StyledLink>
-              );
-            }}
-          </IsLoggedIn>
+          <StyledLink to="/cart">
+            <CartIcon />
+            Cart
+          </StyledLink>
+          <StyledLink to="/profile">
+            <ProfileIcon />
+            Profile
+          </StyledLink>
+          <ApolloConsumer>
+            {client => (
+              <StyledButton onClick={() => this.logout(client)}>
+                <ExitIcon />
+                Log out
+              </StyledButton>
+            )}
+          </ApolloConsumer>
         </InnerContainer>
       </Container>
     );
