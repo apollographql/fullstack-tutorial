@@ -23,6 +23,7 @@ export default class LoginForm extends Component {
         <Heading>Space Explorer</Heading>
         <StyledForm onSubmit={this.onSubmit}>
           <StyledInput
+            required
             type="email"
             name="email"
             placeholder="Email"
