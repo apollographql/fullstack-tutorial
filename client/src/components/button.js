@@ -1,20 +1,27 @@
 import styled from 'react-emotion';
-import { colors, unit } from '../styles';
+import { colors } from '../styles';
+import { lighten } from 'polished';
 
-export default styled('button')(({ isBooked }) => {
-  const color = isBooked ? colors.secondary : colors.primary;
-  return {
-    backgroundColor: 'white',
-    border: `1px solid ${color}`,
-    color,
-    borderRadius: 3,
-    padding: unit,
-    fontSize: 14,
-    width: 200,
-    cursor: 'pointer',
-    ':hover': {
-      backgroundColor: color,
-      color: 'white',
-    },
-  };
+const height = 50;
+export default styled('button')({
+  width: 200,
+  height,
+  padding: 0,
+  border: 'none',
+  borderRadius: height / 2,
+  fontFamily: 'inherit',
+  fontSize: 18,
+  lineHeight: `${height}px`,
+  fontWeight: 700,
+  color: 'white',
+  textTransform: 'uppercase',
+  backgroundColor: colors.accent,
+  cursor: 'pointer',
+  outline: 'none',
+  ':hover': {
+    backgroundColor: lighten(0.1, colors.accent),
+  },
+  ':active': {
+    backgroundColor: lighten(0.2, colors.accent),
+  },
 });
