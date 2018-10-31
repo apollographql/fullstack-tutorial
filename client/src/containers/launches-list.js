@@ -46,10 +46,11 @@ export default function LaunchesList() {
           <Fragment>
             {data.launches &&
               data.launches.launches &&
-              data.launches.launches.map(l => (
+              data.launches.launches.map((l, index) => (
                 <LaunchTile
                   key={l.id}
                   launch={l}
+                  index={index}
                   isLoggedIn={data.isLoggedIn}
                 />
               ))}
