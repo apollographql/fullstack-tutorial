@@ -9,20 +9,6 @@ import Profile from './profile';
 import Footer from '../components/footer';
 import { unit, colors } from '../styles';
 
-const Bar = styled('div')({
-  flexShrink: 0,
-  height: 12,
-  backgroundColor: colors.primary,
-});
-
-const Container = styled('div')({
-  width: '100%',
-  maxWidth: 600,
-  margin: '0 auto',
-  padding: unit * 3,
-  paddingBottom: unit * 5
-});
-
 export default function Pages() {
   return (
     <Fragment>
@@ -39,3 +25,21 @@ export default function Pages() {
     </Fragment>
   );
 }
+
+/**
+ * STYLED COMPONENTS USED IN THIS FILE ARE BELOW HERE
+ */
+
+const Bar = styled('div')({
+  flexShrink: 0,
+  height: 12,
+  backgroundColor: colors.primary,
+});
+
+const Container = styled('div')({
+  width: '100%',
+  maxWidth: 600,
+  margin: '0 auto',
+  padding: unit * 3,
+  paddingBottom: unit * 5
+});
