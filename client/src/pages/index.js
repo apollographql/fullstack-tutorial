@@ -6,7 +6,7 @@ import Launch from './launch';
 import Launches from './launches';
 import Cart from './cart';
 import Profile from './profile';
-import Footer from '../containers/footer';
+import Footer from '../components/footer';
 import { unit, colors } from '../styles';
 
 const Bar = styled('div')({
