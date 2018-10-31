@@ -1,8 +1,12 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { Mutation, ApolloConsumer } from 'react-apollo';
 import gql from 'graphql-tag';
+import styled from 'react-emotion';
 
+import space from '../assets/space.png';
 import { ReactComponent as Logo } from '../assets/logo.svg';
+import { ReactComponent as Rocket } from '../assets/rocket.svg';
+import { colors, unit } from '../styles';
 
 const LOGIN_MUTATION = gql`
   mutation login($email: String!) {
@@ -34,9 +38,12 @@ export default class Login extends Component {
             }}
           >
             {(login, { data }) => (
-              <Fragment>
-                <Logo width={logoSize} height={logoSize} />
-                <h1>Login</h1>
+              <Container>
+                <Header>
+                  <Logo width={logoSize} />
+                </Header>
+                <Rocket width={250} />
+                <h1>Space Explorer</h1>
                 <form
                   onSubmit={event => {
                     event.preventDefault();
@@ -53,7 +60,7 @@ export default class Login extends Component {
                   </label>
                   <input type="submit" value="Login" />
                 </form>
-              </Fragment>
+              </Container>
             )}
           </Mutation>
         )}
@@ -61,3 +68,28 @@ export default class Login extends Component {
     );
   }
 }
+
+const Container = styled('div')({
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  flexGrow: 1,
+  color: 'white',
+  backgroundColor: colors.primary,
+  backgroundImage: `url(${space})`,
+  backgroundSize: 'cover',
+  backgroundPosition: 'center',
+  svg: {
+    display: 'block',
+    fill: 'currentColor'
+  }
+});
+
+const Header = styled('header')({
+  width: '100%',
+  padding: unit * 2.5,
+  backgroundColor: colors.primary,
+  svg: {
+    margin: '0 auto'
+  }
+});
