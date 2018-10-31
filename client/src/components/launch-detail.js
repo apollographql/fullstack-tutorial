@@ -11,17 +11,9 @@ const LaunchDetail = ({ id, mission, site, rocket }) => (
     <Card style={{
       backgroundImage: getBackgroundImage(id)
     }}>
-      <h3>Site</h3>
+      <h3>{rocket.name}</h3>
+      <h5>{rocket.type}</h5>
       <p>{site}</p>
-
-      <h3>Rocket</h3>
-      <p>
-        <strong>Name:</strong> {rocket.name}
-      </p>
-      <p>
-        <strong>Type:</strong> {rocket.type}
-      </p>
-      <hr />
     </Card>
   </Fragment>
 );
