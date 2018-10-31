@@ -39,13 +39,10 @@ export default class LoginForm extends Component {
  * STYLED COMPONENTS USED IN THIS FILE ARE BELOW HERE
  */
 
-const flexColumnCenter = css({
+const Container = styled('div')({
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
-});
-
-const Container = styled('div')(flexColumnCenter, {
   flexGrow: 1,
   paddingBottom: unit * 6,
   color: 'white',
@@ -73,7 +70,7 @@ const Heading = styled('h1')({
   margin: `${unit * 3}px 0 ${unit * 6}px`
 })
 
-const StyledForm = styled('form')(flexColumnCenter, {
+const StyledForm = styled('form')({
   width: '100%',
   maxWidth: 406,
   padding: unit * 3.5,

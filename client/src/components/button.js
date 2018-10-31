@@ -4,8 +4,10 @@ import { lighten } from 'polished';
 
 const height = 50;
 export default styled('button')({
+  display: 'block',
   width: 200,
   height,
+  margin: '0 auto',
   padding: 0,
   border: 'none',
   borderRadius: height / 2,
