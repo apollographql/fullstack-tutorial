@@ -36,12 +36,14 @@ export default function Header() {
 
 const Container = styled('div')({
   display: 'flex',
-  alignItems: 'center'
+  alignItems: 'center',
+  marginBottom: unit * 4.5,
 });
 
 const Image = styled('img')({
   height: 134,
-  marginRight: unit * 2.5
+  marginRight: unit * 2.5,
+  borderRadius: '50%',
 });
 
 const Heading = styled('h2')({
