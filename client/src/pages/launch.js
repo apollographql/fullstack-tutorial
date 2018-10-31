@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
 
-import { LAUNCH_TILE_DATA } from './launches';
+import { LAUNCH_TILE_DATA } from '../containers/launches-list';
 import ActionButton from '../containers/action-button';
 import LaunchDetail from '../components/launch-detail';
 

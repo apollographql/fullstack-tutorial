@@ -3,7 +3,7 @@ import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
 
 import LaunchTile from '../components/launch-tile';
-import { LAUNCH_TILE_DATA } from './launches';
+import { LAUNCH_TILE_DATA } from '../containers/launches-list';
 
 const GET_MY_TRIPS = gql`
   query GetMyTrips {
