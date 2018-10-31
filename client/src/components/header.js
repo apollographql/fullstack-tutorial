@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'react-emotion';
 
-import { unit } from '../styles';
+import { unit, colors } from '../styles';
 import dog1 from '../assets/images/dog-1.png';
 import dog2 from '../assets/images/dog-2.png';
 import dog3 from '../assets/images/dog-3.png';
@@ -23,8 +23,8 @@ export default function Header() {
     <Container>
       <Image src={avatar} alt="Space dog" />
       <div>
-        <Heading>Space Explorer</Heading>
-        <h5>{email}</h5>
+        <h2>Space Explorer</h2>
+        <Subheading>{email}</Subheading>
       </div>
     </Container>
   );
@@ -46,6 +46,7 @@ const Image = styled('img')({
   borderRadius: '50%',
 });
 
-const Heading = styled('h2')({
-  marginBottom: unit / 2
-});
+const Subheading = styled('h5')({
+  marginTop: unit / 2,
+  color: colors.textSecondary,
+})
