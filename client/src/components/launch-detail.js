@@ -1,39 +1,37 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import styled from 'react-emotion';
 
+import Header from './header';
 import { unit } from '../styles';
+import { cardClassName, getBackgroundImage } from './launch-tile';
 
-const LaunchDetail = ({ mission, site, rocket }) => (
-  <Container>
-    <Image
-      src={mission.missionPatch}
-      alt={`Mission patch for ${mission.name}`}
-    />
-    <h2>{mission.name}</h2>
-    <h3>Site</h3>
-    <p>{site}</p>
+const LaunchDetail = ({ id, mission, site, rocket }) => (
+  <Fragment>
+    <Header image={mission.missionPatch}>{mission.name}</Header>
+    <Card style={{
+      backgroundImage: getBackgroundImage(id)
+    }}>
+      <h3>Site</h3>
+      <p>{site}</p>
 
-    <h3>Rocket</h3>
-    <p>
-      <strong>Name:</strong> {rocket.name}
-    </p>
-    <p>
-      <strong>Type:</strong> {rocket.type}
-    </p>
-    <hr />
-  </Container>
+      <h3>Rocket</h3>
+      <p>
+        <strong>Name:</strong> {rocket.name}
+      </p>
+      <p>
+        <strong>Type:</strong> {rocket.type}
+      </p>
+      <hr />
+    </Card>
+  </Fragment>
 );
 
 /**
  * STYLED COMPONENTS USED IN THIS FILE ARE BELOW HERE
  */
 
-const Container = styled('div')({
-  marginBottom: unit * 2
-});
-
-const Image = styled('img')({
-  width: 200
+const Card = styled('div')(cardClassName, {
+  marginBottom: unit * 4
 });
 
 export default LaunchDetail;

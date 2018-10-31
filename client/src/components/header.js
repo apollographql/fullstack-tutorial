@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'react-emotion';
+import { size } from 'polished';
 
 import { unit, colors } from '../styles';
 import dog1 from '../assets/images/dog-1.png';
@@ -16,14 +17,14 @@ function pickAvatarByEmail(email) {
   return avatars[Math.round(maxIndex * percentile)];
 }
 
-export default function Header() {
+export default function Header({image, children = 'Space Explorer'}) {
   const email = atob(localStorage.getItem('token'));
-  const avatar = pickAvatarByEmail(email);
+  const avatar = image || pickAvatarByEmail(email);
   return (
     <Container>
-      <Image src={avatar} alt="Space dog" />
+      <Image round={!image} src={avatar} alt="Space dog" />
       <div>
-        <h2>Space Explorer</h2>
+        <h2>{children}</h2>
         <Subheading>{email}</Subheading>
       </div>
     </Container>
@@ -40,11 +41,10 @@ const Container = styled('div')({
   marginBottom: unit * 4.5,
 });
 
-const Image = styled('img')({
-  height: 134,
+const Image = styled('img')(size(134), props => ({
   marginRight: unit * 2.5,
-  borderRadius: '50%',
-});
+  borderRadius: props.round && '50%',
+}));
 
 const Subheading = styled('h5')({
   marginTop: unit / 2,

@@ -50,7 +50,6 @@ export default function LaunchesList() {
                 <LaunchTile
                   key={l.id}
                   launch={l}
-                  index={index}
                   isLoggedIn={data.isLoggedIn}
                 />
               ))}

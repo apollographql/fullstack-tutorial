@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'react-emotion';
+import styled, { css } from 'react-emotion';
 import { Link } from '@reach/router';
 
 import galaxy from '../assets/images/galaxy.jpg';
@@ -8,11 +8,15 @@ import moon from '../assets/images/moon.jpg';
 import { unit } from '../styles';
 
 const backgrounds = [galaxy, iss, moon];
-export default ({ launch, index, isLoggedIn }) => {
+export function getBackgroundImage(id) {
+  return `url(${backgrounds[Number(id) % backgrounds.length]})`;
+}
+
+export default ({ launch, isLoggedIn }) => {
   const { id, mission, rocket } = launch;
   return (
     <StyledLink to={`/launch/${id}`} style={{
-      backgroundImage: `url(${backgrounds[index % backgrounds.length]})`
+      backgroundImage: getBackgroundImage(id)
     }}>
       <h3>{mission.name}</h3>
       <h5>{rocket.name}</h5>
@@ -24,17 +28,20 @@ export default ({ launch, index, isLoggedIn }) => {
  * STYLED COMPONENTS USED IN THIS FILE ARE BELOW HERE
  */
 
-const padding = unit * 2;
-const StyledLink = styled(Link)({
-  display: 'block',
-  height: 193,
+export const cardClassName = css({
   padding: `${unit * 4}px ${unit * 5}px`,
-  marginTop: padding,
   borderRadius: 7,
   color: 'white',
-  textDecoration: 'none',
   backgroundSize: 'cover',
   backgroundPosition: 'center',
+})
+
+const padding = unit * 2;
+const StyledLink = styled(Link)(cardClassName, {
+  display: 'block',
+  height: 193,
+  marginTop: padding,
+  textDecoration: 'none',
   ':not(:last-child)': {
     marginBottom: padding * 2,
   },
