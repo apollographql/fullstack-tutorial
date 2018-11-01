@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
-import styled from 'react-emotion';
+import styled, { css } from 'react-emotion';
+import { size } from 'polished';
 
 import Button from './button';
-import space from '../assets/space.png';
+import space from '../assets/images/space.jpg';
 import { ReactComponent as Logo } from '../assets/logo.svg';
+import { ReactComponent as Curve } from '../assets/curve.svg';
 import { ReactComponent as Rocket } from '../assets/rocket.svg';
 import { colors, unit } from '../styles';
 
@@ -17,9 +19,10 @@ export default class LoginForm extends Component {
     return (
       <Container>
         <Header>
-          <Logo width={56} />
+          <StyledCurve />
+          <StyledLogo />
         </Header>
-        <Rocket width={250} />
+        <StyledRocket />
         <Heading>Space Explorer</Heading>
         <StyledForm onSubmit={this.onSubmit}>
           <StyledInput
@@ -50,25 +53,40 @@ const Container = styled('div')({
   backgroundImage: `url(${space})`,
   backgroundSize: 'cover',
   backgroundPosition: 'center',
-  svg: {
-    display: 'block',
-    fill: 'currentColor'
-  }
 });
 
-const Header = styled('header')({
+const svgClassName = css({
+  display: 'block',
+  fill: 'currentColor'
+})
+
+const Header = styled('header')(svgClassName, {
   width: '100%',
   marginBottom: unit * 5,
   padding: unit * 2.5,
-  backgroundColor: colors.primary,
-  svg: {
-    margin: '0 auto'
-  }
+  position: 'relative'
+});
+
+const StyledLogo = styled(Logo)(size(56), {
+  display: 'block',
+  margin: '0 auto',
+  position: 'relative',
+});
+
+const StyledCurve = styled(Curve)(size('100%'), {
+  fill: colors.primary,
+  position: 'absolute',
+  top: 0,
+  left: 0,
 });
 
 const Heading = styled('h1')({
   margin: `${unit * 3}px 0 ${unit * 6}px`
-})
+});
+
+const StyledRocket = styled(Rocket)(svgClassName, {
+  width: 250
+});
 
 const StyledForm = styled('form')({
   width: '100%',
