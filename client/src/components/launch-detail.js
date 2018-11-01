@@ -8,9 +8,8 @@ const LaunchDetail = ({ id, site, rocket }) => (
   <Card style={{
     backgroundImage: getBackgroundImage(id)
   }}>
-    <h3>{rocket.name}</h3>
-    <h5>{rocket.type}</h5>
-    <p>{site}</p>
+    <h3>{rocket.name} ({rocket.type})</h3>
+    <h5>{site}</h5>
   </Card>
 );
 
