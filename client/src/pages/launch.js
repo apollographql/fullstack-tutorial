@@ -3,6 +3,7 @@ import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
 
 import { LAUNCH_TILE_DATA } from '../containers/launches-list';
+import Header from '../components/header';
 import ActionButton from '../containers/action-button';
 import LaunchDetail from '../components/launch-detail';
 
@@ -30,6 +31,9 @@ const Launch = ({ launchId }) => (
 
       return (
         <Fragment>
+          <Header image={data.launch.mission.missionPatch}>
+            {data.launch.mission.name}
+          </Header>
           <LaunchDetail {...data.launch} />
           <ActionButton {...data.launch} />
         </Fragment>
