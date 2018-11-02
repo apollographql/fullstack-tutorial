@@ -25,6 +25,9 @@ const Bar = styled('div')({
 });
 
 const Container = styled('div')({
+  display: 'flex',
+  flexDirection: 'column',
+  flexGrow: 1,
   width: '100%',
   maxWidth: 600,
   margin: '0 auto',

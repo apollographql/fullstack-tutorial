@@ -11,14 +11,14 @@ import PageContainer from '../components/page-container';
 export default function Pages() {
   return (
     <Fragment>
-      <Router>
-        <PageContainer path="/">
-          <Launches default />
+      <PageContainer>
+        <Router primary={false} component={Fragment}>
+          <Launches path="/" />
           <Launch path="launch/:launchId" />
           <Cart path="cart" />
           <Profile path="profile" />
-        </PageContainer>
-      </Router>
+        </Router>
+      </PageContainer>
       <Footer />
     </Fragment>
   );

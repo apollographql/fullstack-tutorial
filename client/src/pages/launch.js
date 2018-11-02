@@ -2,7 +2,8 @@ import React, { Fragment } from 'react';
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
 
-import { LAUNCH_TILE_DATA } from '../containers/launches-list';
+import { LAUNCH_TILE_DATA } from './launches';
+import Loading from '../components/loading';
 import Header from '../components/header';
 import ActionButton from '../containers/action-button';
 import LaunchDetail from '../components/launch-detail';
@@ -23,23 +24,23 @@ export const GET_LAUNCH_DETAILS = gql`
   ${LAUNCH_TILE_DATA}
 `;
 
-const Launch = ({ launchId }) => (
-  <Query query={GET_LAUNCH_DETAILS} variables={{ launchId }}>
-    {({ data, loading, error }) => {
-      if (loading) return <p>Loading...</p>;
-      if (error) return <p>ERROR: {error.message}</p>;
+export default function Launch({ launchId }) {
+  return (
+    <Query query={GET_LAUNCH_DETAILS} variables={{ launchId }}>
+      {({ data, loading, error }) => {
+        if (loading) return <Loading />;
+        if (error) return <p>ERROR: {error.message}</p>;
 
-      return (
-        <Fragment>
-          <Header image={data.launch.mission.missionPatch}>
-            {data.launch.mission.name}
-          </Header>
-          <LaunchDetail {...data.launch} />
-          <ActionButton {...data.launch} />
-        </Fragment>
-      );
-    }}
-  </Query>
-);
-
-export default Launch;
+        return (
+          <Fragment>
+            <Header image={data.launch.mission.missionPatch}>
+              {data.launch.mission.name}
+            </Header>
+            <LaunchDetail {...data.launch} />
+            <ActionButton {...data.launch} />
+          </Fragment>
+        );
+      }}
+    </Query>
+  );
+}

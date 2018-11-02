@@ -3,7 +3,7 @@ import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
 
 import LaunchTile from '../components/launch-tile';
-import { LAUNCH_TILE_DATA } from './launches-list';
+import { LAUNCH_TILE_DATA } from '../pages/launches';
 
 export const GET_LAUNCH = gql`
   query LaunchTileQuery($launchId: ID!) {
