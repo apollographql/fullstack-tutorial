@@ -2,6 +2,7 @@ import React from 'react';
 import { Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
 
+import Button from '../components/button';
 import { GET_LAUNCH } from './cart-item';
 
 const BOOK_TRIPS = gql`
@@ -33,7 +34,7 @@ const BookTrips = ({ cartItems }) => (
       data && data.bookTrips && !data.bookTrips.success ? (
         <p>{data.bookTrips.message}</p>
       ) : (
-        <button onClick={bookTrips}>Reserve</button>
+        <Button onClick={bookTrips}>Book All</Button>
       )
     }
   </Mutation>

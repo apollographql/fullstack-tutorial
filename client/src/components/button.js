@@ -1,12 +1,15 @@
 import styled from 'react-emotion';
-import { colors } from '../styles';
 import { lighten } from 'polished';
+
+import { unit, colors } from '../styles';
 
 const height = 50;
 export default styled('button')({
-  width: 200,
+  display: 'block',
+  minWidth: 200,
   height,
-  padding: 0,
+  margin: '0 auto',
+  padding: `0 ${unit * 4}px`,
   border: 'none',
   borderRadius: height / 2,
   fontFamily: 'inherit',

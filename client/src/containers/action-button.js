@@ -1,7 +1,6 @@
 import React from 'react';
 import { Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
-import { Link } from '@reach/router';
 
 import { GET_LAUNCH_DETAILS } from '../pages/launch';
 import Button from '../components/button';
@@ -46,11 +45,6 @@ const ActionButton = ({ isBooked, id, isInCart }) => (
                 ? 'Remove from Cart'
                 : 'Add to Cart'}
           </Button>
-          {isInCart && (
-            <Link to="/cart" style={{ marginLeft: '16px' }}>
-              Go to Cart
-            </Link>
-          )}
         </div>
       );
     }}

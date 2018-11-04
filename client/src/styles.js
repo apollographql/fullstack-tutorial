@@ -41,8 +41,11 @@ export default () => injectGlobal({
   h2: {
     fontSize: 40,
   },
+  h3: {
+    fontSize: 36,
+  },
   h5: {
-    color: colors.textSecondary,
+    fontSize: 16,
     textTransform: 'uppercase',
     letterSpacing: 4,
   }

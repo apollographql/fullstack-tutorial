@@ -1,17 +1,25 @@
 import React from 'react';
-import styled from 'react-emotion';
+import styled, { css } from 'react-emotion';
 import { Link } from '@reach/router';
+
+import galaxy from '../assets/images/galaxy.jpg';
+import iss from '../assets/images/iss.jpg';
+import moon from '../assets/images/moon.jpg';
 import { unit } from '../styles';
 
+const backgrounds = [galaxy, iss, moon];
+export function getBackgroundImage(id) {
+  return `url(${backgrounds[Number(id) % backgrounds.length]})`;
+}
+
 export default ({ launch, isLoggedIn }) => {
-  const { id, mission } = launch;
+  const { id, mission, rocket } = launch;
   return (
-    <StyledLink to={`/launch/${id}`}>
-      <Image
-        src={mission.missionPatch}
-        alt={`Mission patch for ${mission.name}`}
-      />
-      <Title>{mission.name}</Title>
+    <StyledLink to={`/launch/${id}`} style={{
+      backgroundImage: getBackgroundImage(id)
+    }}>
+      <h3>{mission.name}</h3>
+      <h5>{rocket.name}</h5>
     </StyledLink>
   );
 };
@@ -20,34 +28,21 @@ export default ({ launch, isLoggedIn }) => {
  * STYLED COMPONENTS USED IN THIS FILE ARE BELOW HERE
  */
 
+export const cardClassName = css({
+  padding: `${unit * 4}px ${unit * 5}px`,
+  borderRadius: 7,
+  color: 'white',
+  backgroundSize: 'cover',
+  backgroundPosition: 'center',
+})
+
 const padding = unit * 2;
-const StyledLink = styled(Link)({
-  display: 'flex',
-  flexDirection: 'row',
-  alignItems: 'center',
-  padding,
+const StyledLink = styled(Link)(cardClassName, {
+  display: 'block',
+  height: 193,
   marginTop: padding,
-  border: '1px solid #ccc',
-  borderRadius: 3,
-  color: 'black',
   textDecoration: 'none',
-  boxShadow: '0 1px 2px rgba(0,0,0,0.16), 0 1px 2px rgba(0,0,0,0.23)',
-  ':hover': {
-    boxShadow: '0 3px 2px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23)',
-  },
   ':not(:last-child)': {
     marginBottom: padding * 2,
   },
-});
-
-const Image = styled('img')({
-  height: 50
-});
-
-const Title = styled('p')({
-  fontSize: 20,
-  fontWeight: 400,
-  marginTop: 0,
-  margin: 0,
-  marginLeft: unit * 2,
 });
