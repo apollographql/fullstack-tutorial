@@ -9,6 +9,7 @@ import Loading from '../components/loading';
 
 export const LAUNCH_TILE_DATA = gql`
   fragment LaunchTile on Launch {
+    __typename
     id
     isBooked
     rocket {
@@ -80,11 +81,11 @@ export default function Launches() {
                 }
               >
                 Load More
-            </Button>
+              </Button>
             ) : null}
           </Fragment>
         );
       }}
     </Query>
   );
-};
+}

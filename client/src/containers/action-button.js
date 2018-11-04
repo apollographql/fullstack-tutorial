@@ -5,13 +5,16 @@ import gql from 'graphql-tag';
 import { GET_LAUNCH_DETAILS } from '../pages/launch';
 import Button from '../components/button';
 
-const TOGGLE_CART_MUTATION = gql`
+// export all queries used in this file for testing
+export { GET_LAUNCH_DETAILS };
+
+export const TOGGLE_CART_MUTATION = gql`
   mutation addOrRemoveFromCart($launchId: ID!) {
     addOrRemoveFromCart(id: $launchId) @client
   }
 `;
 
-const CANCEL_TRIP = gql`
+export const CANCEL_TRIP = gql`
   mutation cancel($launchId: ID!) {
     cancelTrip(launchId: $launchId) {
       success
@@ -35,19 +38,21 @@ const ActionButton = ({ isBooked, id, isInCart }) => (
       },
     ]}
   >
-    {(mutate, { data, loading, error }) => {
-      return (
-        <div>
-          <Button onClick={mutate} isBooked={isBooked}>
-            {isBooked
-              ? 'Cancel This Trip'
-              : isInCart
-                ? 'Remove from Cart'
-                : 'Add to Cart'}
-          </Button>
-        </div>
-      );
-    }}
+    {mutate => (
+      <div>
+        <Button
+          onClick={mutate}
+          isBooked={isBooked}
+          data-testid={'action-button'}
+        >
+          {isBooked
+            ? 'Cancel This Trip'
+            : isInCart
+              ? 'Remove from Cart'
+              : 'Add to Cart'}
+        </Button>
+      </div>
+    )}
   </Mutation>
 );
 

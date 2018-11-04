@@ -25,12 +25,7 @@ export default class LoginForm extends Component {
         <StyledRocket />
         <Heading>Space Explorer</Heading>
         <StyledForm onSubmit={this.onSubmit}>
-          <StyledInput
-            required
-            type="email"
-            name="email"
-            placeholder="Email"
-          />
+          <StyledInput required type="email" name="email" placeholder="Email" />
           <Button type="submit">Log in</Button>
         </StyledForm>
       </Container>
@@ -57,14 +52,14 @@ const Container = styled('div')({
 
 const svgClassName = css({
   display: 'block',
-  fill: 'currentColor'
-})
+  fill: 'currentColor',
+});
 
 const Header = styled('header')(svgClassName, {
   width: '100%',
   marginBottom: unit * 5,
   padding: unit * 2.5,
-  position: 'relative'
+  position: 'relative',
 });
 
 const StyledLogo = styled(Logo)(size(56), {
@@ -81,11 +76,11 @@ const StyledCurve = styled(Curve)(size('100%'), {
 });
 
 const Heading = styled('h1')({
-  margin: `${unit * 3}px 0 ${unit * 6}px`
+  margin: `${unit * 3}px 0 ${unit * 6}px`,
 });
 
 const StyledRocket = styled(Rocket)(svgClassName, {
-  width: 250
+  width: 250,
 });
 
 const StyledForm = styled('form')({
