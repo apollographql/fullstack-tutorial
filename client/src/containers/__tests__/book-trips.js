@@ -9,6 +9,7 @@ import {
   render,
 } from '../../test-utils';
 import BookTrips, { BOOK_TRIPS, GET_LAUNCH } from '../book-trips';
+import { GET_CART_ITEMS } from '../../pages/cart';
 
 const mockLaunch = {
   __typename: 'Launch',
@@ -33,7 +34,7 @@ describe('book trips', () => {
     expect(getByTestId('book-button')).toBeTruthy();
   });
 
-  it('shows success message after mutation', async () => {
+  it('completes mutation and shows message', async () => {
     let mocks = [
       {
         request: { query: BOOK_TRIPS, variables: { launchIds: [1] } },

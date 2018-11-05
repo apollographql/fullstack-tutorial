@@ -1,4 +1,5 @@
 import React from 'react';
+import { InMemoryCache } from 'apollo-cache-inmemory';
 
 import {
   renderApollo,
@@ -13,6 +14,7 @@ import ActionButton, {
   CANCEL_TRIP,
   TOGGLE_CART_MUTATION,
 } from '../action-button';
+import { GET_CART_ITEMS } from '../../pages/cart';
 
 describe('action button', () => {
   // automatically unmount and cleanup DOM after the test is finished.
@@ -37,7 +39,6 @@ describe('action button', () => {
   });
 
   /**
-   * >>>> TODO: client state mutation
    * This test is a bit tricky, since the button doesn't _render_
    * anything based on the response from the mutation.
    *
@@ -45,29 +46,51 @@ describe('action button', () => {
    * tried to execute any mutation not mocked, it would throw an
    * error
    */
-  it('fires correct mutation with variables', async () => {
+  xit('fires correct mutation with variables', async () => {
+    // const cache = new InMemoryCache();
+    // cache.writeQuery({
+    //   query: GET_CART_ITEMS,
+    //   data: { cartItems: [1] },
+    // });
+
     // if we only provide 1 mock, any other queries would cause error
     let mocks = [
       {
-        request: {
-          query: TOGGLE_CART_MUTATION,
-          variables: {
-            launchId: 1,
-          },
-        },
-        result: {
-          data: {
-            addOrRemoveFromCart: true,
-          },
-        },
+        request: { query: TOGGLE_CART_MUTATION, variables: { launchId: 1 } },
+        result: { data: { addOrRemoveFromCart: true } },
       },
     ];
 
     const { getByTestId, container, debug } = renderApollo(
-      <ActionButton id={1} />,
-      { mocks },
+      <ActionButton id={1} isBooked={false} />,
+      {
+        mocks,
+        // cache
+      },
     );
-    await fireEvent.click(getByTestId('action-button'));
-    // debug();
+    fireEvent.click(getByTestId('action-button'));
+    await waitForElement(() => getByTestId('action-button'));
+
+    // mocks = [
+    //   {
+    //     request: {
+    //       query: CANCEL_TRIP,
+    //       variables: { launchId: 1 },
+    //     },
+    //     result: {
+    //       data: {
+    //         cancelTrip: {
+    //           success: true,
+    //           message: '',
+    //           launches: [{ id: 1, isBooked: false }],
+    //         },
+    //       },
+    //     },
+    //   },
+    // ];
+
+    // renderApollo(<ActionButton id={1} isBooked={true} />, { mocks, container });
+    // fireEvent.click(getByTestId('action-button'));
+    // await waitForElement(() => getByTestId('action-button'));
   });
 });

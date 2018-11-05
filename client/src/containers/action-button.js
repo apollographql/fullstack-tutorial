@@ -38,21 +38,26 @@ const ActionButton = ({ isBooked, id, isInCart }) => (
       },
     ]}
   >
-    {mutate => (
-      <div>
-        <Button
-          onClick={mutate}
-          isBooked={isBooked}
-          data-testid={'action-button'}
-        >
-          {isBooked
-            ? 'Cancel This Trip'
-            : isInCart
-              ? 'Remove from Cart'
-              : 'Add to Cart'}
-        </Button>
-      </div>
-    )}
+    {(mutate, { loading, error }) => {
+      if (loading) return <p>Loading...</p>;
+      if (error) return <p>An error occurred</p>;
+
+      return (
+        <div>
+          <Button
+            onClick={mutate}
+            isBooked={isBooked}
+            data-testid={'action-button'}
+          >
+            {isBooked
+              ? 'Cancel This Trip'
+              : isInCart
+                ? 'Remove from Cart'
+                : 'Add to Cart'}
+          </Button>
+        </div>
+      );
+    }}
   </Mutation>
 );
 
