@@ -1,9 +1,12 @@
 import React from 'react';
 
-import { render } from '../../test-utils';
+import { render, cleanup } from '../../test-utils';
 import LaunchDetail from '../launch-detail';
 
 describe('Launch Detail View', () => {
+  // automatically unmount and cleanup DOM after the test is finished.
+  afterEach(cleanup);
+
   it('renders without error', () => {
     render(
       <LaunchDetail

@@ -2,10 +2,7 @@ import React, { Fragment } from 'react';
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
 
-import LaunchTile from '../components/launch-tile';
-import Header from '../components/header';
-import Button from '../components/button';
-import Loading from '../components/loading';
+import { LaunchTile, Header, Button, Loading } from '../components';
 
 export const LAUNCH_TILE_DATA = gql`
   fragment LaunchTile on Launch {

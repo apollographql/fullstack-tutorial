@@ -10,7 +10,7 @@ const renderApollo = (
 ) => {
   return render(
     <MockedProvider
-      mocks={mocks || []}
+      mocks={mocks}
       addTypename={addTypename}
       defaultOptions={defaultOptions}
       cache={cache}

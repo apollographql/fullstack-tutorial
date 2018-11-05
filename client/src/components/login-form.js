@@ -10,9 +10,16 @@ import { ReactComponent as Rocket } from '../assets/rocket.svg';
 import { colors, unit } from '../styles';
 
 export default class LoginForm extends Component {
+  state = { email: '' };
+
+  onChange = event => {
+    const email = event.target.value;
+    this.setState(s => ({ email }));
+  };
+
   onSubmit = event => {
     event.preventDefault();
-    this.props.login({ variables: { email: event.target.email.value } });
+    this.props.login({ variables: { email: this.state.email } });
   };
 
   render() {
@@ -25,7 +32,14 @@ export default class LoginForm extends Component {
         <StyledRocket />
         <Heading>Space Explorer</Heading>
         <StyledForm onSubmit={this.onSubmit}>
-          <StyledInput required type="email" name="email" placeholder="Email" />
+          <StyledInput
+            required
+            type="email"
+            name="email"
+            placeholder="Email"
+            data-testid="login-input"
+            onChange={this.onChange}
+          />
           <Button type="submit">Log in</Button>
         </StyledForm>
       </Container>
