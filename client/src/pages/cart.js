@@ -1,7 +1,6 @@
 import React, { Fragment } from 'react';
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
-import { Redirect } from '@reach/router';
 
 import Header from '../components/header';
 import Loading from '../components/loading';
@@ -20,22 +19,19 @@ export default function Cart() {
       {({ data, loading, error }) => {
         if (loading) return <Loading />;
         if (error) return <p>ERROR: {error.message}</p>;
-        if (!data.cartItems || !data.cartItems.length) {
-          return (
-            <Fragment>
-              <Header>My Cart</Header>
-              <p>No items in your cart</p>
-            </Fragment>
-          )
-        }
-
         return (
           <Fragment>
             <Header>My Cart</Header>
-            {data.cartItems.map(launchId => (
-              <CartItem key={launchId} launchId={launchId} />
-            ))}
-            <BookTrips cartItems={data.cartItems} />
+            {!data.cartItems || !data.cartItems.length ? (
+              <p>No items in your cart</p>
+            ) : (
+              <Fragment>
+                {data.cartItems.map(launchId => (
+                  <CartItem key={launchId} launchId={launchId} />
+                ))}
+                <BookTrips cartItems={data.cartItems} />
+              </Fragment>
+            )}
           </Fragment>
         );
       }}
