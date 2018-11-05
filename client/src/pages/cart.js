@@ -21,7 +21,12 @@ export default function Cart() {
         if (loading) return <Loading />;
         if (error) return <p>ERROR: {error.message}</p>;
         if (!data.cartItems || !data.cartItems.length) {
-          return <Redirect to="/" noThrow />;
+          return (
+            <Fragment>
+              <Header>My Cart</Header>
+              <p>No items in your cart</p>
+            </Fragment>
+          )
         }
 
         return (
