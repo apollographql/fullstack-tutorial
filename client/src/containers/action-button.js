@@ -8,7 +8,7 @@ import Button from '../components/button';
 // export all queries used in this file for testing
 export { GET_LAUNCH_DETAILS };
 
-export const TOGGLE_CART_MUTATION = gql`
+const TOGGLE_CART = gql`
   mutation addOrRemoveFromCart($launchId: ID!) {
     addOrRemoveFromCart(id: $launchId) @client
   }
@@ -29,7 +29,7 @@ export const CANCEL_TRIP = gql`
 
 const ActionButton = ({ isBooked, id, isInCart }) => (
   <Mutation
-    mutation={isBooked ? CANCEL_TRIP : TOGGLE_CART_MUTATION}
+    mutation={isBooked ? CANCEL_TRIP : TOGGLE_CART}
     variables={{ launchId: id }}
     refetchQueries={[
       {

@@ -1,10 +1,24 @@
+import gql from 'graphql-tag';
 import { GET_CART_ITEMS } from './pages/cart';
 
-const resolvers = {
+export const schema = gql`
+  extend type Query {
+    isLoggedIn: Boolean!
+    cartItems: [Launch]!
+  }
+
+  extend type Launch {
+    isInCart: Boolean!
+  }
+
+  extend type Mutation {
+    addOrRemoveFromCart: [Launch]
+  }
+`;
+
+export const resolvers = {
   Query: {
-    isLoggedIn: async () => {
-      return await !!localStorage.getItem('token');
-    },
+    isLoggedIn: () => !!localStorage.getItem('token'),
   },
   Launch: {
     isInCart: (launch, _, { cache }) => {
@@ -25,5 +39,3 @@ const resolvers = {
     },
   },
 };
-
-export default resolvers;
