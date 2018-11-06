@@ -12,7 +12,7 @@ export const typeDefs = gql`
   }
 
   extend type Mutation {
-    addOrRemoveFromCart: [Launch]
+    addOrRemoveFromCart(id: ID!): [Launch]
   }
 `;
 
