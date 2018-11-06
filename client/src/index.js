@@ -9,7 +9,7 @@ import gql from 'graphql-tag';
 
 import Pages from './pages';
 import Login from './pages/login';
-import resolvers from './resolvers';
+import { resolvers, typeDefs } from './resolvers';
 import injectStyles from './styles';
 
 // Set up our apollo-client to point at the server we created
@@ -28,6 +28,7 @@ const client = new ApolloClient({
     cartItems: () => [],
   },
   resolvers,
+  typeDefs,
 });
 
 /**
@@ -50,9 +51,7 @@ injectStyles();
 ReactDOM.render(
   <ApolloProvider client={client}>
     <Query query={IS_LOGGED_IN}>
-      {({ data }) =>
-        data.isLoggedIn ? <Pages /> : <Login />
-      }
+      {({ data }) => (data.isLoggedIn ? <Pages /> : <Login />)}
     </Query>
   </ApolloProvider>,
   document.getElementById('root'),

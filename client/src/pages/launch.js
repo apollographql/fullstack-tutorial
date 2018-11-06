@@ -12,8 +12,6 @@ export const GET_LAUNCH_DETAILS = gql`
       isInCart @client
       site
       rocket {
-        id
-        name
         type
       }
       ...LaunchTile

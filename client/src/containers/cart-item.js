@@ -19,7 +19,7 @@ const CartItem = ({ launchId }) => (
     {({ data, loading, error }) => {
       if (loading) return <p>Loading...</p>;
       if (error) return <p>ERROR: {error.message}</p>;
-      return data && data.launch ? <LaunchTile launch={data.launch} /> : null;
+      return data && <LaunchTile launch={data.launch} />;
     }}
   </Query>
 );

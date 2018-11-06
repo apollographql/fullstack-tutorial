@@ -11,7 +11,7 @@ import {
   waitForElement,
   render,
 } from '../../test-utils';
-import Login, { LOGIN_MUTATION } from '../login';
+import Login, { LOGIN_USER } from '../login';
 
 describe('Login Page', () => {
   // automatically unmount and cleanup DOM after the test is finished.
@@ -21,11 +21,11 @@ describe('Login Page', () => {
     renderApollo(<Login />);
   });
 
-  fit('fires login mutation and updates cache after done', async () => {
+  it('fires login mutation and updates cache after done', async () => {
     const cache = new InMemoryCache();
     const mocks = [
       {
-        request: { query: LOGIN_MUTATION, variables: { email: 'a@a.a' } },
+        request: { query: LOGIN_USER, variables: { email: 'a@a.a' } },
         result: { data: { login: 'abc' } },
       },
     ];
