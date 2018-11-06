@@ -37,7 +37,7 @@ const mockMe = {
   trips: [mockLaunch],
 };
 
-describe('Profile Page', () => {
+xdescribe('Profile Page', () => {
   // automatically unmount and cleanup DOM after the test is finished.
   afterEach(cleanup);
 

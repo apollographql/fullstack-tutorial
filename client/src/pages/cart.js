@@ -32,17 +32,7 @@ export default function Cart() {
             )}
           </Fragment>
         );
-      }
-
-      return (
-        <Fragment>
-          <Header>My Cart</Header>
-          {data.cartItems.map(launchId => (
-            <CartItem key={launchId} launchId={launchId} />
-          ))}
-          <BookTrips cartItems={data.cartItems} />
-        </Fragment>
-      );
-    }}
-  </Query>
-);
+      }}
+    </Query>
+  );
+}

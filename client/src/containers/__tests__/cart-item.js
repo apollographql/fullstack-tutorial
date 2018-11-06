@@ -24,7 +24,7 @@ const mockLaunch = {
   },
 };
 
-describe('cart item', () => {
+xdescribe('cart item', () => {
   // automatically unmount and cleanup DOM after the test is finished.
   afterEach(cleanup);
 
