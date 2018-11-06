@@ -20,7 +20,7 @@ export const GET_LAUNCH_DETAILS = gql`
   ${LAUNCH_TILE_DATA}
 `;
 
-export default ({ launchId }) => {
+export default function Launch({ launchId }) {
   return (
     <Query query={GET_LAUNCH_DETAILS} variables={{ launchId }}>
       {({ data, loading, error }) => {
@@ -39,4 +39,4 @@ export default ({ launchId }) => {
       }}
     </Query>
   );
-};
+}

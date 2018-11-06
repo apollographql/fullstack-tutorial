@@ -27,38 +27,38 @@ export const CANCEL_TRIP = gql`
   }
 `;
 
-const ActionButton = ({ isBooked, id, isInCart }) => (
-  <Mutation
-    mutation={isBooked ? CANCEL_TRIP : TOGGLE_CART}
-    variables={{ launchId: id }}
-    refetchQueries={[
-      {
-        query: GET_LAUNCH_DETAILS,
-        variables: { launchId: id },
-      },
-    ]}
-  >
-    {(mutate, { loading, error }) => {
-      if (loading) return <p>Loading...</p>;
-      if (error) return <p>An error occurred</p>;
+export default function ActionButton({ isBooked, id, isInCart }) {
+  return (
+    <Mutation
+      mutation={isBooked ? CANCEL_TRIP : TOGGLE_CART}
+      variables={{ launchId: id }}
+      refetchQueries={[
+        {
+          query: GET_LAUNCH_DETAILS,
+          variables: { launchId: id },
+        },
+      ]}
+    >
+      {(mutate, { loading, error }) => {
+        if (loading) return <p>Loading...</p>;
+        if (error) return <p>An error occurred</p>;
 
-      return (
-        <div>
-          <Button
-            onClick={mutate}
-            isBooked={isBooked}
-            data-testid={'action-button'}
-          >
-            {isBooked
-              ? 'Cancel This Trip'
-              : isInCart
-                ? 'Remove from Cart'
-                : 'Add to Cart'}
-          </Button>
-        </div>
-      );
-    }}
-  </Mutation>
-);
-
-export default ActionButton;
+        return (
+          <div>
+            <Button
+              onClick={mutate}
+              isBooked={isBooked}
+              data-testid={'action-button'}
+            >
+              {isBooked
+                ? 'Cancel This Trip'
+                : isInCart
+                  ? 'Remove from Cart'
+                  : 'Add to Cart'}
+            </Button>
+          </div>
+        );
+      }}
+    </Mutation>
+  );
+}

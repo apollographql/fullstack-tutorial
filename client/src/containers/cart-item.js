@@ -14,14 +14,14 @@ export const GET_LAUNCH = gql`
   ${LAUNCH_TILE_DATA}
 `;
 
-const CartItem = ({ launchId }) => (
-  <Query query={GET_LAUNCH} variables={{ launchId }}>
-    {({ data, loading, error }) => {
-      if (loading) return <p>Loading...</p>;
-      if (error) return <p>ERROR: {error.message}</p>;
-      return data && <LaunchTile launch={data.launch} />;
-    }}
-  </Query>
-);
-
-export default CartItem;
+export default function CartItem({ launchId }) {
+  return (
+    <Query query={GET_LAUNCH} variables={{ launchId }}>
+      {({ data, loading, error }) => {
+        if (loading) return <p>Loading...</p>;
+        if (error) return <p>ERROR: {error.message}</p>;
+        return data && <LaunchTile launch={data.launch} />;
+      }}
+    </Query>
+  );
+}

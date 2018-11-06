@@ -28,7 +28,7 @@ export const resolvers = {
       const { cartItems } = cache.readQuery({ query: GET_CART_ITEMS });
       const data = {
         cartItems: cartItems.includes(id)
-          ? cartItems.filter(i => !i)
+          ? cartItems.filter(i => i !== id)
           : [...cartItems, id],
       };
       cache.writeQuery({ query: GET_CART_ITEMS, data });
