@@ -19,28 +19,28 @@ export const BOOK_TRIPS = gql`
   }
 `;
 
-const BookTrips = ({ cartItems }) => (
-  <Mutation
-    mutation={BOOK_TRIPS}
-    variables={{ launchIds: cartItems }}
-    refetchQueries={cartItems.map(launchId => ({
-      query: GET_LAUNCH,
-      variables: { launchId },
-    }))}
-    update={cache => {
-      cache.writeData({ data: { cartItems: [] } });
-    }}
-  >
-    {(bookTrips, { data, loading, error }) =>
-      data && data.bookTrips && !data.bookTrips.success ? (
-        <p data-testid="message">{data.bookTrips.message}</p>
-      ) : (
-        <Button onClick={bookTrips} data-testid="book-button">
-          Book All
-        </Button>
-      )
-    }
-  </Mutation>
-);
-
-export default BookTrips;
+export default function BookTrips({ cartItems }) {
+  return (
+    <Mutation
+      mutation={BOOK_TRIPS}
+      variables={{ launchIds: cartItems }}
+      refetchQueries={cartItems.map(launchId => ({
+        query: GET_LAUNCH,
+        variables: { launchId },
+      }))}
+      update={cache => {
+        cache.writeData({ data: { cartItems: [] } });
+      }}
+    >
+      {(bookTrips, { data, loading, error }) =>
+        data && data.bookTrips && !data.bookTrips.success ? (
+          <p data-testid="message">{data.bookTrips.message}</p>
+        ) : (
+          <Button onClick={bookTrips} data-testid="book-button">
+            Book All
+          </Button>
+        )
+      }
+    </Mutation>
+  );
+}
