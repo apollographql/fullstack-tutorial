@@ -6,7 +6,7 @@ import LaunchTile from '../components/launch-tile';
 import { LAUNCH_TILE_DATA } from '../pages/launches';
 
 export const GET_LAUNCH = gql`
-  query LaunchTileQuery($launchId: ID!) {
+  query GetLaunch($launchId: ID!) {
     launch(id: $launchId) {
       ...LaunchTile
     }

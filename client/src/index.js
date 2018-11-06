@@ -42,7 +42,7 @@ const client = new ApolloClient({
  */
 
 const IS_LOGGED_IN = gql`
-  {
+  query IsUserLoggedIn {
     isLoggedIn @client
   }
 `;
