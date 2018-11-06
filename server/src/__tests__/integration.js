@@ -2,35 +2,12 @@ const { createTestClient } = require('apollo-server-testing');
 const gql = require('graphql-tag');
 const nock = require('nock');
 
-const {
-  dataSources,
-  context: defaultContext,
-  typeDefs,
-  resolvers,
-  ApolloServer,
-  LaunchAPI,
-  UserAPI,
-  store,
-} = require('../');
+const { constructTestServer } = require('./__utils');
 
 // the mocked REST API data
 const { mockLaunchResponse } = require('../datasources/__tests__/launch');
 // the mocked SQL DataSource store
 const { mockStore } = require('../datasources/__tests__/user');
-
-const constructTestServer = ({ context = defaultContext } = {}) => {
-  const userAPI = new UserAPI({ store });
-  const launchAPI = new LaunchAPI();
-
-  const server = new ApolloServer({
-    typeDefs,
-    resolvers,
-    dataSources: () => ({ userAPI, launchAPI }),
-    context,
-  });
-
-  return { server, userAPI, launchAPI };
-};
 
 const GET_LAUNCHES = gql`
   query launchList($after: String) {

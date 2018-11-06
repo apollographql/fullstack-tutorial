@@ -57,4 +57,5 @@ module.exports = {
   LaunchAPI,
   UserAPI,
   store,
+  server,
 };
