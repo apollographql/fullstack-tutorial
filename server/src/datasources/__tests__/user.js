@@ -11,6 +11,7 @@ const mockStore = {
     findAll: jest.fn(),
   },
 };
+module.exports.mockStore = mockStore;
 
 const ds = new UserAPI({ store: mockStore });
 ds.initialize({ context: { user: { id: 1, email: 'a@a.a' } } });
