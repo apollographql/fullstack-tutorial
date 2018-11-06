@@ -5,7 +5,8 @@ import gql from 'graphql-tag';
 import Button from '../components/button';
 import { GET_LAUNCH } from './cart-item';
 
-const BOOK_TRIPS = gql`
+export { GET_LAUNCH };
+export const BOOK_TRIPS = gql`
   mutation BookTrips($launchIds: [ID]!) {
     bookTrips(launchIds: $launchIds) {
       success
@@ -32,9 +33,11 @@ const BookTrips = ({ cartItems }) => (
   >
     {(bookTrips, { data, loading, error }) =>
       data && data.bookTrips && !data.bookTrips.success ? (
-        <p>{data.bookTrips.message}</p>
+        <p data-testid="message">{data.bookTrips.message}</p>
       ) : (
-        <Button onClick={bookTrips}>Book All</Button>
+        <Button onClick={bookTrips} data-testid="book-button">
+          Book All
+        </Button>
       )
     }
   </Mutation>

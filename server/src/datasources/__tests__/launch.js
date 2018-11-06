@@ -182,3 +182,5 @@ const mockLaunchResponse = {
   static_fire_date_utc: '2006-03-17T00:00:00.000Z',
   static_fire_date_unix: 1142553600,
 };
+
+module.exports.mockLaunchResponse = mockLaunchResponse;

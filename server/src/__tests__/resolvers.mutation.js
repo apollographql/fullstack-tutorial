@@ -108,13 +108,13 @@ describe('[Mutation.login]', () => {
     expect(findOrCreateUser).toBeCalledWith(args);
   });
 
-  it('returns false if fails', async () => {
+  it('returns nothing if login fails', async () => {
     const args = { email: 'a@a.a' };
+    // simulate failed lookup/creation
     findOrCreateUser.mockReturnValueOnce(false);
-    const base64Email = new Buffer(mockContext.user.email).toString('base64');
 
     // check the resolver response
     const res = await resolvers.Mutation.login(null, args, mockContext);
-    expect(res).toEqual(false);
+    expect(res).toBeFalsy();
   });
 });

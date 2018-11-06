@@ -1,0 +1,84 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Mutations books trips 1`] = `
+Object {
+  "data": Object {
+    "bookTrips": Object {
+      "launches": Array [
+        Object {
+          "id": "1",
+          "isBooked": true,
+        },
+        Object {
+          "id": "2",
+          "isBooked": true,
+        },
+      ],
+      "message": "trips booked successfully",
+      "success": true,
+    },
+  },
+  "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;
+
+exports[`Queries fetches list of launches 1`] = `
+Object {
+  "data": Object {
+    "launches": Object {
+      "cursor": "1143239400",
+      "hasMore": false,
+      "launches": Array [
+        Object {
+          "id": "1",
+          "isBooked": true,
+          "mission": Object {
+            "missionPatch": "https://images2.imgbox.com/40/e3/GypSkayF_o.png",
+            "name": "FalconSat",
+          },
+          "rocket": Object {
+            "name": "Falcon 1",
+          },
+        },
+      ],
+    },
+  },
+  "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;
+
+exports[`Queries fetches single launch 1`] = `
+Object {
+  "data": Object {
+    "launch": Object {
+      "id": "1",
+      "isBooked": true,
+      "mission": Object {
+        "name": "FalconSat",
+      },
+      "rocket": Object {
+        "type": "Merlin A",
+      },
+    },
+  },
+  "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;

@@ -10,9 +10,16 @@ import { ReactComponent as Rocket } from '../assets/rocket.svg';
 import { colors, unit } from '../styles';
 
 export default class LoginForm extends Component {
+  state = { email: '' };
+
+  onChange = event => {
+    const email = event.target.value;
+    this.setState(s => ({ email }));
+  };
+
   onSubmit = event => {
     event.preventDefault();
-    this.props.login({ variables: { email: event.target.email.value } });
+    this.props.login({ variables: { email: this.state.email } });
   };
 
   render() {
@@ -30,6 +37,8 @@ export default class LoginForm extends Component {
             type="email"
             name="email"
             placeholder="Email"
+            data-testid="login-input"
+            onChange={this.onChange}
           />
           <Button type="submit">Log in</Button>
         </StyledForm>
@@ -57,14 +66,14 @@ const Container = styled('div')({
 
 const svgClassName = css({
   display: 'block',
-  fill: 'currentColor'
-})
+  fill: 'currentColor',
+});
 
 const Header = styled('header')(svgClassName, {
   width: '100%',
   marginBottom: unit * 5,
   padding: unit * 2.5,
-  position: 'relative'
+  position: 'relative',
 });
 
 const StyledLogo = styled(Logo)(size(56), {
@@ -81,11 +90,11 @@ const StyledCurve = styled(Curve)(size('100%'), {
 });
 
 const Heading = styled('h1')({
-  margin: `${unit * 3}px 0 ${unit * 6}px`
+  margin: `${unit * 3}px 0 ${unit * 6}px`,
 });
 
 const StyledRocket = styled(Rocket)(svgClassName, {
-  width: 250
+  width: 250,
 });
 
 const StyledForm = styled('form')({

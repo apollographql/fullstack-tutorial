@@ -17,7 +17,7 @@ function pickAvatarByEmail(email) {
   return avatars[Math.round(maxIndex * percentile)];
 }
 
-export default function Header({image, children = 'Space Explorer'}) {
+export default function Header({ image, children = 'Space Explorer' }) {
   const email = atob(localStorage.getItem('token'));
   const avatar = image || pickAvatarByEmail(email);
   return (
@@ -49,4 +49,4 @@ const Image = styled('img')(size(134), props => ({
 const Subheading = styled('h5')({
   marginTop: unit / 2,
   color: colors.textSecondary,
-})
+});
