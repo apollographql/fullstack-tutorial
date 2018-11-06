@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
 import { GET_CART_ITEMS } from './pages/cart';
 
-export const schema = gql`
+export const typeDefs = gql`
   extend type Query {
     isLoggedIn: Boolean!
     cartItems: [Launch]!
