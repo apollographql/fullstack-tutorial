@@ -1,4 +1,4 @@
-const { gql } = require('apollo-server');
+const {gql} = require('apollo-server');
 
 const typeDefs = gql`
   type Query {
@@ -53,12 +53,11 @@ const typeDefs = gql`
 
   type Rocket {
     id: ID!
-    name: String
+    fullName: String
     type: String
   }
 
   type User {
-    id: ID!
     email: String!
     trips: [Launch]!
   }

@@ -1,15 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import { ApolloClient } from 'apollo-client';
-import { InMemoryCache } from 'apollo-cache-inmemory';
-import { HttpLink } from 'apollo-link-http';
-import { Query, ApolloProvider } from 'react-apollo';
+import {ApolloClient} from 'apollo-client';
+import {InMemoryCache} from 'apollo-cache-inmemory';
+import {HttpLink} from 'apollo-link-http';
+import {Query, ApolloProvider} from 'react-apollo';
 import gql from 'graphql-tag';
 
 import Pages from './pages';
 import Login from './pages/login';
-import { resolvers, typeDefs } from './resolvers';
+import {resolvers, typeDefs} from './resolvers';
 import injectStyles from './styles';
 
 // Set up our apollo-client to point at the server we created
@@ -21,6 +21,8 @@ const client = new ApolloClient({
     uri: 'http://localhost:4000/graphql',
     headers: {
       authorization: localStorage.getItem('token'),
+      'client-name': 'Space Explorer [web]',
+      'client-version': '1.0.0',
     },
   }),
   initializers: {
@@ -51,7 +53,7 @@ injectStyles();
 ReactDOM.render(
   <ApolloProvider client={client}>
     <Query query={IS_LOGGED_IN}>
-      {({ data }) => (data.isLoggedIn ? <Pages /> : <Login />)}
+      {({data}) => (data.isLoggedIn ? <Pages /> : <Login />)}
     </Query>
   </ApolloProvider>,
   document.getElementById('root'),
