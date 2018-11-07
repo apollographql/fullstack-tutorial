@@ -23,7 +23,7 @@ const client = new ApolloClient({
       authorization: localStorage.getItem('token'),
     },
   }),
-  storeInitializers: {
+  initializers: {
     isLoggedIn: () => !!localStorage.getItem('token'),
     cartItems: () => [],
   },
