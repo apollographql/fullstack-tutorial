@@ -53,6 +53,8 @@ const typeDefs = gql`
 
   type Rocket {
     id: ID!
+    name: String
+      @deprecated(reason: "Not clear enough of field, use fullName instead")
     fullName: String
     type: String
   }
