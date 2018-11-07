@@ -1,6 +1,6 @@
 import React from 'react';
-import { print } from 'graphql';
-import { InMemoryCache } from 'apollo-cache-inmemory';
+import {print} from 'graphql';
+import {InMemoryCache} from 'apollo-cache-inmemory';
 import gql from 'graphql-tag';
 
 import {
@@ -11,7 +11,7 @@ import {
   waitForElement,
   render,
 } from '../../test-utils';
-import Login, { LOGIN_USER } from '../login';
+import Login, {LOGIN_USER} from '../login';
 
 describe('Login Page', () => {
   // automatically unmount and cleanup DOM after the test is finished.
@@ -25,18 +25,18 @@ describe('Login Page', () => {
     const cache = new InMemoryCache();
     const mocks = [
       {
-        request: { query: LOGIN_USER, variables: { email: 'a@a.a' } },
-        result: { data: { login: 'abc' } },
+        request: {query: LOGIN_USER, variables: {email: 'a@a.a'}},
+        result: {data: {login: 'abc'}},
       },
     ];
 
-    const { getByText, getByTestId } = await renderApollo(<Login />, {
+    const {getByText, getByTestId} = await renderApollo(<Login />, {
       mocks,
       cache,
     });
 
     fireEvent.change(getByTestId('login-input'), {
-      target: { value: 'a@a.a' },
+      target: {value: 'a@a.a'},
     });
 
     fireEvent.click(getByText(/log in/i));
@@ -45,9 +45,9 @@ describe('Login Page', () => {
     await waitForElement(() => getByText(/log in/i));
 
     // check to make sure the cache's contents have been updated
-    const { isLoggedIn } = cache.readQuery({
+    const {isLoggedIn} = cache.readQuery({
       query: gql`
-        {
+        query IsUserLoggedIn {
           isLoggedIn @client
         }
       `,
