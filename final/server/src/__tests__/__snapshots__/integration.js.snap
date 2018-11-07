@@ -43,7 +43,7 @@ Object {
             "name": "FalconSat",
           },
           "rocket": Object {
-            "name": "Falcon 1",
+            "fullName": "Falcon 1",
           },
         },
       ],
