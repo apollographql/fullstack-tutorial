@@ -1,28 +1,25 @@
-## Full Stack App Server
+# Apollo tutorial
 
-This is the backend implementation for the full stack app of the new Learn tutorial site.
+This is the fullstack app for the [Apollo tutorial](http://apollographql.com/docs/tutorial/introduction.html). 🚀
 
+## File structure
 
-### Schema Design
+The app is split out into two folders:
+- `start`: Starting point for the tutorial
+- `final`: Final version
 
-* Core features (upcoming launches)
-    * Browse upcoming launches (home screen)
-        * Get upcoming launches query
-        * Carousel of launches
-        * Reserve your place on a launch
-    * My trips
-        * Get my trips query
-        * Cancel your trip mutation
-        * See list of trips that you've signed up for
-        * Almost like a profile page (email, avatar)
-    * Cart to save launches with a simple checkout feature to save them to the server
-        * Local state mutation to save trips to the cart
-        * Local state mutation to remove the trip from the cart
-        * Reserve launch mutation to send trips to the server
-        * No money required to reserve your spot
-    * Navigation between the 3 screens
-        * React Router
+From within the `start` and `final` directories, there are two folders (one for `server` and one for `client`).
 
+## Installation
 
-* Nice to have (past launches)
-    * Find a launch near you
+To run the app, run these commands in two separate terminal windows from the root:
+
+```bash
+cd final/server && npm i && npm start
+```
+
+and
+
+```bash
+cd final/client && npm i && npm start
+```
