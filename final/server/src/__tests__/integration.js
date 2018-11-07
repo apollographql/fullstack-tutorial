@@ -53,7 +53,7 @@ const LOGIN = gql`
 const BOOK_TRIPS = gql`
   mutation BookTrips($launchIds: [ID]!) {
     bookTrips(launchIds: $launchIds) {
-      success
+      failure
       message
       launches {
         id
