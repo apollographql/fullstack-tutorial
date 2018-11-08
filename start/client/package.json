@@ -10,14 +10,12 @@
     "emotion": "^9.2.12",
     "graphql": "^14.0.2",
     "graphql-tag": "^2.10.0",
-    "jest-dom": "^2.1.0",
     "polished": "^2.3.0",
     "react": "^16.5.2",
     "react-apollo": "alpha",
     "react-dom": "^16.5.2",
     "react-emotion": "^9.2.12",
-    "react-scripts": "2.0.4",
-    "react-testing-library": "^5.2.3"
+    "react-scripts": "2.0.4"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -33,5 +31,10 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "devDependencies": {
+    "apollo": "^2.0.0-beta.89",
+    "jest-dom": "^2.1.0",
+    "react-testing-library": "^5.2.3"
+  }
 }
