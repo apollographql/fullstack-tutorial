@@ -1,4 +1,4 @@
-const { gql } = require('apollo-server');
+const {gql} = require('apollo-server');
 
 const typeDefs = gql`
   type Query {
@@ -27,7 +27,7 @@ const typeDefs = gql`
   }
 
   type TripUpdateResponse {
-    success: Boolean!
+    failure: Boolean!
     message: String
     launches: [Launch]
   }
@@ -54,11 +54,12 @@ const typeDefs = gql`
   type Rocket {
     id: ID!
     name: String
+      @deprecated(reason: "Not clear enough of field, use fullName instead")
+    fullName: String
     type: String
   }
 
   type User {
-    id: ID!
     email: String!
     trips: [Launch]!
   }

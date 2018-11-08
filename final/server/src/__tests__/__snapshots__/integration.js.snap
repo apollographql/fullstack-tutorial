@@ -2,23 +2,10 @@
 
 exports[`Mutations books trips 1`] = `
 Object {
-  "data": Object {
-    "bookTrips": Object {
-      "launches": Array [
-        Object {
-          "id": "1",
-          "isBooked": true,
-        },
-        Object {
-          "id": "2",
-          "isBooked": true,
-        },
-      ],
-      "message": "trips booked successfully",
-      "success": true,
-    },
-  },
-  "errors": undefined,
+  "data": null,
+  "errors": Array [
+    [GraphQLError: Cannot return null for non-nullable field TripUpdateResponse.failure.],
+  ],
   "extensions": undefined,
   "http": Object {
     "headers": Headers {
@@ -43,7 +30,7 @@ Object {
             "name": "FalconSat",
           },
           "rocket": Object {
-            "name": "Falcon 1",
+            "fullName": "Falcon 1",
           },
         },
       ],

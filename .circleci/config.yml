@@ -1,35 +1,46 @@
 version: 2
 
 jobs:
-  build:
+  Apollo Client:
     docker:
       - image: circleci/node:8
 
     steps:
       - checkout
+      - run: cd final/client && npm ci
+      - run: cd final/client && npm test
+      - run: cd final/client npx apollo client:check
 
-      - run: cd server && npm ci
-      # - run: npm test
-
-      # Start the GraphQL server.  If a different command is used to
-      # start the server, use it in place of `npm start` here.
-      - run:
-          name: Starting server
-          command: cd server && npm run start:ci
-          background: true
-
-      # make sure the server has enough time to start up before running
-      # commands against it
-      - run: sleep 5
-
-      # This will authenticate using the `ENGINE_API_KEY` environment
-      # variable. If the GraphQL server is available elsewhere than
-      # http://localhost:4000/graphql, set it with `--endpoint=<URL>`.
-      - run: npx apollo schema:check
-
-      # When running on the 'master' branch, publish the latest version
-      # of the schema to Apollo Engine.
       - run: |
           if [ "${CIRCLE_BRANCH}" == "master" ]; then
-            npx apollo schema:publish
+            cd final/client npx apollo client:push
           fi
+
+  Apollo Server:
+    docker:
+      - image: circleci/node:8
+
+    steps:
+      - checkout
+      - run: cd final/server && npm ci
+      - run: cd final/server && npm test
+
+      - run:
+          name: Starting server
+          command: cd final/server && npm run start:ci
+          background: true
+
+      - run: sleep 5
+      - run: cd final/server npx apollo service:check
+
+      - run: |
+          if [ "${CIRCLE_BRANCH}" == "master" ]; then
+            cd final/server npx apollo service:push
+          fi
+
+workflows:
+  version: 2
+  Build and Test:
+    jobs:
+      - Apollo Client
+      - Apollo Server
