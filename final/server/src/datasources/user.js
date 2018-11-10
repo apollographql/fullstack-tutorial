@@ -18,7 +18,7 @@ class UserAPI extends DataSource {
   }
 
   /**
-   * User can be called with an argument that includes email, but it doersn't
+   * User can be called with an argument that includes email, but it doesn't
    * have to be. If the user is already on the context, it will use that user
    * instead
    */
