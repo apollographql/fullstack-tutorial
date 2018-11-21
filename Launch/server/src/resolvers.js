@@ -60,6 +60,7 @@ module.exports = {
       }
     },
     bookTrips: async (_, { launchIds }, { dataSources }) => {
+      
     const results = await dataSources.userAPI.bookTrips({ launchIds });
     const launches = await dataSources.launchAPI.getLaunchesByIds({
       launchIds,
