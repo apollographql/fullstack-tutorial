@@ -38,10 +38,11 @@
   },
   "apollo": {
     "service": {
-      "name": "Kyle-Neale-6201"
-    },
-    "endpoint": {
-      "url": "https://localhost:4000"
+      "name": "Kyle-Neale-6201",
+      
+      "endpoint": {
+        "url": "http://localhost:4000"
+      }
     }
   }
 }
