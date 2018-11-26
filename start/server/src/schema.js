@@ -73,8 +73,6 @@ const typeDefs = gql`
     message: String
     launches: [Launch]
   }
-
-
 `;
 
 module.exports = typeDefs
