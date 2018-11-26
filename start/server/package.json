@@ -35,5 +35,10 @@
       "/node_modules/",
       "/__utils"
     ]
+  },
+  "apollo": {
+    "service": {
+      "name": "my-service"
+    }
   }
 }
