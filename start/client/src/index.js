@@ -8,7 +8,6 @@ import gql from "graphql-tag";
 const client = new ApolloClient({
   uri: "http://localhost:4000"
 });
-
 ReactDOM.render(
   <ApolloProvider client={client}>
     <Pages />
