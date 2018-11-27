@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@reach/router": "^1.2.1",
+    "apollo-boost": "^0.1.22",
     "apollo-cache-inmemory": "alpha",
     "apollo-client": "alpha",
     "apollo-link-http": "^1.5.5",
@@ -36,5 +37,5 @@
     "apollo": "^2.0.0-beta.89",
     "jest-dom": "^2.1.0",
     "react-testing-library": "^5.2.3"
-  },
+  }
 }
