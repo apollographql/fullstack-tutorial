@@ -9,7 +9,7 @@ import { ActionButton } from '../containers';
 export const GET_LAUNCH_DETAILS = gql`
   query LaunchDetails($launchId: ID!) {
     launch(id: $launchId) {
-      isInCart @client
+      # isInCart @client
       site
       rocket {
         type
@@ -24,6 +24,7 @@ export default function Launch({ launchId }) {
   return (
     <Query query={GET_LAUNCH_DETAILS} variables={{ launchId }}>
       {({ data, loading, error }) => {
+        console.log(data);
         if (loading) return <Loading />;
         if (error) return <p>ERROR: {error.message}</p>;
 
