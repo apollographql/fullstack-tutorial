@@ -2,12 +2,10 @@ import React, { Fragment } from 'react';
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
 
-import Loading from '../components/loading';
-import Header from '../components/header';
-import LaunchTile from '../components/launch-tile';
+import { Loading, Header, LaunchTile } from '../components';
 import { LAUNCH_TILE_DATA } from './launches';
 
-const GET_MY_TRIPS = gql`
+export const GET_MY_TRIPS = gql`
   query GetMyTrips {
     me {
       id
