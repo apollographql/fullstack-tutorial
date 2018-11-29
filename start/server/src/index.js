@@ -1,7 +1,6 @@
 const { ApolloServer } = require('apollo-server');
 const isEmail = require('isemail');
 const { createStore } = require('./utils');
-
 const typeDefs = require('./schema');
 const resolvers = require('./resolvers');
 
