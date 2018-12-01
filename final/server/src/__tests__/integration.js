@@ -18,7 +18,7 @@ const GET_LAUNCHES = gql`
         id
         isBooked
         rocket {
-          fullName
+          name
         }
         mission {
           name
@@ -53,7 +53,7 @@ const LOGIN = gql`
 const BOOK_TRIPS = gql`
   mutation BookTrips($launchIds: [ID]!) {
     bookTrips(launchIds: $launchIds) {
-      failure
+      success
       message
       launches {
         id
