@@ -1,15 +1,12 @@
 import React from 'react';
-import {print} from 'graphql';
 import {InMemoryCache} from 'apollo-cache-inmemory';
 import gql from 'graphql-tag';
 
 import {
   renderApollo,
   cleanup,
-  getByTestId,
   fireEvent,
   waitForElement,
-  render,
 } from '../../test-utils';
 import Login, {LOGIN_USER} from '../login';
 

@@ -20,7 +20,7 @@ export const LAUNCH_TILE_DATA = gql`
   }
 `;
 
-const GET_LAUNCHES = gql`
+export const GET_LAUNCHES = gql`
   query GetLaunchList($after: String) {
     launches(after: $after) {
       cursor

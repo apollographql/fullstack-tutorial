@@ -1,15 +1,9 @@
 import React from 'react';
-import { print } from 'graphql';
-import { InMemoryCache } from 'apollo-cache-inmemory';
-import gql from 'graphql-tag';
 
 import {
   renderApollo,
   cleanup,
-  getByTestId,
-  fireEvent,
   waitForElement,
-  render,
 } from '../../test-utils';
 import Profile, { GET_MY_TRIPS } from '../profile';
 
@@ -37,7 +31,7 @@ const mockMe = {
   trips: [mockLaunch],
 };
 
-xdescribe('Profile Page', () => {
+describe('Profile Page', () => {
   // automatically unmount and cleanup DOM after the test is finished.
   afterEach(cleanup);
 
