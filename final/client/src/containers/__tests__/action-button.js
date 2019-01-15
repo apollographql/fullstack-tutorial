@@ -12,9 +12,29 @@ import {
 import ActionButton, {
   GET_LAUNCH_DETAILS,
   CANCEL_TRIP,
-  TOGGLE_CART_MUTATION,
+  TOGGLE_CART,
 } from '../action-button';
 import { GET_CART_ITEMS } from '../../pages/cart';
+
+const mockLaunch = {
+  __typename: 'Launch',
+  id: 1,
+  isBooked: true,
+  rocket: {
+    __typename: 'Rocket',
+    id: 1,
+    name: 'tester',
+    type: 'test',
+  },
+  mission: {
+    __typename: 'Mission',
+    id: 1,
+    name: 'test mission',
+    missionPatch: '/',
+  },
+  site: 'earth',
+  isInCart: false,
+};
 
 describe('action button', () => {
   // automatically unmount and cleanup DOM after the test is finished.
@@ -46,18 +66,22 @@ describe('action button', () => {
    * tried to execute any mutation not mocked, it would throw an
    * error
    */
-  xit('fires correct mutation with variables', async () => {
-    // const cache = new InMemoryCache();
-    // cache.writeQuery({
-    //   query: GET_CART_ITEMS,
-    //   data: { cartItems: [1] },
-    // });
+  it('fires correct mutation with variables', async () => {
+    const cache = new InMemoryCache();
+    cache.writeQuery({
+      query: GET_CART_ITEMS,
+      data: { cartItems: [1] },
+    });
 
     // if we only provide 1 mock, any other queries would cause error
     let mocks = [
       {
-        request: { query: TOGGLE_CART_MUTATION, variables: { launchId: 1 } },
+        request: { query: TOGGLE_CART, variables: { launchId: 1 } },
         result: { data: { addOrRemoveFromCart: true } },
+      },
+      {
+        request: { query: GET_LAUNCH_DETAILS, variables: { launchId: 1 } },
+        result: { data: { launch: mockLaunch } },
       },
     ];
 
@@ -65,7 +89,7 @@ describe('action button', () => {
       <ActionButton id={1} isBooked={false} />,
       {
         mocks,
-        // cache
+        cache
       },
     );
     fireEvent.click(getByTestId('action-button'));

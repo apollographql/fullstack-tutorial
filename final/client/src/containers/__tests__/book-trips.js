@@ -3,13 +3,10 @@ import React from 'react';
 import {
   renderApollo,
   cleanup,
-  getByTestId,
   fireEvent,
   waitForElement,
-  render,
 } from '../../test-utils';
 import BookTrips, { BOOK_TRIPS, GET_LAUNCH } from '../book-trips';
-import { GET_CART_ITEMS } from '../../pages/cart';
 
 const mockLaunch = {
   __typename: 'Launch',
@@ -50,7 +47,7 @@ describe('book trips', () => {
         result: { data: { launch: mockLaunch } },
       },
     ];
-    const { getByText, container, getByTestId } = renderApollo(
+    const { getByTestId } = renderApollo(
       <BookTrips cartItems={[1]} />,
       { mocks, addTypename: false },
     );
@@ -61,7 +58,7 @@ describe('book trips', () => {
     // the component re-renders.
     // getByTestId throws an error if it cannot find an element with the given ID
     // and waitForElement will wait until the callback doesn't throw an error
-    const successText = await waitForElement(() => getByTestId('message'));
+    await waitForElement(() => getByTestId('message'));
   });
 
   // >>>> TODO
