@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import { Router } from '@reach/router';
 
 import Launches from './launches';
-import { Footer, PageContainer } from '../components';
+import { PageContainer } from '../components';
 
 export default function Pages() {
   return (
