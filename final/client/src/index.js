@@ -25,12 +25,15 @@ const client = new ApolloClient({
       'client-version': '1.0.0',
     },
   }),
-  initializers: {
-    isLoggedIn: () => !!localStorage.getItem('token'),
-    cartItems: () => [],
-  },
   resolvers,
   typeDefs,
+});
+
+cache.writeData({
+  data: {
+    isLoggedIn: !!localStorage.getItem('token'),
+    cartItems: [],
+  },
 });
 
 /**
