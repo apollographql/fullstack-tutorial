@@ -26,8 +26,6 @@ module.exports.paginateResults = ({
           Math.min(results.length, cursorIndex + 1 + pageSize),
         )
     : results.slice(0, pageSize);
-
-  results.slice(cursorIndex >= 0 ? cursorIndex + 1 : 0, cursorIndex >= 0);
 };
 
 module.exports.createStore = () => {
