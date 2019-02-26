@@ -4,15 +4,15 @@
   "private": true,
   "dependencies": {
     "@reach/router": "^1.2.1",
-    "apollo-cache-inmemory": "^1.4.0-alpha.12",
-    "apollo-client": "alpha",
+    "apollo-cache-inmemory": "^1.5.1",
+    "apollo-client": "^2.5.1",
     "apollo-link-http": "^1.5.9",
     "emotion": "^10.0.6",
     "graphql": "^14.0.2",
     "graphql-tag": "^2.10.0",
     "polished": "^2.3.3",
     "react": "^16.7.0",
-    "react-apollo": "alpha",
+    "react-apollo": "^2.5.1",
     "react-dom": "^16.7.0",
     "react-emotion": "^9.2.12",
     "react-scripts": "2.1.3"
