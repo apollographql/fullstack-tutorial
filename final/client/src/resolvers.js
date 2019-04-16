@@ -4,7 +4,7 @@ import { GET_CART_ITEMS } from './pages/cart';
 export const typeDefs = gql`
   extend type Query {
     isLoggedIn: Boolean!
-    cartItems: [Launch]!
+    cartItems: [ID!]!
   }
 
   extend type Launch {
