@@ -1,16 +1,12 @@
-// require('dotenv').config();
+import { ApolloServer } from "apollo-server";
+import isEmail from "isemail";
 
-const { ApolloServer } = require('apollo-server');
-const isEmail = require('isemail');
+import { typeDefs } from "./schema";
+import { resolvers } from "./resolvers";
+import { createStore } from "./utils";
 
-const typeDefs = require('./schema');
-const resolvers = require('./resolvers');
-const { createStore } = require('./utils');
-
-const LaunchAPI = require('./datasources/launch');
-const UserAPI = require('./datasources/user');
-
-const internalEngineDemo = require('./engine-demo');
+import { LaunchAPI } from "./datasources/launch";
+import { UserAPI } from "./datasources/user";
 
 // creates a sequelize connection once. NOT for every request
 const store = createStore();
@@ -18,14 +14,14 @@ const store = createStore();
 // set up any dataSources our resolvers need
 const dataSources = () => ({
   launchAPI: new LaunchAPI(),
-  userAPI: new UserAPI({ store }),
+  userAPI: new UserAPI({ store })
 });
 
 // the function that sets up the global context for each resolver, using the req
 const context = async ({ req }) => {
   // simple auth check on every request
-  const auth = (req.headers && req.headers.authorization) || '';
-  const email = new Buffer(auth, 'base64').toString('ascii');
+  const auth = (req.headers && req.headers.authorization) || "";
+  const email = new Buffer(auth, "base64").toString("ascii");
 
   // if the email isn't formatted validly, return null for user
   if (!isEmail.validate(email)) return { user: null };
@@ -43,14 +39,13 @@ const server = new ApolloServer({
   dataSources,
   context,
   engine: {
-    apiKey: process.env.ENGINE_API_KEY,
-    ...internalEngineDemo,
-  },
+    apiKey: process.env.ENGINE_API_KEY
+  }
 });
 
 // Start our server if we're not in a test env.
 // if we're in a test env, we'll manually start it in a test
-if (process.env.NODE_ENV !== 'test')
+if (process.env.NODE_ENV !== "test")
   server
     .listen({ port: 4000 })
     .then(({ url }) => console.log(`🚀 app running at ${url}`));
@@ -65,5 +60,13 @@ module.exports = {
   LaunchAPI,
   UserAPI,
   store,
-  server,
+  server
+};
+
+export type Context = {
+  dataSources: {
+    launchAPI: LaunchAPI;
+    userAPI: UserAPI;
+  };
+  user: any;
 };

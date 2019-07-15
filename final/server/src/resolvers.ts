@@ -1,6 +1,9 @@
-const { paginateResults } = require('./utils');
+import * as types from "./types";
+import { Context } from "./index";
 
-module.exports = {
+const { paginateResults } = require("./utils");
+
+export const resolvers: types.Resolvers<Context> = {
   Query: {
     launches: async (_, { pageSize = 20, after }, { dataSources }) => {
       const allLaunches = await dataSources.launchAPI.getAllLaunches();
@@ -10,7 +13,7 @@ module.exports = {
       const launches = paginateResults({
         after,
         pageSize,
-        results: allLaunches,
+        results: allLaunches
       });
 
       return {
@@ -21,30 +24,29 @@ module.exports = {
         hasMore: launches.length
           ? launches[launches.length - 1].cursor !==
             allLaunches[allLaunches.length - 1].cursor
-          : false,
+          : false
       };
     },
     launch: (_, { id }, { dataSources }) =>
       dataSources.launchAPI.getLaunchById({ launchId: id }),
-    me: async (_, __, { dataSources }) =>
-      dataSources.userAPI.findOrCreateUser(),
+    me: async (_, __, { dataSources }) => dataSources.userAPI.findOrCreateUser()
   },
   Mutation: {
     bookTrips: async (_, { launchIds }, { dataSources }) => {
       const results = await dataSources.userAPI.bookTrips({ launchIds });
       const launches = await dataSources.launchAPI.getLaunchesByIds({
-        launchIds,
+        launchIds
       });
 
       return {
         success: results && results.length === launchIds.length,
         message:
           results.length === launchIds.length
-            ? 'trips booked successfully'
+            ? "trips booked successfully"
             : `the following launches couldn't be booked: ${launchIds.filter(
-                id => !results.includes(id),
+                id => !results.includes(id)
               )}`,
-        launches,
+        launches
       };
     },
     cancelTrip: async (_, { launchId }, { dataSources }) => {
@@ -53,32 +55,32 @@ module.exports = {
       if (!result)
         return {
           success: false,
-          message: 'failed to cancel trip',
+          message: "failed to cancel trip"
         };
 
       const launch = await dataSources.launchAPI.getLaunchById({ launchId });
       return {
         success: true,
-        message: 'trip cancelled',
-        launches: [launch],
+        message: "trip cancelled",
+        launches: [launch]
       };
     },
     login: async (_, { email }, { dataSources }) => {
       const user = await dataSources.userAPI.findOrCreateUser({ email });
-      if (user) return new Buffer(email).toString('base64');
-    },
+      if (user) return new Buffer(email).toString("base64");
+    }
   },
   Launch: {
     isBooked: async (launch, _, { dataSources }) =>
-      dataSources.userAPI.isBookedOnLaunch({ launchId: launch.id }),
+      dataSources.userAPI.isBookedOnLaunch({ launchId: launch.id })
   },
   Mission: {
     // make sure the default size is 'large' in case user doesn't specify
-    missionPatch: (mission, { size } = { size: 'LARGE' }) => {
-      return size === 'SMALL'
+    missionPatch: (mission, { size } = { size: "LARGE" }) => {
+      return size === "SMALL"
         ? mission.missionPatchSmall
         : mission.missionPatchLarge;
-    },
+    }
   },
   User: {
     trips: async (_, __, { dataSources }) => {
@@ -90,9 +92,9 @@ module.exports = {
       // look up those launches by their ids
       return (
         dataSources.launchAPI.getLaunchesByIds({
-          launchIds,
+          launchIds
         }) || []
       );
-    },
-  },
+    }
+  }
 };

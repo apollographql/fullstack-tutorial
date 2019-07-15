@@ -1,7 +1,9 @@
-const { DataSource } = require('apollo-datasource');
-const isEmail = require('isemail');
+import { DataSource } from "apollo-datasource";
+import isEmail from "isemail";
 
-class UserAPI extends DataSource {
+export class UserAPI extends DataSource {
+  private context: any;
+  private store: any;
   constructor({ store }) {
     super();
     this.store = store;
@@ -22,7 +24,7 @@ class UserAPI extends DataSource {
    * have to be. If the user is already on the context, it will use that user
    * instead
    */
-  async findOrCreateUser({ email: emailArg } = {}) {
+  async findOrCreateUser({ email: emailArg } = { email: null }) {
     const email =
       this.context && this.context.user ? this.context.user.email : emailArg;
     if (!email || !isEmail.validate(email)) return null;
@@ -50,7 +52,7 @@ class UserAPI extends DataSource {
   async bookTrip({ launchId }) {
     const userId = this.context.user.id;
     const res = await this.store.trips.findOrCreate({
-      where: { userId, launchId },
+      where: { userId, launchId }
     });
     return res && res.length ? res[0].get() : false;
   }
@@ -63,7 +65,7 @@ class UserAPI extends DataSource {
   async getLaunchIdsByUser() {
     const userId = this.context.user.id;
     const found = await this.store.trips.findAll({
-      where: { userId },
+      where: { userId }
     });
     return found && found.length
       ? found.map(l => l.dataValues.launchId).filter(l => !!l)
@@ -74,10 +76,8 @@ class UserAPI extends DataSource {
     if (!this.context || !this.context.user) return false;
     const userId = this.context.user.id;
     const found = await this.store.trips.findAll({
-      where: { userId, launchId },
+      where: { userId, launchId }
     });
     return found && found.length > 0;
   }
 }
-
-module.exports = UserAPI;

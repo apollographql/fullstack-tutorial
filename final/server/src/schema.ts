@@ -1,6 +1,6 @@
-const { gql } = require('apollo-server');
+import { gql } from "apollo-server";
 
-const typeDefs = gql`
+export const typeDefs = gql`
   type Query {
     launches(
       """
@@ -73,5 +73,3 @@ const typeDefs = gql`
     LARGE
   }
 `;
-
-module.exports = typeDefs;
