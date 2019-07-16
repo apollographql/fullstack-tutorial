@@ -1,5 +1,5 @@
 import { ApolloServer } from "apollo-server";
-import isEmail from "isemail";
+import * as isEmail from "isemail";
 
 import { typeDefs } from "./schema";
 import { resolvers } from "./resolvers";
@@ -27,7 +27,7 @@ const context = async ({ req }) => {
   if (!isEmail.validate(email)) return { user: null };
   // find a user by their email
   const users = await store.users.findOrCreate({ where: { email } });
-  const user = users && users[0] ? users[0] : null;
+  const user: any = users && users[0] ? users[0] : null;
 
   return { user: { ...user.dataValues } };
 };

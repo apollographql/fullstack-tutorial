@@ -1,11 +1,16 @@
 import * as SQL from "sequelize";
 
-export const paginateResults = ({
+export const paginateResults = <T extends { cursor?: any }>({
   after: cursor,
-  pageSize = 20,
+  pageSize,
   results,
   // can pass in a function to calculate an item's cursor
   getCursor = () => null
+}: {
+  after?: any;
+  pageSize: number;
+  results: T[];
+  getCursor?: (item: T) => any;
 }) => {
   if (pageSize < 1) return [];
 

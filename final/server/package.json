@@ -2,11 +2,12 @@
   "name": "fullstack-tutorial-server",
   "version": "1.0.0",
   "description": "",
-  "main": "src/index.js",
+  "main": "build/index.js",
   "scripts": {
     "test": "jest",
-    "start": "nodemon src/index.js",
-    "start:ci": "node src/index.js"
+    "build": "tsc",
+    "start": "nodemon build/index.js",
+    "start:ci": "node build/index.js"
   },
   "author": "",
   "license": "ISC",
@@ -23,6 +24,8 @@
     "sqlite3": "^4.0.3"
   },
   "devDependencies": {
+    "@types/sequelize": "^4.28.3",
+    "typescript": "^3.5.3",
     "apollo": "^2.1.8",
     "apollo-link": "^1.2.3",
     "apollo-link-http": "^1.5.5",

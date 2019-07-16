@@ -1,20 +1,20 @@
 type PromiseOrValue<T> = Promise<T> | T;
 
-export type Resolvers<TContext> = Partial<{
+export type Resolvers<TContext> = {
   Query: QueryResolver<TContext>;
   Mutation: MutationResolver<TContext>;
-  TripUpdateResponse: TripUpdateResponseResolver<TContext>;
-  LaunchConnection: LaunchConnectionResolver<TContext>;
-  Launch: LaunchResolver<TContext>;
-  Rocket: RocketResolver<TContext>;
-  User: UserResolver<TContext>;
-  Mission: MissionResolver<TContext>;
-}>;
+  TripUpdateResponse?: TripUpdateResponseResolver<TContext>;
+  LaunchConnection?: LaunchConnectionResolver<TContext>;
+  Launch?: LaunchResolver<TContext>;
+  Rocket?: RocketResolver<TContext>;
+  User?: UserResolver<TContext>;
+  Mission?: MissionResolver<TContext>;
+};
 
-export type QueryResolver<TContext> = Partial<{
+export type QueryResolver<TContext> = {
   launches: (
     parent: any,
-    args: { pageSize: number | null; after: number | null },
+    args: { pageSize: number | undefined; after: number | undefined },
     context: TContext,
     info: any
   ) => PromiseOrValue<LaunchConnection>;
@@ -23,16 +23,16 @@ export type QueryResolver<TContext> = Partial<{
     args: { id: number },
     context: TContext,
     info: any
-  ) => PromiseOrValue<Launch | null>;
+  ) => PromiseOrValue<Launch | undefined>;
   me: (
     parent: any,
     args: {},
     context: TContext,
     info: any
-  ) => PromiseOrValue<User | null>;
-}>;
+  ) => PromiseOrValue<User>;
+};
 
-export type MutationResolver<TContext> = Partial<{
+export type MutationResolver<TContext> = {
   bookTrips: (
     parent: any,
     args: { launchIds: string[] },
@@ -47,191 +47,179 @@ export type MutationResolver<TContext> = Partial<{
   ) => PromiseOrValue<TripUpdateResponse>;
   login: (
     parent: any,
-    args: { email: string | null },
+    args: { email: string | undefined },
     context: TContext,
     info: any
-  ) => PromiseOrValue<string | null>;
-}>;
+  ) => PromiseOrValue<string | undefined>;
+};
 
-export type TripUpdateResponseResolver<TContext> = Partial<{
-  success: (
+export type TripUpdateResponseResolver<TContext> = {
+  success?: (
     parent: any,
     args: {},
     context: TContext,
     info: any
   ) => PromiseOrValue<boolean>;
-  message: (
+  message?: (
     parent: any,
     args: {},
     context: TContext,
     info: any
-  ) => PromiseOrValue<string | null>;
-  launches: (
+  ) => PromiseOrValue<string | undefined>;
+  launches?: (
     parent: any,
     args: {},
     context: TContext,
     info: any
-  ) => PromiseOrValue<Array<Launch | null> | null>;
-}>;
+  ) => PromiseOrValue<Array<Launch | undefined> | undefined>;
+};
 
-export type LaunchConnectionResolver<TContext> = Partial<{
-  cursor: (
+export type LaunchConnectionResolver<TContext> = {
+  cursor?: (
     parent: any,
     args: {},
     context: TContext,
     info: any
   ) => PromiseOrValue<string>;
-  hasMore: (
+  hasMore?: (
     parent: any,
     args: {},
     context: TContext,
     info: any
   ) => PromiseOrValue<boolean>;
-  launches: (
+  launches?: (
     parent: any,
     args: {},
     context: TContext,
     info: any
-  ) => PromiseOrValue<Array<Launch | null>>;
-}>;
+  ) => PromiseOrValue<Array<Launch | undefined>>;
+};
 
-export type LaunchResolver<TContext> = Partial<{
-  id: (
+export type LaunchResolver<TContext> = {
+  id?: (
     parent: any,
     args: {},
     context: TContext,
     info: any
   ) => PromiseOrValue<string>;
-  site: (
+  site?: (
     parent: any,
     args: {},
     context: TContext,
     info: any
-  ) => PromiseOrValue<string | null>;
-  mission: (
+  ) => PromiseOrValue<string | undefined>;
+  mission?: (
     parent: any,
     args: {},
     context: TContext,
     info: any
-  ) => PromiseOrValue<Mission | null>;
-  rocket: (
+  ) => PromiseOrValue<Mission | undefined>;
+  rocket?: (
     parent: any,
     args: {},
     context: TContext,
     info: any
-  ) => PromiseOrValue<Rocket | null>;
-  isBooked: (
+  ) => PromiseOrValue<Rocket | undefined>;
+  isBooked?: (
     parent: any,
     args: {},
     context: TContext,
     info: any
   ) => PromiseOrValue<boolean>;
-}>;
+};
 
-export type RocketResolver<TContext> = Partial<{
-  id: (
+export type RocketResolver<TContext> = {
+  id?: (
     parent: any,
     args: {},
     context: TContext,
     info: any
   ) => PromiseOrValue<string>;
-  name: (
+  name?: (
     parent: any,
     args: {},
     context: TContext,
     info: any
-  ) => PromiseOrValue<string | null>;
-  type: (
+  ) => PromiseOrValue<string | undefined>;
+  type?: (
     parent: any,
     args: {},
     context: TContext,
     info: any
-  ) => PromiseOrValue<string | null>;
-}>;
+  ) => PromiseOrValue<string | undefined>;
+};
 
-export type UserResolver<TContext> = Partial<{
-  id: (
+export type UserResolver<TContext> = {
+  id?: (
     parent: any,
     args: {},
     context: TContext,
     info: any
   ) => PromiseOrValue<string>;
-  email: (
+  email?: (
     parent: any,
     args: {},
     context: TContext,
     info: any
   ) => PromiseOrValue<string>;
-  trips: (
+  trips?: (
     parent: any,
     args: {},
     context: TContext,
     info: any
-  ) => PromiseOrValue<Array<Launch | null>>;
-}>;
+  ) => PromiseOrValue<Array<Launch | undefined>>;
+};
 
-export type MissionResolver<TContext> = Partial<{
-  name: (
+export type MissionResolver<TContext> = {
+  name?: (
     parent: any,
     args: {},
     context: TContext,
     info: any
-  ) => PromiseOrValue<String | null>;
-  missionPatch: (
+  ) => PromiseOrValue<String | undefined>;
+  missionPatch?: (
     parent: any,
     args: { size: PatchSize },
     context: TContext,
     info: any
-  ) => PromiseOrValue<String | null>;
-}>;
+  ) => PromiseOrValue<String | undefined>;
+};
 
-export type Query = Partial<{
-  launches: LaunchConnection;
-  launch: Launch | null;
-  me: User | null;
-}>;
+export type TripUpdateResponse = {
+  success?: boolean;
+  message?: string | null;
+  launches?: Array<Launch | null> | null;
+};
 
-export type Mutation = Partial<{
-  bookTrips: TripUpdateResponse;
-  cancelTrip: TripUpdateResponse;
-  login: string | null;
-}>;
+export type LaunchConnection = {
+  cursor?: string;
+  hasMore?: boolean;
+  launches?: Array<Launch | null>;
+};
 
-export type TripUpdateResponse = Partial<{
-  success: boolean;
-  message: string | null;
-  launches: Array<Launch | null> | null;
-}>;
+export type Launch = {
+  id?: string;
+  site?: string | null;
+  mission?: Mission | null;
+  rocket?: Rocket | null;
+  isBooked?: boolean;
+};
 
-export type LaunchConnection = Partial<{
-  cursor: string;
-  hasMore: boolean;
-  launches: Array<Launch | null>;
-}>;
+export type Rocket = {
+  id?: string;
+  name?: string | null;
+  type?: string | null;
+};
 
-export type Launch = Partial<{
-  id: string;
-  site: string | null;
-  mission: Mission | null;
-  rocket: Rocket | null;
-  isBooked: boolean;
-}>;
+export type User = {
+  id?: string;
+  email?: string;
+  trips?: Array<Launch> | null;
+};
 
-export type Rocket = Partial<{
-  id: string;
-  name: string | null;
-  type: string | null;
-}>;
-
-export type User = Partial<{
-  id: string;
-  email: string;
-  trips: Array<Launch> | null;
-}>;
-
-export type Mission = Partial<{
-  name: String | null;
-  missionPatch: String | null;
-}>;
+export type Mission = {
+  name?: String | null;
+  missionPatch?: String | null;
+};
 
 export type PatchSize = "SMALL" | "LARGE";

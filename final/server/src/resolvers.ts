@@ -1,24 +1,24 @@
 import * as types from "./types";
 import { Context } from "./index";
 
-const { paginateResults } = require("./utils");
+import { paginateResults } from "./utils";
 
 export const resolvers: types.Resolvers<Context> = {
   Query: {
-    launches: async (_, { pageSize = 20, after }, { dataSources }) => {
+    async launches(_, { after, pageSize = 20 }, { dataSources }) {
       const allLaunches = await dataSources.launchAPI.getAllLaunches();
       // we want these in reverse chronological order
       allLaunches.reverse();
-
       const launches = paginateResults({
         after,
         pageSize,
         results: allLaunches
       });
-
       return {
         launches,
-        cursor: launches.length ? launches[launches.length - 1].cursor : null,
+        cursor: launches.length
+          ? launches[launches.length - 1].cursor
+          : undefined,
         // if the cursor of the end of the paginated results is the same as the
         // last item in _all_ results, then there are no more results after this
         hasMore: launches.length
@@ -27,9 +27,10 @@ export const resolvers: types.Resolvers<Context> = {
           : false
       };
     },
-    launch: (_, { id }, { dataSources }) =>
-      dataSources.launchAPI.getLaunchById({ launchId: id }),
-    me: async (_, __, { dataSources }) => dataSources.userAPI.findOrCreateUser()
+    launch(_, { id }, { dataSources }) {
+      return dataSources.launchAPI.getLaunchById({ launchId: id });
+    },
+    me: (_, __, { dataSources }) => dataSources.userAPI.findOrCreateUser()
   },
   Mutation: {
     bookTrips: async (_, { launchIds }, { dataSources }) => {
@@ -67,7 +68,7 @@ export const resolvers: types.Resolvers<Context> = {
     },
     login: async (_, { email }, { dataSources }) => {
       const user = await dataSources.userAPI.findOrCreateUser({ email });
-      if (user) return new Buffer(email).toString("base64");
+      if (user) return new Buffer(email!).toString("base64");
     }
   },
   Launch: {

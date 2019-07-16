@@ -1,5 +1,5 @@
 import { DataSource } from "apollo-datasource";
-import isEmail from "isemail";
+import * as isEmail from "isemail";
 
 export class UserAPI extends DataSource {
   private context: any;
@@ -24,7 +24,11 @@ export class UserAPI extends DataSource {
    * have to be. If the user is already on the context, it will use that user
    * instead
    */
-  async findOrCreateUser({ email: emailArg } = { email: null }) {
+  async findOrCreateUser(
+    { email: emailArg }: { email?: string | null } = {
+      email: null
+    }
+  ) {
     const email =
       this.context && this.context.user ? this.context.user.email : emailArg;
     if (!email || !isEmail.validate(email)) return null;
@@ -35,9 +39,9 @@ export class UserAPI extends DataSource {
 
   async bookTrips({ launchIds }) {
     const userId = this.context.user.id;
-    if (!userId) return;
+    if (!userId) return [];
 
-    let results = [];
+    let results: any[] = [];
 
     // for each launch id, try to book the trip and add it to the results array
     // if successful
