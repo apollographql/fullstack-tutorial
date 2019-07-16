@@ -11,178 +11,89 @@ export type Resolvers<TContext> = {
   Mission?: MissionResolver<TContext>;
 };
 
+type ResolverFunction<TContext, TReturn, TArgs = {}> = (
+  parent: any,
+  args: TArgs,
+  context: TContext,
+  info: any
+) => PromiseOrValue<TReturn>;
+
 export type QueryResolver<TContext> = {
-  launches: (
-    parent: any,
-    args: { pageSize: number | undefined; after: number | undefined },
-    context: TContext,
-    info: any
-  ) => PromiseOrValue<LaunchConnection>;
-  launch: (
-    parent: any,
-    args: { id: number },
-    context: TContext,
-    info: any
-  ) => PromiseOrValue<Launch | undefined>;
-  me: (
-    parent: any,
-    args: {},
-    context: TContext,
-    info: any
-  ) => PromiseOrValue<User>;
+  launches: ResolverFunction<
+    TContext,
+    LaunchConnection,
+    {
+      /** The number of results to show. Must be >= 1. Default = 20 */
+      pageSize: number | undefined;
+      /** If you add a cursor here, it will only return results _after_ this cursor */
+      after: number | undefined;
+    }
+  >;
+  launch: ResolverFunction<TContext, Launch | undefined, { id: number }>;
+  me: ResolverFunction<TContext, User>;
 };
 
 export type MutationResolver<TContext> = {
-  bookTrips: (
-    parent: any,
-    args: { launchIds: string[] },
-    context: TContext,
-    info: any
-  ) => PromiseOrValue<TripUpdateResponse>;
-  cancelTrip: (
-    parent: any,
-    args: { launchId: string },
-    context: TContext,
-    info: any
-  ) => PromiseOrValue<TripUpdateResponse>;
-  login: (
-    parent: any,
-    args: { email: string | undefined },
-    context: TContext,
-    info: any
-  ) => PromiseOrValue<string | undefined>;
+  bookTrips: ResolverFunction<
+    TContext,
+    TripUpdateResponse,
+    { launchIds: string[] }
+  >;
+  cancelTrip: ResolverFunction<
+    TContext,
+    TripUpdateResponse,
+    { launchId: string }
+  >;
+  login: ResolverFunction<
+    TContext,
+    string | undefined,
+    { email: string | undefined }
+  >;
 };
 
 export type TripUpdateResponseResolver<TContext> = {
-  success?: (
-    parent: any,
-    args: {},
-    context: TContext,
-    info: any
-  ) => PromiseOrValue<boolean>;
-  message?: (
-    parent: any,
-    args: {},
-    context: TContext,
-    info: any
-  ) => PromiseOrValue<string | undefined>;
-  launches?: (
-    parent: any,
-    args: {},
-    context: TContext,
-    info: any
-  ) => PromiseOrValue<Array<Launch | undefined> | undefined>;
+  success?: ResolverFunction<TContext, boolean>;
+  message?: ResolverFunction<TContext, string | undefined>;
+  launches?: ResolverFunction<
+    TContext,
+    Array<Launch | undefined> | undefined,
+    {}
+  >;
 };
 
 export type LaunchConnectionResolver<TContext> = {
-  cursor?: (
-    parent: any,
-    args: {},
-    context: TContext,
-    info: any
-  ) => PromiseOrValue<string>;
-  hasMore?: (
-    parent: any,
-    args: {},
-    context: TContext,
-    info: any
-  ) => PromiseOrValue<boolean>;
-  launches?: (
-    parent: any,
-    args: {},
-    context: TContext,
-    info: any
-  ) => PromiseOrValue<Array<Launch | undefined>>;
+  cursor?: ResolverFunction<TContext, string>;
+  hasMore?: ResolverFunction<TContext, boolean>;
+  launches?: ResolverFunction<TContext, Array<Launch | undefined>>;
 };
 
 export type LaunchResolver<TContext> = {
-  id?: (
-    parent: any,
-    args: {},
-    context: TContext,
-    info: any
-  ) => PromiseOrValue<string>;
-  site?: (
-    parent: any,
-    args: {},
-    context: TContext,
-    info: any
-  ) => PromiseOrValue<string | undefined>;
-  mission?: (
-    parent: any,
-    args: {},
-    context: TContext,
-    info: any
-  ) => PromiseOrValue<Mission | undefined>;
-  rocket?: (
-    parent: any,
-    args: {},
-    context: TContext,
-    info: any
-  ) => PromiseOrValue<Rocket | undefined>;
-  isBooked?: (
-    parent: any,
-    args: {},
-    context: TContext,
-    info: any
-  ) => PromiseOrValue<boolean>;
+  id?: ResolverFunction<TContext, string>;
+  site?: ResolverFunction<TContext, string | undefined>;
+  mission?: ResolverFunction<TContext, Mission | undefined>;
+  rocket?: ResolverFunction<TContext, Rocket | undefined>;
+  isBooked?: ResolverFunction<TContext, boolean>;
 };
 
 export type RocketResolver<TContext> = {
-  id?: (
-    parent: any,
-    args: {},
-    context: TContext,
-    info: any
-  ) => PromiseOrValue<string>;
-  name?: (
-    parent: any,
-    args: {},
-    context: TContext,
-    info: any
-  ) => PromiseOrValue<string | undefined>;
-  type?: (
-    parent: any,
-    args: {},
-    context: TContext,
-    info: any
-  ) => PromiseOrValue<string | undefined>;
+  id?: ResolverFunction<TContext, string>;
+  name?: ResolverFunction<TContext, string | undefined>;
+  type?: ResolverFunction<TContext, string | undefined>;
 };
 
 export type UserResolver<TContext> = {
-  id?: (
-    parent: any,
-    args: {},
-    context: TContext,
-    info: any
-  ) => PromiseOrValue<string>;
-  email?: (
-    parent: any,
-    args: {},
-    context: TContext,
-    info: any
-  ) => PromiseOrValue<string>;
-  trips?: (
-    parent: any,
-    args: {},
-    context: TContext,
-    info: any
-  ) => PromiseOrValue<Array<Launch | undefined>>;
+  id?: ResolverFunction<TContext, string>;
+  email?: ResolverFunction<TContext, string>;
+  trips?: ResolverFunction<TContext, Array<Launch | undefined>>;
 };
 
 export type MissionResolver<TContext> = {
-  name?: (
-    parent: any,
-    args: {},
-    context: TContext,
-    info: any
-  ) => PromiseOrValue<String | undefined>;
-  missionPatch?: (
-    parent: any,
-    args: { size: PatchSize },
-    context: TContext,
-    info: any
-  ) => PromiseOrValue<String | undefined>;
+  name?: ResolverFunction<TContext, String | undefined>;
+  missionPatch?: ResolverFunction<
+    TContext,
+    String | undefined,
+    { size: PatchSize }
+  >;
 };
 
 export type TripUpdateResponse = {
@@ -214,7 +125,7 @@ export type Rocket = {
 export type User = {
   id?: string;
   email?: string;
-  trips?: Array<Launch> | null;
+  trips?: Array<Launch | null>;
 };
 
 export type Mission = {
