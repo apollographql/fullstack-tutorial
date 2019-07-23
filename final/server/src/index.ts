@@ -10,6 +10,7 @@ import { UserAPI } from "./datasources/user";
 
 // creates a sequelize connection once. NOT for every request
 const store = createStore();
+export type Store = typeof store;
 
 // set up any dataSources our resolvers need
 const dataSources = () => ({

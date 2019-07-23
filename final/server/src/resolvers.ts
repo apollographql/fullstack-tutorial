@@ -1,11 +1,12 @@
-import * as types from "./types";
 import { Context } from "./index";
+
+import { Resolvers, User } from "./types";
 
 import { paginateResults } from "./utils";
 
-export const resolvers: types.Resolvers<Context> = {
+export const resolvers: Resolvers<Context> = {
   Query: {
-    async launches(_, { after, pageSize = 20 }, { dataSources }) {
+    async launches(_, { pageSize = 20, after }, { dataSources }) {
       const allLaunches = await dataSources.launchAPI.getAllLaunches();
       // we want these in reverse chronological order
       allLaunches.reverse();
@@ -30,7 +31,8 @@ export const resolvers: types.Resolvers<Context> = {
     launch(_, { id }, { dataSources }) {
       return dataSources.launchAPI.getLaunchById({ launchId: id });
     },
-    me: (_, __, { dataSources }) => dataSources.userAPI.findOrCreateUser()
+    me: (_, __, { dataSources }) =>
+      dataSources.userAPI.findOrCreateUser() as User
   },
   Mutation: {
     bookTrips: async (_, { launchIds }, { dataSources }) => {
@@ -88,12 +90,12 @@ export const resolvers: types.Resolvers<Context> = {
       // get ids of launches by user
       const launchIds = await dataSources.userAPI.getLaunchIdsByUser();
 
-      if (!launchIds.length) return [];
+      if (!launchIds || !launchIds.length) return [];
 
       // look up those launches by their ids
       return (
         dataSources.launchAPI.getLaunchesByIds({
-          launchIds
+          launchIds: (launchIds as unknown) as string[]
         }) || []
       );
     }

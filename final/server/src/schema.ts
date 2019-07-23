@@ -8,7 +8,7 @@ export const typeDefs = gql`
       """
       pageSize: Int
       """
-      If you add a cursor here, it will only return results _after_ this cursor
+      If you add a cursor here, it will only return results \`_after_\` this cursor
       """
       after: String
     ): LaunchConnection!
@@ -18,7 +18,7 @@ export const typeDefs = gql`
 
   type Mutation {
     # if false, signup failed -- check errors
-    bookTrips(launchIds: [ID]!): TripUpdateResponse!
+    bookTrips(launchIds: [ID!]!): TripUpdateResponse!
 
     # if false, cancellation failed -- check errors
     cancelTrip(launchId: ID!): TripUpdateResponse!

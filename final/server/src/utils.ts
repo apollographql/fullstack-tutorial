@@ -72,3 +72,22 @@ export const createStore = () => {
 
   return { users, trips };
 };
+
+export type StoreTrip = {
+  id: number;
+  createdAt?: Date;
+  updatedAt?: Date;
+  launchId?: number;
+  userId?: number;
+};
+
+export type StoreUser = {
+  id: number;
+  createdAt?: Date;
+  updatedAt?: Date;
+  email?: string;
+  token?: string;
+};
+
+export type SQLOne<T> = { get(): T };
+export type SQLMany<T> = Array<{ dataValues: T }>;

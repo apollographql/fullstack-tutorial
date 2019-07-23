@@ -1,5 +1,4 @@
 import { RESTDataSource } from "apollo-datasource-rest";
-import { Launch } from "../types";
 
 export class LaunchAPI extends RESTDataSource {
   constructor() {
@@ -8,7 +7,7 @@ export class LaunchAPI extends RESTDataSource {
   }
 
   // leaving this inside the class to make the class easier to test
-  launchReducer(launch) {
+  launchReducer(launch: any) {
     return {
       id: launch.flight_number || 0,
       cursor: `${launch.launch_date_unix}`,
@@ -35,12 +34,12 @@ export class LaunchAPI extends RESTDataSource {
       : [];
   }
 
-  async getLaunchById({ launchId }) {
+  async getLaunchById({ launchId }: { launchId: string }) {
     const res = await this.get("launches", { flight_number: launchId });
     return this.launchReducer(res[0]);
   }
 
-  async getLaunchesByIds({ launchIds }): Promise<Launch[]> {
+  async getLaunchesByIds({ launchIds }: { launchIds: string[] }) {
     return Promise.all(
       launchIds.map(launchId => this.getLaunchById({ launchId }))
     );
