@@ -25,6 +25,7 @@ export default function Launch({ launchId }) {
     GET_LAUNCH_DETAILS,
     { variables: { launchId } },
   );
+
   if (loading) return <Loading />;
   if (error) return <p>ERROR: {error.message}</p>;
 

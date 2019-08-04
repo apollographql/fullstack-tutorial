@@ -89,7 +89,8 @@ describe('action button', () => {
       <ActionButton id={1} isBooked={false} />,
       {
         mocks,
-        cache
+        cache,
+        resolvers: {}
       },
     );
     fireEvent.click(getByTestId('action-button'));
