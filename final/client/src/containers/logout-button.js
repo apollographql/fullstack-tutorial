@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'react-emotion';
-import { ApolloConsumer } from 'react-apollo';
+import { ApolloConsumer } from '@apollo/react-hooks';
 
 import { menuItemClassName } from '../components/menu-item';
 import { ReactComponent as ExitIcon } from '../assets/icons/exit.svg';

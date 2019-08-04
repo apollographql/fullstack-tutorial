@@ -1,4 +1,4 @@
-import styled, { keyframes } from 'react-emotion';
+import styled, { keyframes} from 'react-emotion';
 import { size } from 'polished';
 
 import { ReactComponent as Logo } from '../assets/logo.svg';

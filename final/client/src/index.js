@@ -1,15 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import {ApolloClient} from 'apollo-client';
-import {InMemoryCache} from 'apollo-cache-inmemory';
-import {HttpLink} from 'apollo-link-http';
-import {Query, ApolloProvider} from 'react-apollo';
+import { ApolloClient } from 'apollo-client';
+import { InMemoryCache } from 'apollo-cache-inmemory';
+import { HttpLink } from 'apollo-link-http';
+import { ApolloProvider, useQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 
 import Pages from './pages';
 import Login from './pages/login';
-import {resolvers, typeDefs} from './resolvers';
+import { resolvers, typeDefs } from './resolvers';
 import injectStyles from './styles';
 
 // Set up our apollo-client to point at the server we created
@@ -52,12 +52,16 @@ const IS_LOGGED_IN = gql`
   }
 `;
 
+function IsLoggedIn() {
+  const { data } = useQuery(IS_LOGGED_IN);
+  return data.isLoggedIn ? <Pages /> : <Login />;
+}
+
 injectStyles();
 ReactDOM.render(
+
   <ApolloProvider client={client}>
-    <Query query={IS_LOGGED_IN}>
-      {({data}) => (data.isLoggedIn ? <Pages /> : <Login />)}
-    </Query>
+    <IsLoggedIn />
   </ApolloProvider>,
   document.getElementById('root'),
 );

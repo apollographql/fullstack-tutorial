@@ -1,5 +1,5 @@
 import React from 'react';
-import { Mutation } from 'react-apollo';
+import { useMutation } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 
 import { GET_LAUNCH_DETAILS } from '../pages/launch';
@@ -28,37 +28,35 @@ export const CANCEL_TRIP = gql`
 `;
 
 export default function ActionButton({ isBooked, id, isInCart }) {
-  return (
-    <Mutation
-      mutation={isBooked ? CANCEL_TRIP : TOGGLE_CART}
-      variables={{ launchId: id }}
-      refetchQueries={[
+  const [mutate, { loading, error }] = useMutation(
+    isBooked ? CANCEL_TRIP : TOGGLE_CART,
+    {
+      variables: { launchId: id },
+      refetchQueries: [
         {
           query: GET_LAUNCH_DETAILS,
           variables: { launchId: id },
         },
-      ]}
-    >
-      {(mutate, { loading, error }) => {
-        if (loading) return <p>Loading...</p>;
-        if (error) return <p>An error occurred</p>;
+      ]
+    }
+  );
 
-        return (
-          <div>
-            <Button
-              onClick={mutate}
-              isBooked={isBooked}
-              data-testid={'action-button'}
-            >
-              {isBooked
-                ? 'Cancel This Trip'
-                : isInCart
-                  ? 'Remove from Cart'
-                  : 'Add to Cart'}
-            </Button>
-          </div>
-        );
-      }}
-    </Mutation>
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>An error occurred</p>;
+
+  return (
+    <div>
+      <Button
+        onClick={mutate}
+        isBooked={isBooked}
+        data-testid={'action-button'}
+      >
+        {isBooked
+          ? 'Cancel This Trip'
+          : isInCart
+            ? 'Remove from Cart'
+            : 'Add to Cart'}
+      </Button>
+    </div>
   );
 }

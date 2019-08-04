@@ -1,5 +1,9 @@
 import React from 'react';
-import { Mutation, ApolloConsumer } from 'react-apollo';
+import {
+  ApolloConsumer,
+  useApolloClient,
+  useMutation
+} from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 
 import { LoginForm, Loading } from '../components';
@@ -11,26 +15,26 @@ export const LOGIN_USER = gql`
 `;
 
 export default function Login() {
+  const client = useApolloClient();
+  const [login, { loading, error }] = useMutation(
+    LOGIN_USER,
+    {
+      onCompleted({ login }) {
+        localStorage.setItem('token', login);
+        client.writeData({ data: { isLoggedIn: true } });
+      }
+    }
+  );
+
   return (
     <ApolloConsumer>
-      {client => (
-        <Mutation
-          mutation={LOGIN_USER}
-          onCompleted={({ login }) => {
-            localStorage.setItem('token', login);
-            client.writeData({ data: { isLoggedIn: true } });
-          }}
-        >
-          {(login, { loading, error }) => {
-            // this loading state will probably never show, but it's helpful to
-            // have for testing
-            if (loading) return <Loading />;
-            if (error) return <p>An error occurred</p>;
-
-            return <LoginForm login={login} />;
-          }}
-        </Mutation>
-      )}
+      {() => {
+        // this loading state will probably never show, but it's helpful to
+        // have for testing
+        if (loading) return <Loading />;
+        if (error) return <p>An error occurred</p>;
+        return <LoginForm login={login} />;
+      }}
     </ApolloConsumer>
   );
 }

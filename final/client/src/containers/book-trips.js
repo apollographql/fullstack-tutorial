@@ -1,5 +1,5 @@
 import React from 'react';
-import { Mutation } from 'react-apollo';
+import { useMutation } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 
 import Button from '../components/button';
@@ -20,27 +20,25 @@ export const BOOK_TRIPS = gql`
 `;
 
 export default function BookTrips({ cartItems }) {
-  return (
-    <Mutation
-      mutation={BOOK_TRIPS}
-      variables={{ launchIds: cartItems }}
-      refetchQueries={cartItems.map(launchId => ({
+  const [bookTrips, { data }] = useMutation(
+    BOOK_TRIPS,
+    {
+      variables: { launchIds: cartItems },
+      refetchQueries: cartItems.map(launchId => ({
         query: GET_LAUNCH,
         variables: { launchId },
-      }))}
-      update={cache => {
+      })),
+      update(cache) {
         cache.writeData({ data: { cartItems: [] } });
-      }}
-    >
-      {(bookTrips, { data, loading, error }) =>
-        data && data.bookTrips && !data.bookTrips.success ? (
-          <p data-testid="message">{data.bookTrips.message}</p>
-        ) : (
-          <Button onClick={bookTrips} data-testid="book-button">
-            Book All
-          </Button>
-        )
       }
-    </Mutation>
+    }
   );
+
+  return data && data.bookTrips && !data.bookTrips.success
+    ? <p data-testid="message">{data.bookTrips.message}</p>
+    : (
+      <Button onClick={bookTrips} data-testid="book-button">
+        Book All
+      </Button>
+    );
 }

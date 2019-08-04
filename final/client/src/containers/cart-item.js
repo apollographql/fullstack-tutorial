@@ -1,5 +1,5 @@
 import React from 'react';
-import { Query } from 'react-apollo';
+import { useQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 
 import LaunchTile from '../components/launch-tile';
@@ -15,13 +15,11 @@ export const GET_LAUNCH = gql`
 `;
 
 export default function CartItem({ launchId }) {
-  return (
-    <Query query={GET_LAUNCH} variables={{ launchId }}>
-      {({ data, loading, error }) => {
-        if (loading) return <p>Loading...</p>;
-        if (error) return <p>ERROR: {error.message}</p>;
-        return data && <LaunchTile launch={data.launch} />;
-      }}
-    </Query>
+  const { data, loading, error } = useQuery(
+    GET_LAUNCH,
+    { variables: { launchId } }
   );
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>ERROR: {error.message}</p>;
+  return data && <LaunchTile launch={data.launch} />;
 }
