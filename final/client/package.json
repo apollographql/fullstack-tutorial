@@ -12,8 +12,8 @@
     "graphql": "^14.4.2",
     "graphql-tag": "^2.10.1",
     "polished": "^3.4.1",
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6",
+    "react": "^16.9.0-alpha.0",
+    "react-dom": "^16.9.0-alpha.0",
     "react-emotion": "^9.2.12",
     "react-scripts": "3.0.1"
   },

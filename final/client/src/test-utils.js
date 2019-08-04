@@ -21,5 +21,5 @@ const renderApollo = (
   );
 };
 
-export * from 'react-testing-library';
+export * from '@testing-library/react';
 export { renderApollo };
