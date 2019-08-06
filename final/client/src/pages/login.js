@@ -1,9 +1,5 @@
 import React from 'react';
-import {
-  ApolloConsumer,
-  useApolloClient,
-  useMutation
-} from '@apollo/react-hooks';
+import { useApolloClient, useMutation } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 
 import { LoginForm, Loading } from '../components';
