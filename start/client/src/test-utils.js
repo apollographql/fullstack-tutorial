@@ -1,8 +1,8 @@
 import React from 'react';
-import { render } from 'react-testing-library';
+import { render } from '@testing-library/react';
 // this adds custom jest matchers from jest-dom
-import 'jest-dom/extend-expect';
-import { MockedProvider } from 'react-apollo/test-utils';
+import '@testing-library/jest-dom/extend-expect';
+import { MockedProvider } from '@apollo/react-testing';
 
 const renderApollo = (
   node,
@@ -21,5 +21,5 @@ const renderApollo = (
   );
 };
 
-export * from 'react-testing-library';
+export * from '@testing-library/react';
 export { renderApollo };

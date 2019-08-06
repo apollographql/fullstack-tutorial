@@ -49,7 +49,7 @@ xdescribe('Profile Page', () => {
       },
     ];
 
-    const { getByText } = renderApollo(<Profile />, { mocks });
+    const { getByText } = renderApollo(<Profile />, { mocks, resolvers: {} });
 
     // if the profile renders, it will have the list of missions booked
     await waitForElement(() => getByText(/test mission/i));

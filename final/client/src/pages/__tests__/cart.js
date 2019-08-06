@@ -30,6 +30,6 @@ describe('Cart Page', () => {
       },
     ];
     const { getByTestId } = renderApollo(<Cart />, { mocks });
-    return waitForElement(() => getByTestId('empty-message'));
+    return waitForElement(() => getByTestId('book-button'));
   });
 });
