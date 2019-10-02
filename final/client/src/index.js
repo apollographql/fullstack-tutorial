@@ -29,10 +29,12 @@ const client = new ApolloClient({
   typeDefs,
 });
 
+const token = localStorage.getItem('token');
+const cart = localStorage.getItem('cart');
 cache.writeData({
   data: {
-    isLoggedIn: !!localStorage.getItem('token'),
-    cartItems: [],
+    isLoggedIn: !!token,
+    cartItems: token && cart && JSON.parse(cart)[token] ? JSON.parse(cart)[token] : [],
   },
 });
 

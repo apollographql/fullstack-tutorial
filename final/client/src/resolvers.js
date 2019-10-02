@@ -32,6 +32,9 @@ export const resolvers = {
           : [...cartItems, id],
       };
       cache.writeQuery({ query: GET_CART_ITEMS, data });
+      const token = localStorage.getItem('token');
+      const cartObj = JSON.parse(localStorage.getItem('cart'));
+      localStorage.setItem('cart', JSON.stringify({...cartObj, [token]: data.cartItems}));
       return data.cartItems;
     },
   },
