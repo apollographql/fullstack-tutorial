@@ -17,7 +17,13 @@ export default function Login() {
     {
       onCompleted({ login }) {
         localStorage.setItem('token', login);
-        client.writeData({ data: { isLoggedIn: true } });
+        const cart = localStorage.getItem('cart');
+        client.writeData({
+          data: {
+            isLoggedIn: true,
+            cartItems: login && cart && JSON.parse(cart)[login] ? JSON.parse(cart)[login] : [],
+          },
+        });
       }
     }
   );
