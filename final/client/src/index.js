@@ -6,6 +6,7 @@ import { InMemoryCache } from 'apollo-cache-inmemory';
 import { HttpLink } from 'apollo-link-http';
 import { ApolloProvider, useQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
+import { navigate } from "@reach/router";
 
 import Pages from './pages';
 import Login from './pages/login';
@@ -54,7 +55,11 @@ const IS_LOGGED_IN = gql`
 
 function IsLoggedIn() {
   const { data } = useQuery(IS_LOGGED_IN);
-  return data.isLoggedIn ? <Pages /> : <Login />;
+  if (data.isLoggedIn) {
+    return <Pages />;
+  }
+  navigate(`/`);  
+  return <Login />;
 }
 
 injectStyles();
