@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom';
 import { ApolloClient } from 'apollo-client';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { HttpLink } from 'apollo-link-http';
+import { ApolloLink, concat } from 'apollo-link';
 import { ApolloProvider, useQuery } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 
@@ -15,19 +16,25 @@ import injectStyles from './styles';
 // Set up our apollo-client to point at the server we created
 // this can be local or a remote endpoint
 const cache = new InMemoryCache();
-const client = new ApolloClient({
-  cache,
-  link: new HttpLink({
-    uri: 'http://localhost:4000/graphql',
+const httpLink = new HttpLink({
+  uri: 'http://localhost:4000/graphql',
+});
+const authMiddleware = new ApolloLink((operation, forward) => {
+  // add the authorization to the headers
+  operation.setContext({
     headers: {
-      authorization: localStorage.getItem('token'),
+      authorization: localStorage.getItem('token') || null,
       'client-name': 'Space Explorer [web]',
       'client-version': '1.0.0',
     },
-    resolvers: {},
-  }),
-  resolvers,
+  });
+  return forward(operation);
+});
+const client = new ApolloClient({
+  cache,
+  link: concat(authMiddleware, httpLink),
   typeDefs,
+  resolvers
 });
 
 cache.writeData({
