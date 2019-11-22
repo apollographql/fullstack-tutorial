@@ -78,6 +78,16 @@ class UserAPI extends DataSource {
     });
     return found && found.length > 0;
   }
+
+  async uploadProfileImage({ file }) {
+    const userId = this.context.user.id;
+    if (!userId) return;
+
+    // TODO: upload file to S3
+    // TODO: update profileImage field on user model
+
+    return this.context.user;
+  }
 }
 
 module.exports = UserAPI;

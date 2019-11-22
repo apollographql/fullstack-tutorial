@@ -50,6 +50,7 @@ module.exports.createStore = () => {
     createdAt: SQL.DATE,
     updatedAt: SQL.DATE,
     email: SQL.STRING,
+    profileImage: SQL.STRING,
     token: SQL.STRING,
   });
 
