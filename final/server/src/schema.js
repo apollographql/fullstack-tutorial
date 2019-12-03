@@ -25,7 +25,7 @@ const typeDefs = gql`
 
     login(email: String): String # login token
 
-    uploadProfileImage(file: Upload): User
+    uploadProfileImage(file: Upload!): User
   }
 
   type TripUpdateResponse {
@@ -62,7 +62,7 @@ const typeDefs = gql`
   type User {
     id: ID!
     email: String!
-    # TODO: add profileImage field
+    profileImage: String
     trips: [Launch]!
   }
 

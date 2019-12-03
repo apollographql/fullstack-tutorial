@@ -6,6 +6,7 @@ import { Loading, Header, LaunchTile } from '../components';
 import { LAUNCH_TILE_DATA } from './launches';
 import { RouteComponentProps } from '@reach/router';
 import * as GetMyTripsTypes from './__generated__/GetMyTrips';
+import ProfileImageUploader from '../components/profile-image-uploader';
 
 export const GET_MY_TRIPS = gql`
   query GetMyTrips {
@@ -38,6 +39,7 @@ const Profile: React.FC<ProfileProps> = () => {
   return (
     <Fragment>
       <Header>My Trips</Header>
+      <ProfileImageUploader />
       {data.me && data.me.trips.length ? (
         data.me.trips.map((launch: any) => (
           <LaunchTile key={launch.id} launch={launch} />

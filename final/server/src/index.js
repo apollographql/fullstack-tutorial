@@ -24,6 +24,7 @@ const dataSources = () => ({
 // the function that sets up the global context for each resolver, using the req
 const context = async ({ req }) => {
   // simple auth check on every request
+  console.log(req.headers);
   const auth = (req.headers && req.headers.authorization) || '';
   const email = new Buffer(auth, 'base64').toString('ascii');
 

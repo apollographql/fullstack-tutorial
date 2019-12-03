@@ -83,6 +83,8 @@ class UserAPI extends DataSource {
     const userId = this.context.user.id;
     if (!userId) return;
 
+    console.log('file', file);
+
     // TODO: upload file to S3
     // TODO: update profileImage field on user model
 
