@@ -12,6 +12,7 @@
     "apollo-cache-inmemory": "^1.6.2",
     "apollo-client": "^2.6.3",
     "apollo-upload-client": "^12.0.0",
+    "aws-sdk": "^2.584.0",
     "emotion": "^9.2.12",
     "graphql": "^14.4.2",
     "graphql-tag": "^2.10.1",

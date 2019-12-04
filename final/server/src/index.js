@@ -1,4 +1,4 @@
-// require('dotenv').config();
+require('dotenv').config();
 
 const { ApolloServer } = require('apollo-server');
 const isEmail = require('isemail');
