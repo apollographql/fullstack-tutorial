@@ -92,7 +92,7 @@ class UserAPI extends DataSource {
     const filename = uuidv4() + '.' + mime.getExtension(mimetype);
 
     await s3
-      .putObject({
+      .upload({
         ACL: 'public-read',
         Body: createReadStream(),
         Bucket: bucket,
