@@ -29,7 +29,7 @@ const Header: React.FC<HeaderProps> = ({ image, children = 'Space Explorer' }) =
 
   return (
     <Container>
-      <Image round={!image} src={avatar} alt="Space dog" />
+      <Image round={!image} src={avatar} />
       <div>
         <h2>{children}</h2>
         <Subheading>{email}</Subheading>

@@ -34,7 +34,7 @@ const context = async ({ req }) => {
   const users = await store.users.findOrCreate({ where: { email } });
   const user = users && users[0] ? users[0] : null;
 
-  return { user: { ...user.dataValues } };
+  return { user };
 };
 
 // Set up Apollo Server

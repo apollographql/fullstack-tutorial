@@ -1,5 +1,8 @@
-const { DataSource } = require('apollo-datasource');
+const S3 = require('aws-sdk/clients/s3');
 const isEmail = require('isemail');
+const mime = require('mime');
+const uuidv4 = require('uuid/v4');
+const { DataSource } = require('apollo-datasource');
 
 class UserAPI extends DataSource {
   constructor({ store }) {
@@ -83,13 +86,25 @@ class UserAPI extends DataSource {
     const userId = this.context.user.id;
     if (!userId) return;
 
-    console.log('file', file);
+    const s3 = new S3();
+    const bucket = process.env.AWS_S3_BUCKET;
+    const { createReadStream, mimetype } = await file;
+    const filename = uuidv4() + '.' + mime.getExtension(mimetype);
 
-    // TODO: upload file to S3
-    // TODO: update profileImage field on user model
+    await s3
+      .putObject({
+        ACL: 'public-read',
+        Body: createReadStream(),
+        Bucket: bucket,
+        Key: filename,
+        ContentType: mimetype
+      })
+      .promise();
 
-    return this.context.user;
+    return this.context.user.update({
+      profileImage: `https://${bucket}.s3.us-west-2.amazonaws.com/${filename}`
+    });
   }
 }
-
+    
 module.exports = UserAPI;
