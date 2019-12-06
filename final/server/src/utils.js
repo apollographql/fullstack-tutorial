@@ -34,12 +34,7 @@ module.exports.createStore = () => {
     $in: Op.in,
   };
 
-  const db = new SQL('database', 'username', 'password', {
-    dialect: 'sqlite',
-    storage: './store.sqlite',
-    operatorsAliases,
-    logging: false,
-  });
+  const db = new SQL(process.env.DATABASE_URL);
 
   const users = db.define('user', {
     id: {
