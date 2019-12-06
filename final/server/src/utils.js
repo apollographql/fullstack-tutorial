@@ -1,4 +1,4 @@
-const SQL = require('sequelize');
+const {Sequelize} = require('sequelize');
 
 module.exports.paginateResults = ({
   after: cursor,
@@ -29,36 +29,21 @@ module.exports.paginateResults = ({
 };
 
 module.exports.createStore = () => {
-  const Op = SQL.Op;
-  const operatorsAliases = {
-    $in: Op.in,
-  };
-
-  const db = new SQL(process.env.DATABASE_URL);
+  const db = new Sequelize(process.env.DATABASE_URL);
 
   const users = db.define('user', {
-    id: {
-      type: SQL.INTEGER,
-      primaryKey: true,
-      autoIncrement: true,
-    },
-    createdAt: SQL.DATE,
-    updatedAt: SQL.DATE,
-    email: SQL.STRING,
-    profileImage: SQL.STRING,
-    token: SQL.STRING,
+    createdAt: Sequelize.DATE,
+    updatedAt: Sequelize.DATE,
+    email: Sequelize.STRING,
+    profileImage: Sequelize.STRING,
+    token: Sequelize.STRING,
   });
 
   const trips = db.define('trip', {
-    id: {
-      type: SQL.INTEGER,
-      primaryKey: true,
-      autoIncrement: true,
-    },
-    createdAt: SQL.DATE,
-    updatedAt: SQL.DATE,
-    launchId: SQL.INTEGER,
-    userId: SQL.INTEGER,
+    createdAt: Sequelize.DATE,
+    updatedAt: Sequelize.DATE,
+    launchId: Sequelize.INTEGER,
+    userId: Sequelize.INTEGER,
   });
 
   return { db, users, trips };
