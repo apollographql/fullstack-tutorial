@@ -2,17 +2,19 @@ import React from 'react';
 import { useMutation } from '@apollo/react-hooks';
 import gql from 'graphql-tag';
 
-const UPLOAD_PROFILE_IMAGE = gql`
-  mutation UploadProfileImage($file: Upload!) {
-    uploadProfileImage(file: $file) {
-      id
-      profileImage
-    }
-  }
-`;
+// const UPLOAD_PROFILE_IMAGE = gql`
+//   mutation UploadProfileImage($file: Upload!) {
+//     uploadProfileImage(file: $file) {
+//       id
+//       profileImage
+//     }
+//   }
+// `;
 
 export default function ProfileImageUploader() {
-  const [uploadProfileImage, {loading, error}] = useMutation(UPLOAD_PROFILE_IMAGE);
+  const [uploadProfileImage, {loading, error}] = useMutation(
+    // UPLOAD_PROFILE_IMAGE
+  );
 
   function handleSubmit(event) {
     event.preventDefault();
