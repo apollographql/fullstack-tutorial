@@ -40,7 +40,7 @@ const Profile: React.FC<ProfileProps> = () => {
   return (
     <Fragment>
       <Header image={data.me.profileImage}>My Trips</Header>
-      <ProfileImageUploader />
+      {/* <ProfileImageUploader /> */}
       {data.me && data.me.trips.length ? (
         data.me.trips.map((launch: any) => (
           <LaunchTile key={launch.id} launch={launch} />
