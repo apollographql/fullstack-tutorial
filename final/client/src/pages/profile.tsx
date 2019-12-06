@@ -4,6 +4,7 @@ import gql from 'graphql-tag';
 
 import { Loading, Header, LaunchTile } from '../components';
 import { LAUNCH_TILE_DATA } from './launches';
+import { RouteComponentProps } from '@reach/router';
 
 export const GET_MY_TRIPS = gql`
   query GetMyTrips {
@@ -18,7 +19,9 @@ export const GET_MY_TRIPS = gql`
   ${LAUNCH_TILE_DATA}
 `;
 
-export default function Profile() {
+interface ProfileProps extends RouteComponentProps {}
+
+const Profile: React.FC<ProfileProps> = () => {
   const { data, loading, error } = useQuery(
     GET_MY_TRIPS,
     { fetchPolicy: "network-only" }
@@ -39,3 +42,5 @@ export default function Profile() {
     </Fragment>
   );
 }
+
+export default Profile;

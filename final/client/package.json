@@ -5,6 +5,10 @@
   "dependencies": {
     "@apollo/react-hooks": "3.0.0",
     "@reach/router": "^1.2.1",
+    "@types/node": "^12.12.14",
+    "@types/reach__router": "^1.2.6",
+    "@types/react": "^16.9.15",
+    "@types/react-dom": "^16.9.4",
     "apollo-cache-inmemory": "^1.6.2",
     "apollo-client": "^2.6.3",
     "apollo-link-http": "^1.5.15",
@@ -15,7 +19,8 @@
     "react": "^16.9.0-alpha.0",
     "react-dom": "^16.9.0-alpha.0",
     "react-emotion": "^9.2.12",
-    "react-scripts": "3.0.1"
+    "react-scripts": "3.0.1",
+    "typescript": "^3.7.3"
   },
   "scripts": {
     "start": "react-scripts start",

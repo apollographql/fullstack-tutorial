@@ -5,6 +5,7 @@ import gql from 'graphql-tag';
 import { LAUNCH_TILE_DATA } from './launches';
 import { Loading, Header, LaunchDetail } from '../components';
 import { ActionButton } from '../containers';
+import { RouteComponentProps } from '@reach/router';
 
 export const GET_LAUNCH_DETAILS = gql`
   query LaunchDetails($launchId: ID!) {
@@ -20,7 +21,11 @@ export const GET_LAUNCH_DETAILS = gql`
   ${LAUNCH_TILE_DATA}
 `;
 
-export default function Launch({ launchId }) {
+interface LaunchProps extends RouteComponentProps {
+  launchId?: string;
+}
+
+const Launch: React.FC<LaunchProps> = ({ launchId }) => {
   const { data, loading, error } = useQuery(
     GET_LAUNCH_DETAILS,
     { variables: { launchId } },
@@ -39,3 +44,5 @@ export default function Launch({ launchId }) {
     </Fragment>
   );
 }
+
+export default Launch;

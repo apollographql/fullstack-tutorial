@@ -4,6 +4,7 @@ import gql from 'graphql-tag';
 
 import { Header, Loading } from '../components';
 import { CartItem, BookTrips } from '../containers';
+import { RouteComponentProps } from '@reach/router';
 
 export const GET_CART_ITEMS = gql`
   query GetCartItems {
@@ -11,7 +12,9 @@ export const GET_CART_ITEMS = gql`
   }
 `;
 
-export default function Cart() {
+interface CartProps extends RouteComponentProps {}
+
+const Cart: React.FC<CartProps> = () => {
   const { data, loading, error } = useQuery(GET_CART_ITEMS);
   if (loading) return <Loading />;
   if (error) return <p>ERROR: {error.message}</p>;
@@ -31,3 +34,5 @@ export default function Cart() {
     </Fragment>
   );
 }
+
+export default Cart;
