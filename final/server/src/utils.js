@@ -29,7 +29,10 @@ module.exports.paginateResults = ({
 };
 
 module.exports.createStore = () => {
-  const db = new Sequelize(process.env.DATABASE_URL);
+  const db = new Sequelize({
+    dialect: 'sqlite',
+    storage: './store.sqlite'
+  });
 
   const users = db.define('user', {
     createdAt: Sequelize.DATE,
