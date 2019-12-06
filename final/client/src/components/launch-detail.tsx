@@ -3,15 +3,18 @@ import styled from 'react-emotion';
 
 import { unit } from '../styles';
 import { cardClassName, getBackgroundImage } from './launch-tile';
+import { LaunchDetails_launch } from '../pages/__generated__/LaunchDetails';
 
-const LaunchDetail = ({ id, site, rocket }) => (
+type LaunchDetailProps = Partial<LaunchDetails_launch>
+
+const LaunchDetail: React.FC<LaunchDetailProps> = ({ id, site, rocket }) => (
   <Card
     style={{
-      backgroundImage: getBackgroundImage(id),
+      backgroundImage: getBackgroundImage(id as string),
     }}
   >
     <h3>
-      {rocket.name} ({rocket.type})
+      {rocket && rocket.name} ({rocket && rocket.type})
     </h3>
     <h5>{site}</h5>
   </Card>

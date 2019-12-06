@@ -20,7 +20,7 @@ function pickAvatarByEmail(email: string) {
 
 interface HeaderProps {
   image?: string | any;
-  children?: string;
+  children?: any;
 }
 
 const Header: React.FC<HeaderProps> = ({ image, children = 'Space Explorer' }) => {

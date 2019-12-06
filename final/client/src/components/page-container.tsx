@@ -3,7 +3,7 @@ import styled from 'react-emotion';
 
 import { unit, colors } from '../styles';
 
-export default function PageContainer(props) {
+export default function PageContainer (props: any) {
   return (
     <Fragment>
       <Bar />

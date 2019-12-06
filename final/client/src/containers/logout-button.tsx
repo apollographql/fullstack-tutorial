@@ -5,7 +5,7 @@ import { useApolloClient } from '@apollo/react-hooks';
 import { menuItemClassName } from '../components/menu-item';
 import { ReactComponent as ExitIcon } from '../assets/icons/exit.svg';
 
-export default function LogoutButton() {
+const LogoutButton = () => {
   const client = useApolloClient();
   return (
     <StyledButton
@@ -20,6 +20,8 @@ export default function LogoutButton() {
     </StyledButton>
   );
 }
+
+export default LogoutButton;
 
 /**
  * STYLED COMPONENTS USED IN THIS FILE ARE BELOW HERE

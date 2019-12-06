@@ -5,6 +5,8 @@ import gql from 'graphql-tag';
 import { Header, Loading } from '../components';
 import { CartItem, BookTrips } from '../containers';
 import { RouteComponentProps } from '@reach/router';
+import { QueryResult } from '@apollo/react-common';
+import { GetCartItems } from './__generated__/GetCartItems';
 
 export const GET_CART_ITEMS = gql`
   query GetCartItems {
@@ -15,20 +17,26 @@ export const GET_CART_ITEMS = gql`
 interface CartProps extends RouteComponentProps {}
 
 const Cart: React.FC<CartProps> = () => {
-  const { data, loading, error } = useQuery(GET_CART_ITEMS);
+  const { 
+    data, 
+    loading, 
+    error 
+  }: QueryResult<GetCartItems, any> = useQuery<GetCartItems, any>(GET_CART_ITEMS);
+  
   if (loading) return <Loading />;
   if (error) return <p>ERROR: {error.message}</p>;
+
   return (
     <Fragment>
       <Header>My Cart</Header>
-      {!data.cartItems || !data.cartItems.length ? (
+      {!!data && data.cartItems || !!data && data.cartItems.length ? (
         <p data-testid="empty-message">No items in your cart</p>
       ) : (
         <Fragment>
-          {data.cartItems.map((launchId: any) => (
+          {!!data && data.cartItems.map((launchId: any) => (
             <CartItem key={launchId} launchId={launchId} />
           ))}
-          <BookTrips cartItems={data.cartItems} />
+          <BookTrips cartItems={!!data ? data.cartItems : []} />
         </Fragment>
       )}
     </Fragment>

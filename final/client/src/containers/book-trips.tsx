@@ -4,6 +4,8 @@ import gql from 'graphql-tag';
 
 import Button from '../components/button';
 import { GET_LAUNCH } from './cart-item';
+import * as GetCartItemsTypes from '../pages/__generated__/GetCartItems';
+import * as BookTripsTypes from './__generated__/BookTrips';
 
 export { GET_LAUNCH };
 export const BOOK_TRIPS = gql`
@@ -19,8 +21,10 @@ export const BOOK_TRIPS = gql`
   }
 `;
 
-export default function BookTrips({ cartItems }) {
-  const [bookTrips, { data }] = useMutation(
+interface BookTripsProps extends GetCartItemsTypes.GetCartItems {}
+
+const BookTrips: React.FC<BookTripsProps> = ({ cartItems }) => {
+  const [bookTrips, { data }] = useMutation<BookTripsTypes.BookTrips, BookTripsTypes.BookTripsVariables>(
     BOOK_TRIPS,
     {
       variables: { launchIds: cartItems },
@@ -37,8 +41,10 @@ export default function BookTrips({ cartItems }) {
   return data && data.bookTrips && !data.bookTrips.success
     ? <p data-testid="message">{data.bookTrips.message}</p>
     : (
-      <Button onClick={bookTrips} data-testid="book-button">
+      <Button onClick={() => bookTrips()} data-testid="book-button">
         Book All
       </Button>
     );
 }
+
+export default BookTrips;

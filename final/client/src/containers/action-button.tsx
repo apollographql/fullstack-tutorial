@@ -4,6 +4,7 @@ import gql from 'graphql-tag';
 
 import { GET_LAUNCH_DETAILS } from '../pages/launch';
 import Button from '../components/button';
+import * as LaunchDetailTypes from '../pages/__generated__/LaunchDetails';
 
 // export all queries used in this file for testing
 export { GET_LAUNCH_DETAILS };
@@ -27,7 +28,10 @@ export const CANCEL_TRIP = gql`
   }
 `;
 
-export default function ActionButton({ isBooked, id, isInCart }) {
+interface ActionButtonProps extends Partial<LaunchDetailTypes.LaunchDetails_launch> {
+}
+
+const ActionButton: React.FC<ActionButtonProps> = ({ isBooked, id, isInCart }) => {
   const [mutate, { loading, error }] = useMutation(
     isBooked ? CANCEL_TRIP : TOGGLE_CART,
     {
@@ -47,8 +51,7 @@ export default function ActionButton({ isBooked, id, isInCart }) {
   return (
     <div>
       <Button
-        onClick={mutate}
-        isBooked={isBooked}
+        onClick={() => mutate()}
         data-testid={'action-button'}
       >
         {isBooked
@@ -60,3 +63,5 @@ export default function ActionButton({ isBooked, id, isInCart }) {
     </div>
   );
 }
+
+export default ActionButton;
