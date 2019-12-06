@@ -11,17 +11,20 @@
     "emotion": "^9.2.12",
     "graphql": "^14.4.2",
     "graphql-tag": "^2.10.1",
+    "lodash": "^4.17.15",
     "polished": "^3.4.1",
     "react": "^16.9.0-alpha.0",
     "react-dom": "^16.9.0-alpha.0",
     "react-emotion": "^9.2.12",
-    "react-scripts": "3.0.1"
+    "react-scripts": "3.0.1",
+    "typescript": "^3.7.3"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "run:ios-demo": "npx artillery run apollo-internal-demos/ios-workload.yml"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -33,9 +36,16 @@
     "not op_mini all"
   ],
   "devDependencies": {
+    "@types/node": "^12.12.14",
+    "@types/reach__router": "^1.2.6",
+    "@types/react": "^16.9.15",
+    "@types/react-dom": "^16.9.4",
     "@apollo/react-testing": "3.0.0",
     "@testing-library/jest-dom": "^4.0.0",
     "@testing-library/react": "^8.0.7",
-    "apollo": "^2.16.3"
+    "@types/jest": "^24.0.23",
+    "@types/lodash": "^4.14.149",
+    "apollo": "^2.16.3",
+    "artillery": "^1.6.0-26"
   }
 }

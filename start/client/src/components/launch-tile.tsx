@@ -8,11 +8,11 @@ import moon from '../assets/images/moon.jpg';
 import { unit } from '../styles';
 
 const backgrounds = [galaxy, iss, moon];
-export function getBackgroundImage(id) {
+export function getBackgroundImage(id: string) {
   return `url(${backgrounds[Number(id) % backgrounds.length]})`;
 }
 
-export default ({ launch }) => {
+export default ({ launch }: any) => {
   const { id, mission, rocket } = launch;
   return (
     <StyledLink
