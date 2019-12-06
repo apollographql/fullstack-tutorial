@@ -13,7 +13,7 @@ export const GET_MY_TRIPS = gql`
     me {
       id
       email
-      profileImage
+      # profileImage
       trips {
         ...LaunchTile
       }
@@ -36,6 +36,10 @@ const Profile: React.FC<ProfileProps> = () => {
   if (loading) return <Loading />;
   if (error) return <p>ERROR: {error.message}</p>;
   if (data === undefined) return <p>ERROR</p>;
+
+  if (!data.me) {
+    return <p>You are not logged in</p>;
+  }
 
   return (
     <Fragment>
