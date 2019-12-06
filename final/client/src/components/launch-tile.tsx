@@ -26,7 +26,7 @@ const LaunchTile: React.FC<LaunchTileProps> = ({ launch }) => {
         backgroundImage: getBackgroundImage(id),
       }}
     >
-      <h3>{mission && mission.name}</h3>
+      <h3>{mission ? mission.name : ''}</h3>
       <h5>{rocket && rocket.name}</h5>
     </StyledLink>
   );

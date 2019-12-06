@@ -29,7 +29,7 @@ const Cart: React.FC<CartProps> = () => {
   return (
     <Fragment>
       <Header>My Cart</Header>
-      {!!data && data.cartItems || !!data && data.cartItems.length ? (
+      {!data || !!data && data.cartItems.length === 0 ? (
         <p data-testid="empty-message">No items in your cart</p>
       ) : (
         <Fragment>

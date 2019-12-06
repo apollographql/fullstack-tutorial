@@ -48,7 +48,7 @@ describe('book trips', () => {
       },
     ];
     const { getByTestId } = renderApollo(
-      <BookTrips cartItems={[1]} />,
+      <BookTrips cartItems={['1']} />,
       { mocks, addTypename: false },
     );
 

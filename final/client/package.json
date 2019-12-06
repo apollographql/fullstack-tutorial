@@ -43,6 +43,7 @@
     "@apollo/react-testing": "3.0.0",
     "@testing-library/jest-dom": "^4.0.0",
     "@testing-library/react": "^8.0.7",
+    "@types/jest": "^24.0.23",
     "@types/lodash": "^4.14.149",
     "apollo": "^2.16.3",
     "artillery": "^1.6.0-26"

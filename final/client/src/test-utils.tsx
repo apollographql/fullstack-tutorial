@@ -2,11 +2,20 @@ import React from 'react';
 import { render } from '@testing-library/react';
 // this adds custom jest matchers from jest-dom
 import '@testing-library/jest-dom/extend-expect';
-import { MockedProvider } from '@apollo/react-testing';
+import { MockedProvider, MockedResponse } from '@apollo/react-testing';
+
+type RenderApolloOptions = { 
+  mocks?: MockedResponse[], 
+  addTypename?: any, 
+  defaultOptions?: any, 
+  cache?: any, 
+  resolvers?: any,
+  [st: string]: any;
+}
 
 const renderApollo = (
-  node,
-  { mocks, addTypename, defaultOptions, cache, resolvers, ...options } = {},
+  node: any,
+  { mocks, addTypename, defaultOptions, cache, resolvers, ...options }: RenderApolloOptions = {},
 ) => {
   return render(
     <MockedProvider
