@@ -46,7 +46,7 @@ const Launches: React.FC<LaunchesProps> = () => {
       <Header />
       {data.launches &&
         data.launches.launches &&
-        data.launches.launches.map(launch => (
+        data.launches.launches.map((launch: any) => (
           <LaunchTile key={launch.id} launch={launch} />
         ))}
       {data.launches &&

@@ -33,7 +33,7 @@ const Profile: React.FC<ProfileProps> = () => {
     <Fragment>
       <Header>My Trips</Header>
       {data.me && data.me.trips.length ? (
-        data.me.trips.map(launch => (
+        data.me.trips.map((launch: any) => (
           <LaunchTile key={launch.id} launch={launch} />
         ))
       ) : (

@@ -25,7 +25,7 @@ const Cart: React.FC<CartProps> = () => {
         <p data-testid="empty-message">No items in your cart</p>
       ) : (
         <Fragment>
-          {data.cartItems.map(launchId => (
+          {data.cartItems.map((launchId: any) => (
             <CartItem key={launchId} launchId={launchId} />
           ))}
           <BookTrips cartItems={data.cartItems} />
