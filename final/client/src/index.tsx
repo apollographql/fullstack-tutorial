@@ -59,7 +59,6 @@ function IsLoggedIn() {
 
 injectStyles();
 ReactDOM.render(
-
   <ApolloProvider client={client}>
     <IsLoggedIn />
   </ApolloProvider>,
