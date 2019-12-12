@@ -82,12 +82,16 @@ class UserAPI extends DataSource {
     return found && found.length > 0;
   }
 
+  /**
+   * This function is currently only used by the iOS tutorial to upload a
+   * profile image to S3 and update the user row
+   */
   async uploadProfileImage({ file }) {
     const userId = this.context.user.id;
     if (!userId) return;
 
     const s3 = new S3();
-    const bucket = process.env.AWS_S3_BUCKET;
+    const { AWS_S3_BUCKET } = process.env;
     const { createReadStream, mimetype } = await file;
     const filename = uuidv4() + '.' + mime.getExtension(mimetype);
 
@@ -95,14 +99,14 @@ class UserAPI extends DataSource {
       .upload({
         ACL: 'public-read',
         Body: createReadStream(),
-        Bucket: bucket,
+        Bucket: AWS_S3_BUCKET,
         Key: filename,
         ContentType: mimetype
       })
       .promise();
 
     return this.context.user.update({
-      profileImage: `https://${bucket}.s3.us-west-2.amazonaws.com/${filename}`
+      profileImage: `https://${AWS_S3_BUCKET}.s3.us-west-2.amazonaws.com/${filename}`
     });
   }
 }
