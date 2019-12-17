@@ -1,5 +1,7 @@
 import React from 'react';
 
-export default function ActionButton() {
-  return <div />;
+const ActionButton: React.FC<any> = () => {
+  return <div/>;
 }
+
+export default ActionButton
