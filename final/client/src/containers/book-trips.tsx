@@ -7,7 +7,6 @@ import { GET_LAUNCH } from './cart-item';
 import * as GetCartItemsTypes from '../pages/__generated__/GetCartItems';
 import * as BookTripsTypes from './__generated__/BookTrips';
 
-export { GET_LAUNCH };
 export const BOOK_TRIPS = gql`
   mutation BookTrips($launchIds: [ID]!) {
     bookTrips(launchIds: $launchIds) {

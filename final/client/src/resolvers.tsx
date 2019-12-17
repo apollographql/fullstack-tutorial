@@ -1,8 +1,8 @@
 import gql from 'graphql-tag';
 import { GET_CART_ITEMS } from './pages/cart';
-import { LaunchTile } from './pages/__generated__/LaunchTile';
+import * as LaunchTileTypes from './pages/__generated__/LaunchTile';
 import { ApolloCache } from 'apollo-cache';
-import { GetCartItems } from './pages/__generated__/GetCartItems';
+import * as GetCartItemTypes from './pages/__generated__/GetCartItems';
 import { Resolvers } from 'apollo-client'
 
 export const typeDefs = gql`
@@ -20,7 +20,11 @@ export const typeDefs = gql`
   }
 `;
 
-type ResolverFn = (parent: any, args: any, { cache } : { cache: ApolloCache<any> }) => any;
+type ResolverFn = (
+  parent: any, 
+  args: any, 
+  { cache } : { cache: ApolloCache<any> }
+) => any;
 
 interface ResolverMap {
   [field: string]: ResolverFn;
@@ -33,8 +37,8 @@ interface AppResolvers extends Resolvers {
 
 export const resolvers: AppResolvers = {
   Launch: {
-    isInCart: (launch: LaunchTile, _, { cache }): boolean => {
-      const queryResult = cache.readQuery<GetCartItems, any>({ query: GET_CART_ITEMS });
+    isInCart: (launch: LaunchTileTypes.LaunchTile, _, { cache }): boolean => {
+      const queryResult = cache.readQuery<GetCartItemTypes.GetCartItems, any>({ query: GET_CART_ITEMS });
       if (queryResult) {
         return queryResult.cartItems.includes(launch.id)
       } 
@@ -43,7 +47,7 @@ export const resolvers: AppResolvers = {
   },
   Mutation: {
     addOrRemoveFromCart: (_, { id }: { id: string }, { cache }): string[] => {
-      const queryResult = cache.readQuery<GetCartItems, any>({ query: GET_CART_ITEMS });
+      const queryResult = cache.readQuery<GetCartItemTypes.GetCartItems, any>({ query: GET_CART_ITEMS });
       if (queryResult) {
         const { cartItems } = queryResult;
         const data = {

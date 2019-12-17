@@ -28,7 +28,6 @@ interface LaunchProps extends RouteComponentProps {
 }
 
 const Launch: React.FC<LaunchProps> = ({ launchId }) => {
-
   const { 
     data, 
     loading, 
@@ -43,7 +42,7 @@ const Launch: React.FC<LaunchProps> = ({ launchId }) => {
   
   if (loading) return <Loading />;
   if (error) return <p>ERROR: {error.message}</p>;
-  if (!data) return <p>ERROR</p>;
+  if (!data) return <p>Not found</p>;
 
   return (
     <Fragment>
