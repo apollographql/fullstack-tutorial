@@ -1,5 +1,7 @@
 import React from 'react';
 
-export default function LogoutButton() {
-  return <div />;
+const LogoutButton: React.FC<any> = () => {
+  return <div/>;
 }
+
+export default LogoutButton;

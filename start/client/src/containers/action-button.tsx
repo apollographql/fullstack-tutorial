@@ -4,4 +4,4 @@ const ActionButton: React.FC<any> = () => {
   return <div/>;
 }
 
-export default ActionButton
+export default ActionButton;

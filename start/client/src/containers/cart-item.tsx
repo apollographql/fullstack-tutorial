@@ -1,5 +1,7 @@
 import React from 'react';
 
-export default function CartItem() {
-  return <div />;
+const CartItem: React.FC<any> = () => {
+  return <div/>;
 }
+
+export default CartItem;

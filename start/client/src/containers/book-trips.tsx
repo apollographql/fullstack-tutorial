@@ -1,5 +1,7 @@
 import React from 'react';
 
-export default function BookTrips() {
-  return <div />;
+const BookTrips: React.FC<any> = () => {
+  return <div/>;
 }
+
+export default BookTrips;
