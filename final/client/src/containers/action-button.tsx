@@ -28,8 +28,7 @@ export const CANCEL_TRIP = gql`
   }
 `;
 
-interface ActionButtonProps extends Partial<LaunchDetailTypes.LaunchDetails_launch> {
-}
+interface ActionButtonProps extends Partial<LaunchDetailTypes.LaunchDetails_launch> {}
 
 const ActionButton: React.FC<ActionButtonProps> = ({ isBooked, id, isInCart }) => {
   const [mutate, { loading, error }] = useMutation(

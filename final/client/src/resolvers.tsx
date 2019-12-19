@@ -38,7 +38,7 @@ interface AppResolvers extends Resolvers {
 export const resolvers: AppResolvers = {
   Launch: {
     isInCart: (launch: LaunchTileTypes.LaunchTile, _, { cache }): boolean => {
-      const queryResult = cache.readQuery<GetCartItemTypes.GetCartItems, any>({ query: GET_CART_ITEMS });
+      const queryResult = cache.readQuery<GetCartItemTypes.GetCartItems>({ query: GET_CART_ITEMS });
       if (queryResult) {
         return queryResult.cartItems.includes(launch.id)
       } 
@@ -47,7 +47,7 @@ export const resolvers: AppResolvers = {
   },
   Mutation: {
     addOrRemoveFromCart: (_, { id }: { id: string }, { cache }): string[] => {
-      const queryResult = cache.readQuery<GetCartItemTypes.GetCartItems, any>({ query: GET_CART_ITEMS });
+      const queryResult = cache.readQuery<GetCartItemTypes.GetCartItems>({ query: GET_CART_ITEMS });
       if (queryResult) {
         const { cartItems } = queryResult;
         const data = {

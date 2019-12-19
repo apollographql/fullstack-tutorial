@@ -4,7 +4,6 @@ import gql from 'graphql-tag';
 
 import { LaunchTile, Header, Button, Loading } from '../components';
 import { RouteComponentProps } from '@reach/router';
-import { QueryResult } from '@apollo/react-common';
 import * as GetLaunchListTypes from './__generated__/GetLaunchList';
 
 export const LAUNCH_TILE_DATA = gql`
@@ -44,10 +43,10 @@ const Launches: React.FC<LaunchesProps> = () => {
     loading, 
     error, 
     fetchMore 
-  }: QueryResult<
+  } = useQuery<
     GetLaunchListTypes.GetLaunchList, 
     GetLaunchListTypes.GetLaunchListVariables
-  > = useQuery(GET_LAUNCHES);
+  >(GET_LAUNCHES);
 
   if (loading) return <Loading />;
   if (error || !data) return <p>ERROR</p>;

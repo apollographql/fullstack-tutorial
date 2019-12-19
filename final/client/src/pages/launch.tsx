@@ -6,7 +6,6 @@ import { LAUNCH_TILE_DATA } from './launches';
 import { Loading, Header, LaunchDetail } from '../components';
 import { ActionButton } from '../containers';
 import { RouteComponentProps } from '@reach/router';
-import { QueryResult } from '@apollo/react-common';
 import * as LaunchDetailsTypes from './__generated__/LaunchDetails';
 
 export const GET_LAUNCH_DETAILS = gql`
@@ -32,11 +31,10 @@ const Launch: React.FC<LaunchProps> = ({ launchId }) => {
     data, 
     loading, 
     error 
-  }: QueryResult<
+  } = useQuery<
     LaunchDetailsTypes.LaunchDetails, 
     LaunchDetailsTypes.LaunchDetailsVariables
-  > = useQuery(
-    GET_LAUNCH_DETAILS, 
+  >(GET_LAUNCH_DETAILS, 
     { variables: { launchId } }
   );
   
