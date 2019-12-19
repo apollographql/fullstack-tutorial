@@ -25,6 +25,7 @@ const typeDefs = gql`
 
     login(email: String): String # login token
 
+    # for use with the iOS tutorial
     uploadProfileImage(file: Upload!): User
   }
 
