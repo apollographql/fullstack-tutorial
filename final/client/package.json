@@ -22,12 +22,21 @@
     "react-scripts": "3.0.1",
     "typescript": "^3.7.3"
   },
+  "watch": {
+    "codegen": {
+      "patterns": [
+        "src"
+      ],
+      "extensions": "ts,tsx"
+    }
+  },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "concurrently \"react-scripts start\" \"npm-watch\"",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "run:ios-demo": "npx artillery run apollo-internal-demos/ios-workload.yml"
+    "run:ios-demo": "npx artillery run apollo-internal-demos/ios-workload.yml",
+    "codegen": "apollo client:codegen --target typescript"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -44,6 +53,8 @@
     "@testing-library/react": "^8.0.7",
     "@types/jest": "^24.0.23",
     "apollo": "^2.16.3",
-    "artillery": "^1.6.0-26"
+    "artillery": "^1.6.0-26",
+    "concurrently": "^5.0.2",
+    "npm-watch": "^0.6.0"
   }
 }
