@@ -5,6 +5,10 @@
   "dependencies": {
     "@apollo/react-hooks": "3.0.0",
     "@reach/router": "^1.2.1",
+    "@types/node": "^12.12.14",
+    "@types/reach__router": "^1.2.6",
+    "@types/react": "^16.9.15",
+    "@types/react-dom": "^16.9.4",
     "apollo-cache-inmemory": "^1.6.2",
     "apollo-client": "^2.6.3",
     "apollo-link-http": "^1.5.15",
@@ -15,14 +19,16 @@
     "react": "^16.9.0-alpha.0",
     "react-dom": "^16.9.0-alpha.0",
     "react-emotion": "^9.2.12",
-    "react-scripts": "3.0.1"
+    "react-scripts": "3.0.1",
+    "typescript": "^3.7.3"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "run:ios-demo": "npx artillery run apollo-internal-demos/ios-workload.yml"
+    "run:ios-demo": "npx artillery run apollo-internal-demos/ios-workload.yml",
+    "codegen": "apollo client:codegen --target typescript --watch"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -37,7 +43,9 @@
     "@apollo/react-testing": "3.0.0",
     "@testing-library/jest-dom": "^4.0.0",
     "@testing-library/react": "^8.0.7",
+    "@types/jest": "^24.0.23",
     "apollo": "^2.16.3",
-    "artillery": "^1.6.0-26"
+    "artillery": "^1.6.0-26",
+    "npm-watch": "^0.6.0"
   }
 }
