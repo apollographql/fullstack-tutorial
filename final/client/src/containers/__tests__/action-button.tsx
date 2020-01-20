@@ -1,5 +1,5 @@
 import React from 'react';
-import { InMemoryCache } from 'apollo-cache-inmemory';
+import { InMemoryCache } from '@apollo/client';
 
 import {
   renderApollo,
@@ -73,11 +73,11 @@ describe('action button', () => {
     // if we only provide 1 mock, any other queries would cause error
     let mocks = [
       {
-        request: { query: TOGGLE_CART, variables: { launchId: 1 } },
+        request: { query: TOGGLE_CART, variables: { launchId: '1' } },
         result: { data: { addOrRemoveFromCart: true } },
       },
       {
-        request: { query: GET_LAUNCH_DETAILS, variables: { launchId: 1 } },
+        request: { query: GET_LAUNCH_DETAILS, variables: { launchId: '1' } },
         result: { data: { launch: mockLaunch } },
       },
     ];

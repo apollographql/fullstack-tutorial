@@ -1,6 +1,5 @@
 import React from 'react';
-import { useMutation } from '@apollo/react-hooks';
-import gql from 'graphql-tag';
+import { gql, useMutation } from '@apollo/client';
 
 import Button from '../components/button';
 import { GET_LAUNCH } from './cart-item';
@@ -40,8 +39,8 @@ const BookTrips: React.FC<BookTripsProps> = ({ cartItems }) => {
   return data && data.bookTrips && !data.bookTrips.success
     ? <p data-testid="message">{data.bookTrips.message}</p>
     : (
-      <Button 
-        onClick={() => bookTrips()} 
+      <Button
+        onClick={() => bookTrips()}
         data-testid="book-button">
         Book All
       </Button>

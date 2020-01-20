@@ -1,5 +1,5 @@
 import React from 'react';
-import { InMemoryCache } from 'apollo-cache-inmemory';
+import { InMemoryCache } from '@apollo/client';
 import LogoutButton from '../logout-button';
 import gql from 'graphql-tag';
 
