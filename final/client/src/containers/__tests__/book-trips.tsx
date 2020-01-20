@@ -35,7 +35,7 @@ describe('book trips', () => {
   it('completes mutation and shows message', async () => {
     let mocks = [
       {
-        request: { query: BOOK_TRIPS, variables: { launchIds: [1] } },
+        request: { query: BOOK_TRIPS, variables: { launchIds: ['1'] } },
         result: {
           data: {
             bookTrips: [{ success: true, message: 'success!', launches: [] }],
@@ -44,7 +44,7 @@ describe('book trips', () => {
       },
       {
         // we need this query for refetchQueries
-        request: { query: GET_LAUNCH, variables: { launchId: 1 } },
+        request: { query: GET_LAUNCH, variables: { launchId: '1' } },
         result: { data: { launch: mockLaunch } },
       },
     ];
