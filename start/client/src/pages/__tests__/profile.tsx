@@ -1,7 +1,6 @@
 import React from 'react';
 import { print } from 'graphql';
-import { InMemoryCache } from 'apollo-cache-inmemory';
-import gql from 'graphql-tag';
+import { gql, InMemoryCache } from '@apollo/client';
 
 import {
   renderApollo,
