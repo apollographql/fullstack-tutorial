@@ -1,6 +1,5 @@
 import React from 'react';
-import { useQuery } from '@apollo/react-hooks';
-import gql from 'graphql-tag';
+import { gql, useQuery } from '@apollo/client';
 
 import LaunchTile from '../components/launch-tile';
 import { LAUNCH_TILE_DATA } from '../pages/launches';
