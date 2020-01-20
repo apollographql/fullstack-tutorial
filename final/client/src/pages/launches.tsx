@@ -1,6 +1,5 @@
 import React, { Fragment } from 'react';
-import { useQuery } from '@apollo/react-hooks';
-import gql from 'graphql-tag';
+import { gql, useQuery } from '@apollo/client';
 
 import { LaunchTile, Header, Button, Loading } from '../components';
 import { RouteComponentProps } from '@reach/router';
@@ -38,13 +37,13 @@ export const GET_LAUNCHES = gql`
 interface LaunchesProps extends RouteComponentProps {}
 
 const Launches: React.FC<LaunchesProps> = () => {
-  const { 
-    data, 
-    loading, 
-    error, 
-    fetchMore 
+  const {
+    data,
+    loading,
+    error,
+    fetchMore
   } = useQuery<
-    GetLaunchListTypes.GetLaunchList, 
+    GetLaunchListTypes.GetLaunchList,
     GetLaunchListTypes.GetLaunchListVariables
   >(GET_LAUNCHES);
 
