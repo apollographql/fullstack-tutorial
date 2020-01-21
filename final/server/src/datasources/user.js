@@ -90,14 +90,21 @@ class UserAPI extends DataSource {
     const userId = this.context.user.id;
     if (!userId) return;
 
+    // Create new S3 client instance
     const s3 = new S3();
-    const { AWS_S3_BUCKET } = process.env;
+
+    /**
+     * Destructure mimetype and stream creator from provided file and generate
+     * a unique filename for the upload
+     */
     const { createReadStream, mimetype } = await file;
     const filename = uuidv4() + '.' + mime.getExtension(mimetype);
 
+    // Upload the file to an S3 bucket using the createReadStream
+    const { AWS_S3_BUCKET } = process.env;
     await s3
       .upload({
-        ACL: 'public-read',
+        ACL: 'public-read', // This will make the file publicly available
         Body: createReadStream(),
         Bucket: AWS_S3_BUCKET,
         Key: filename,
@@ -105,6 +112,7 @@ class UserAPI extends DataSource {
       })
       .promise();
 
+    // Save the profile image URL in the DB and return the updated user
     return this.context.user.update({
       profileImage: `https://${AWS_S3_BUCKET}.s3.us-west-2.amazonaws.com/${filename}`
     });
