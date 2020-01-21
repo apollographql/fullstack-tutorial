@@ -35,14 +35,10 @@ const Profile: React.FC<ProfileProps> = () => {
   if (error) return <p>ERROR: {error.message}</p>;
   if (data === undefined) return <p>ERROR</p>;
 
-  if (!data.me) {
-    return <p>You are not logged in</p>;
-  }
-
   return (
     <Fragment>
       <Header>My Trips</Header>
-      {data.me.trips.length ? (
+      {data.me && data.me.trips.length ? (
         data.me.trips.map((launch: any) => (
           <LaunchTile key={launch.id} launch={launch} />
         ))
