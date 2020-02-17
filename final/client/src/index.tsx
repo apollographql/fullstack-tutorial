@@ -59,26 +59,33 @@ export const resolvers: AppResolvers = {
     }
   },
   Mutation: {
-    addOrRemoveFromCart: (_, { id }: { id: string }, { cache }): string[] => {
-      const queryResult = cache.readQuery<GetCartItemTypes.GetCartItems>({ query: GET_CART_ITEMS });
-      if (queryResult) {
-        const { cartItems } = queryResult;
-        const data = {
-          cartItems: cartItems.includes(id)
-            ? cartItems.filter((i) => i !== id)
-            : [...cartItems, id],
-        };
-        cache.writeQuery({ query: GET_CART_ITEMS, data });
-        return data.cartItems;
-      }
-      return [];
+    addOrRemoveFromCart: (_, { id }: { id: string }) => {
+      const cartItems = cartItemsVar();
+      const updatedItems = cartItems.includes(id)
+        ? cartItems.filter((i) => i !== id)
+        : [...cartItems, id];
+      cartItemsVar(updatedItems);
+      return updatedItems;
     },
   },
 };
 
+const cache: InMemoryCache = new InMemoryCache({
+  typePolicies: {
+    Query: {
+      fields: {
+        cartItems() {
+          return cartItemsVar();
+        }
+      }
+    }
+  }
+});
+
+const cartItemsVar = cache.makeLocalVar<string[]>([]);
+
 // Set up our apollo-client to point at the server we created
 // this can be local or a remote endpoint
-const cache = new InMemoryCache();
 const client: ApolloClient<NormalizedCacheObject> = new ApolloClient({
   cache,
   uri: 'http://localhost:4000/graphql',
@@ -94,7 +101,6 @@ const client: ApolloClient<NormalizedCacheObject> = new ApolloClient({
 cache.writeData({
   data: {
     isLoggedIn: !!localStorage.getItem('token'),
-    cartItems: [],
   },
 });
 
