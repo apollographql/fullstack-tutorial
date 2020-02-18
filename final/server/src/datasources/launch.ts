@@ -1,6 +1,13 @@
 const { RESTDataSource } = require('apollo-datasource-rest');
 
-class LaunchAPI extends RESTDataSource {
+export interface ILaunchAPIDataSource {
+  launchReducer: (launch: any) => any;
+  getAllLaunches: () => Promise<any[]>;
+  getLaunchById: ({ launchId }: { launchId: string} ) =>  Promise<any>;
+  getLaunchesByIds: ({ launchIds }: { launchIds: string[] } ) =>  Promise<any[]>;
+}
+
+export default class LaunchAPI extends RESTDataSource implements ILaunchAPIDataSource {
   constructor() {
     super();
     this.baseURL = 'https://api.spacexdata.com/v2/';
@@ -44,5 +51,3 @@ class LaunchAPI extends RESTDataSource {
     );
   }
 }
-
-module.exports = LaunchAPI;

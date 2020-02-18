@@ -1,10 +1,12 @@
+import { IDataSources } from "./datasources";
+
 require('dotenv').config();
 
 const { ApolloServer } = require('apollo-server');
 const isEmail = require('isemail');
 
 const typeDefs = require('./schema');
-const resolvers = require('./resolvers');
+const { resolvers } = require('./resolvers');
 const { createStore } = require('./utils');
 
 const LaunchAPI = require('./datasources/launch');
@@ -19,7 +21,7 @@ const store = createStore();
 const dataSources = () => ({
   launchAPI: new LaunchAPI(),
   userAPI: new UserAPI({ store }),
-});
+} as IDataSources);
 
 // the function that sets up the global context for each resolver, using the req
 const context = async ({ req }) => {

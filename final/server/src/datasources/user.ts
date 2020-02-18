@@ -1,10 +1,21 @@
+
 const S3 = require('aws-sdk/clients/s3');
 const isEmail = require('isemail');
 const mime = require('mime');
 const uuidv4 = require('uuid/v4');
 const { DataSource } = require('apollo-datasource');
 
-class UserAPI extends DataSource {
+export interface IUserAPIDataSource {
+  findOrCreateUser: ({ email, emailArg } : { email?: string, emailArg?: string } | null) => Promise<any>;
+  bookTrips: ({ launchIds }: { launchIds: string[] }) => Promise<any> | Promise<boolean>;
+  bookTrip: ({ launchId }: { launchId: string }) => Promise<any> | Promise<boolean>;
+  cancelTrip: ({ launchId }: { launchId: string }) => Promise<any>;
+  getLaunchIdsByUser: () => Promise<string[]>;
+  isBookedOnLaunch: ({ launchId }) => Promise<boolean>;
+  uploadProfileImage: ({ file }) => Promise<any>;
+}
+
+export default class UserAPI extends DataSource implements IUserAPIDataSource {
   constructor({ store }) {
     super();
     this.store = store;
@@ -25,8 +36,8 @@ class UserAPI extends DataSource {
    * have to be. If the user is already on the context, it will use that user
    * instead
    */
-  async findOrCreateUser({ email: emailArg } = {}) {
-    const email =
+  async findOrCreateUser({ email, emailArg }) {
+    email =
       this.context && this.context.user ? this.context.user.email : emailArg;
     if (!email || !isEmail.validate(email)) return null;
 
@@ -118,5 +129,4 @@ class UserAPI extends DataSource {
     });
   }
 }
-    
-module.exports = UserAPI;
+  

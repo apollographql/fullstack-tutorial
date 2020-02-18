@@ -1,6 +1,26 @@
+
+import { IDataSources } from "./datasources";
 const { paginateResults } = require('./utils');
 
-module.exports = {
+type Context = { 
+  dataSources: IDataSources;
+};
+
+type ResolverFunction = (parent: any, args: any, ctx: Context) => Promise<any> | any;
+
+type ResolversMap = {
+  [fieldName: string]: ResolverFunction;
+} 
+
+interface Resolvers {
+  Query: ResolversMap;
+  Mutation: ResolversMap;
+  Launch: ResolversMap;
+  Mission: ResolversMap;
+  User: ResolversMap;
+}
+
+export const resolvers: Resolvers = {
   Query: {
     launches: async (_, { pageSize = 20, after }, { dataSources }) => {
       const allLaunches = await dataSources.launchAPI.getAllLaunches();
