@@ -2,87 +2,23 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {
   ApolloClient,
-  InMemoryCache,
   NormalizedCacheObject,
   ApolloProvider,
   useQuery,
   gql,
-  ApolloCache,
-  Resolvers
 } from '@apollo/client';
 
 import Pages from './pages';
 import Login from './pages/login';
 import injectStyles from './styles';
-import { GET_CART_ITEMS } from './pages/cart';
-import * as LaunchTileTypes from './pages/__generated__/LaunchTile';
-import * as GetCartItemTypes from './pages/__generated__/GetCartItems';
+import { cache } from './cache';
 
 export const typeDefs = gql`
   extend type Query {
     isLoggedIn: Boolean!
     cartItems: [ID!]!
   }
-
-  extend type Launch {
-    isInCart: Boolean!
-  }
-
-  extend type Mutation {
-    addOrRemoveFromCart(id: ID!): [ID!]!
-  }
 `;
-
-type ResolverFn = (
-  parent: any,
-  args: any,
-  { cache } : { cache: ApolloCache<any> }
-) => any;
-
-interface ResolverMap {
-  [field: string]: ResolverFn;
-}
-
-interface AppResolvers extends Resolvers {
-  Launch: ResolverMap;
-  Mutation: ResolverMap;
-}
-
-export const resolvers: AppResolvers = {
-  Launch: {
-    isInCart: (launch: LaunchTileTypes.LaunchTile, _, { cache }): boolean => {
-      const queryResult = cache.readQuery<GetCartItemTypes.GetCartItems>({ query: GET_CART_ITEMS });
-      if (queryResult) {
-        return queryResult.cartItems.includes(launch.id)
-      }
-      return false;
-    }
-  },
-  Mutation: {
-    addOrRemoveFromCart: (_, { id }: { id: string }) => {
-      const cartItems = cartItemsVar();
-      const updatedItems = cartItems.includes(id)
-        ? cartItems.filter((i) => i !== id)
-        : [...cartItems, id];
-      cartItemsVar(updatedItems);
-      return updatedItems;
-    },
-  },
-};
-
-const cache: InMemoryCache = new InMemoryCache({
-  typePolicies: {
-    Query: {
-      fields: {
-        cartItems() {
-          return cartItemsVar();
-        }
-      }
-    }
-  }
-});
-
-const cartItemsVar = cache.makeLocalVar<string[]>([]);
 
 // Set up our apollo-client to point at the server we created
 // this can be local or a remote endpoint
@@ -94,8 +30,8 @@ const client: ApolloClient<NormalizedCacheObject> = new ApolloClient({
     'client-name': 'Space Explorer [web]',
     'client-version': '1.0.0',
   },
-  resolvers,
   typeDefs,
+  resolvers: {},
 });
 
 cache.writeData({
