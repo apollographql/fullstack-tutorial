@@ -7,7 +7,10 @@ import * as LoginTypes from './__generated__/login';
 
 export const LOGIN_USER = gql`
   mutation Login($email: String!) {
-    login(email: $email)
+    login(email: $email) {
+      id
+      token
+    }
   }
 `;
 
@@ -16,7 +19,8 @@ export default function Login() {
     LOGIN_USER,
     {
       onCompleted({ login }) {
-        localStorage.setItem('token', login as string);
+        localStorage.setItem('token', login.token as string);
+        localStorage.setItem('userId', login.id as string);
         isLoggedInVar(true);
 
         // TODO: This redirect is temporary. Eventually `makeLocalVar`
