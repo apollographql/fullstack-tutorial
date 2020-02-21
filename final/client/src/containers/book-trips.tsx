@@ -3,6 +3,7 @@ import { gql, useMutation } from '@apollo/client';
 
 import Button from '../components/button';
 import { GET_LAUNCH } from './cart-item';
+import { cartItemsVar } from '../cache';
 import * as GetCartItemsTypes from '../pages/__generated__/GetCartItems';
 import * as BookTripsTypes from './__generated__/BookTrips';
 
@@ -30,9 +31,6 @@ const BookTrips: React.FC<BookTripsProps> = ({ cartItems }) => {
         query: GET_LAUNCH,
         variables: { launchId },
       })),
-      update(cache) {
-        cache.writeData({ data: { cartItems: [] } });
-      }
     }
   );
 
@@ -40,8 +38,12 @@ const BookTrips: React.FC<BookTripsProps> = ({ cartItems }) => {
     ? <p data-testid="message">{data.bookTrips.message}</p>
     : (
       <Button
-        onClick={() => bookTrips()}
-        data-testid="book-button">
+        onClick={async () => {
+          await bookTrips();
+          cartItemsVar([]);
+        }}
+        data-testid="book-button"
+      >
         Book All
       </Button>
     );
