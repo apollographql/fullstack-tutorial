@@ -21,7 +21,6 @@ export interface LaunchDetails_launch_mission {
 
 export interface LaunchDetails_launch {
   __typename: "Launch";
-  isInCart: boolean;
   site: string | null;
   rocket: LaunchDetails_launch_rocket | null;
   id: string;

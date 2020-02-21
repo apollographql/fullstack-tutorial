@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { gql, useMutation } from '@apollo/client';
+import { gql, useMutation, Reference } from '@apollo/client';
 
 import { GET_LAUNCH_DETAILS } from '../pages/launch';
 import Button from '../components/button';
@@ -29,6 +29,22 @@ const CancelTripButton: React.FC<ActionButtonProps> = ({ id }) => {
     CANCEL_TRIP,
     {
       variables: { launchId: id },
+      update(cache, { data: { cancelTrip } }) {
+        // Update the users list of trips in the cache to remove the trip that
+        // was just cancelled.
+        const launch = cancelTrip.launches[0];
+        cache.modify(
+          `User:${localStorage.getItem('userId')}`,
+          {
+            trips(existingTrips, { toReference }) {
+              const launchRef = toReference(launch);
+              return existingTrips.filter(
+                (tripRef: Reference) => tripRef === launchRef
+              );
+            }
+          }
+        );
+      }
     }
   );
 
