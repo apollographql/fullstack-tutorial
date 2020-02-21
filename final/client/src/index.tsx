@@ -34,12 +34,6 @@ const client: ApolloClient<NormalizedCacheObject> = new ApolloClient({
   resolvers: {},
 });
 
-cache.writeData({
-  data: {
-    isLoggedIn: !!localStorage.getItem('token'),
-  },
-});
-
 /**
  * Render our app
  * - We wrap the whole app with ApolloProvider, so any component in the app can
@@ -63,7 +57,6 @@ function IsLoggedIn() {
 
 injectStyles();
 ReactDOM.render(
-
   <ApolloProvider client={client}>
     <IsLoggedIn />
   </ApolloProvider>,

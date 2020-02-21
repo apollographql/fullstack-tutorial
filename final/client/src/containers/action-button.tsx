@@ -29,12 +29,6 @@ const CancelTripButton: React.FC<ActionButtonProps> = ({ id }) => {
     CANCEL_TRIP,
     {
       variables: { launchId: id },
-      refetchQueries: [
-        {
-          query: GET_LAUNCH_DETAILS,
-          variables: { launchId: id },
-        },
-      ]
     }
   );
 

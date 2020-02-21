@@ -4,6 +4,7 @@ import LogoutButton from '../logout-button';
 import gql from 'graphql-tag';
 
 import { renderApollo, cleanup, fireEvent } from '../../test-utils';
+import { isLoggedInVar } from '../../cache';
 
 describe('logout button', () => {
   // automatically unmount and cleanup DOM after the test is finished.
@@ -15,7 +16,7 @@ describe('logout button', () => {
 
   it('complete logout', async () => {
     const cache = new InMemoryCache();
-    cache.writeData({ data: { isLoggedIn: true } });
+    isLoggedInVar(true);
     localStorage.setItem('token', 'testTokenValue');
     const { getByTestId } = renderApollo(<LogoutButton />, { cache });
 
