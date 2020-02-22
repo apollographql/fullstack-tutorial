@@ -22,7 +22,7 @@ export const BOOK_TRIPS = gql`
 interface BookTripsProps extends GetCartItemsTypes.GetCartItems {}
 
 const BookTrips: React.FC<BookTripsProps> = ({ cartItems }) => {
-  const [bookTrips, { data }] = useMutation<
+  const [bookTrips, { data, client }] = useMutation<
     BookTripsTypes.BookTrips,
     BookTripsTypes.BookTripsVariables
   >(
@@ -40,13 +40,9 @@ const BookTrips: React.FC<BookTripsProps> = ({ cartItems }) => {
           await bookTrips();
           cartItemsVar([]);
 
-          // TODO: This redirect is temporary. Eventually `makeVar`
-          // (which is used to create `cartItemsVar`) will broadcast changes
-          // which will result in the `GET_CART_ITEMS` query in `cart.tsx`
-          // automatically re-running, and refreshing the app to show the
-          // cart is empty. For now though, this redirect will force the query
-          // to re-run and show the empty cart.
-          window.location.href = '/cart';
+          // TODO: This is temporary. We're still working on
+          // the broadcast query side of `makeVar`.
+          (client as any).queryManager.broadcastQueries();
         }}
         data-testid="book-button"
       >
