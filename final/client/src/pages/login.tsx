@@ -15,7 +15,10 @@ export const LOGIN_USER = gql`
 `;
 
 export default function Login() {
-  const [login, { loading, error }] = useMutation<LoginTypes.login, LoginTypes.loginVariables>(
+  const [login, { loading, error, client }] = useMutation<
+    LoginTypes.login,
+    LoginTypes.loginVariables
+  >(
     LOGIN_USER,
     {
       onCompleted({ login }) {
@@ -23,13 +26,9 @@ export default function Login() {
         localStorage.setItem('userId', login.id as string);
         isLoggedInVar(true);
 
-        // TODO: This redirect is temporary. Eventually `makeVar`
-        // (which is used to create `isLoggedInVar`) will broadcast changes
-        // which will result in the `IS_LOGGED_IN` query in `index.tsx`
-        // automatically re-running, and refreshing the app to show the user
-        // is logged in. For now though, this redirect will force the query to
-        // re-run and show the logged in state.
-        window.location.href = '/';
+        // TODO: This is temporary. We're still working on
+        // the broadcast query side of `makeVar`.
+        (client as any).queryManager.broadcastQueries();
       }
     }
   );
