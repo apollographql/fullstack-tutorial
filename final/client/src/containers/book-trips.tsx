@@ -40,7 +40,7 @@ const BookTrips: React.FC<BookTripsProps> = ({ cartItems }) => {
           await bookTrips();
           cartItemsVar([]);
 
-          // TODO: This redirect is temporary. Eventually `makeLocalVar`
+          // TODO: This redirect is temporary. Eventually `makeVar`
           // (which is used to create `cartItemsVar`) will broadcast changes
           // which will result in the `GET_CART_ITEMS` query in `cart.tsx`
           // automatically re-running, and refreshing the app to show the

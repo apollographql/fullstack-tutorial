@@ -35,7 +35,7 @@ const LogoutButton = () => {
         // state know we're now logged out.
         isLoggedInVar(false);
 
-        // TODO: This redirect is temporary. Eventually `makeLocalVar`
+        // TODO: This redirect is temporary. Eventually `makeVar`
         // (which is used to create `isLoggedInVar`) will broadcast changes
         // which will result in the `IS_LOGGED_IN` query in `index.tsx`
         // automatically re-running, and refreshing the app to show the login

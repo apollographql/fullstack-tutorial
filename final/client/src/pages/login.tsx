@@ -23,7 +23,7 @@ export default function Login() {
         localStorage.setItem('userId', login.id as string);
         isLoggedInVar(true);
 
-        // TODO: This redirect is temporary. Eventually `makeLocalVar`
+        // TODO: This redirect is temporary. Eventually `makeVar`
         // (which is used to create `isLoggedInVar`) will broadcast changes
         // which will result in the `IS_LOGGED_IN` query in `index.tsx`
         // automatically re-running, and refreshing the app to show the user
