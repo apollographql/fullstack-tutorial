@@ -66,23 +66,28 @@ const CancelTripButton: React.FC<ActionButtonProps> = ({ id }) => {
 const ToggleTripButton: React.FC<ActionButtonProps> = ({ id }) => {
   const cartItems = cartItemsVar();
   const isInCart = id ? cartItems.includes(id) : false;
-  const [inCart, setInCart] = useState(isInCart);
+  const [, toggleTrip] = useState(isInCart);
   return (
     <div>
       <Button
         onClick={() => {
           if (id) {
             cartItemsVar(
-              inCart
+              isInCart
                 ? cartItems.filter((i) => i !== id)
                 : [...cartItems, id]
             );
-            setInCart(!isInCart);
+            // Toggling the trip using state here is temporary. When
+            // changes to the `cartItemsVar` variable are broadcast
+            // (which is being worked on), the parent query will re-rerun
+            // and this component will be automatically re-rendered with the
+            // updated trip state.
+            toggleTrip(!isInCart);
           }
         }}
         data-testid={'action-button'}
       >
-        {inCart ? 'Remove from Cart' : 'Add to Cart'}
+        {isInCart ? 'Remove from Cart' : 'Add to Cart'}
       </Button>
     </div>
   );
