@@ -31,5 +31,5 @@ export const cache: InMemoryCache = new InMemoryCache({
 });
 
 export const isLoggedInVar =
-  cache.makeLocalVar<boolean>(!!localStorage.getItem('token'));
-export const cartItemsVar = cache.makeLocalVar<string[]>([]);
+  cache.makeVar<boolean>(!!localStorage.getItem('token'));
+export const cartItemsVar = cache.makeVar<string[]>([]);
