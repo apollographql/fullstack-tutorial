@@ -77,11 +77,7 @@ const ToggleTripButton: React.FC<ActionButtonProps> = ({ id }) => {
                 ? cartItems.filter((i) => i !== id)
                 : [...cartItems, id]
             );
-            // Toggling the trip using state here is temporary. When
-            // changes to the `cartItemsVar` variable are broadcast
-            // (which is being worked on), the parent query will re-rerun
-            // and this component will be automatically re-rendered with the
-            // updated trip state.
+            // Trigger a re-render to pick up the `cartItemsVar` changes.
             toggleTrip(!isInCart);
           }
         }}
