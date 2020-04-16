@@ -27,10 +27,6 @@ const LogoutButton = () => {
         // Let other parts of the application that are relying on logged in
         // state know we're now logged out.
         isLoggedInVar(false);
-
-        // TODO: This is temporary. We're still working on
-        // the broadcast query side of `makeVar`.
-        (client as any).queryManager.broadcastQueries();
       }}
     >
       <ExitIcon />
