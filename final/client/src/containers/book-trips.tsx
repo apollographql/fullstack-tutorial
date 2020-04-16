@@ -22,7 +22,7 @@ export const BOOK_TRIPS = gql`
 interface BookTripsProps extends GetCartItemsTypes.GetCartItems {}
 
 const BookTrips: React.FC<BookTripsProps> = ({ cartItems }) => {
-  const [bookTrips, { data, client }] = useMutation<
+  const [bookTrips, { data }] = useMutation<
     BookTripsTypes.BookTrips,
     BookTripsTypes.BookTripsVariables
   >(
@@ -39,10 +39,6 @@ const BookTrips: React.FC<BookTripsProps> = ({ cartItems }) => {
         onClick={async () => {
           await bookTrips();
           cartItemsVar([]);
-
-          // TODO: This is temporary. We're still working on
-          // the broadcast query side of `makeVar`.
-          (client as any).queryManager.broadcastQueries();
         }}
         data-testid="book-button"
       >

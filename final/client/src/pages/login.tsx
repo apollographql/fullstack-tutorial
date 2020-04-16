@@ -15,7 +15,7 @@ export const LOGIN_USER = gql`
 `;
 
 export default function Login() {
-  const [login, { loading, error, client }] = useMutation<
+  const [login, { loading, error }] = useMutation<
     LoginTypes.login,
     LoginTypes.loginVariables
   >(
@@ -25,10 +25,6 @@ export default function Login() {
         localStorage.setItem('token', login.token as string);
         localStorage.setItem('userId', login.id as string);
         isLoggedInVar(true);
-
-        // TODO: This is temporary. We're still working on
-        // the broadcast query side of `makeVar`.
-        (client as any).queryManager.broadcastQueries();
       }
     }
   );
