@@ -5,31 +5,21 @@ import {
   cleanup,
   waitForElement,
 } from '../../test-utils';
-import Cart, { GET_CART_ITEMS } from '../cart';
+import Cart from '../cart';
+import { cache, cartItemsVar } from '../../cache';
 
 describe('Cart Page', () => {
   // automatically unmount and cleanup DOM after the test is finished.
   afterEach(cleanup);
 
   it('renders with message for empty carts', () => {
-    let mocks = [
-      {
-        request: { query: GET_CART_ITEMS },
-        result: { data: { cartItems: [] } },
-      },
-    ];
-    const { getByTestId } = renderApollo(<Cart />, { mocks });
+    const { getByTestId } = renderApollo(<Cart />, { cache });
     return waitForElement(() => getByTestId('empty-message'));
   });
 
   it('renders cart', () => {
-    let mocks = [
-      {
-        request: { query: GET_CART_ITEMS },
-        result: { data: { cartItems: [1] } },
-      },
-    ];
-    const { getByTestId } = renderApollo(<Cart />, { mocks });
+    const { getByTestId } = renderApollo(<Cart />, { cache });
+    cartItemsVar(['1']);
     return waitForElement(() => getByTestId('book-button'));
   });
 });
