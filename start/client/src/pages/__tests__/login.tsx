@@ -1,16 +1,13 @@
 import React from 'react';
-import { print } from 'graphql';
-import { gql, InMemoryCache } from '@apollo/client';
 
 import {
   renderApollo,
   cleanup,
-  getByTestId,
   fireEvent,
   waitForElement,
-  render,
 } from '../../test-utils';
-import Login, { LOGIN_USER } from '../login';
+import Login, {LOGIN_USER} from '../login';
+import { cache, isLoggedInVar } from '../../cache';
 
 describe('Login Page', () => {
   // automatically unmount and cleanup DOM after the test is finished.
@@ -21,21 +18,29 @@ describe('Login Page', () => {
   });
 
   it('fires login mutation and updates cache after done', async () => {
-    const cache = new InMemoryCache();
+    expect(isLoggedInVar()).toBeFalsy();
+
     const mocks = [
       {
-        request: { query: LOGIN_USER, variables: { email: 'a@a.a' } },
-        result: { data: { login: 'abc' } },
+        request: {query: LOGIN_USER, variables: {email: 'a@a.a'}},
+        result: {
+          data: {
+            login: {
+              id: 'abc123',
+              token: 'def456',
+            },
+          },
+        },
       },
     ];
 
-    const { getByText, getByTestId } = await renderApollo(<Login />, {
+    const {getByText, getByTestId} = await renderApollo(<Login />, {
       mocks,
       cache,
     });
 
     fireEvent.change(getByTestId('login-input'), {
-      target: { value: 'a@a.a' },
+      target: {value: 'a@a.a'},
     });
 
     fireEvent.click(getByText(/log in/i));
@@ -43,15 +48,6 @@ describe('Login Page', () => {
     // login is done if loader is gone
     await waitForElement(() => getByText(/log in/i));
 
-    // check to make sure the cache's contents have been updated
-    const { isLoggedIn } = cache.readQuery({
-      query: gql`
-        {
-          isLoggedIn @client
-        }
-      `,
-    });
-
-    expect(isLoggedIn).toBeTruthy();
+    expect(isLoggedInVar()).toBeTruthy();
   });
 });

@@ -1,5 +1,4 @@
 import React from 'react';
-import { gql, InMemoryCache } from '@apollo/client';
 
 import {
   renderApollo,
@@ -8,6 +7,7 @@ import {
   waitForElement,
 } from '../../test-utils';
 import Login, {LOGIN_USER} from '../login';
+import { cache, isLoggedInVar } from '../../cache';
 
 describe('Login Page', () => {
   // automatically unmount and cleanup DOM after the test is finished.
@@ -18,11 +18,19 @@ describe('Login Page', () => {
   });
 
   it('fires login mutation and updates cache after done', async () => {
-    const cache = new InMemoryCache();
+    expect(isLoggedInVar()).toBeFalsy();
+
     const mocks = [
       {
         request: {query: LOGIN_USER, variables: {email: 'a@a.a'}},
-        result: {data: {login: 'abc'}},
+        result: {
+          data: {
+            login: {
+              id: 'abc123',
+              token: 'def456',
+            },
+          },
+        },
       },
     ];
 
@@ -40,15 +48,6 @@ describe('Login Page', () => {
     // login is done if loader is gone
     await waitForElement(() => getByText(/log in/i));
 
-    // check to make sure the cache's contents have been updated
-    const response: any = cache.readQuery({
-      query: gql`
-        query IsUserLoggedIn {
-          isLoggedIn @client
-        }
-      `,
-    });
-    const {isLoggedIn} = response;
-    expect(isLoggedIn).toBeTruthy();
+    expect(isLoggedInVar()).toBeTruthy();
   });
 });

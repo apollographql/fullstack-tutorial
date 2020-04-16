@@ -1,9 +1,8 @@
 import React from 'react';
-import { InMemoryCache } from '@apollo/client';
 import LogoutButton from '../logout-button';
-import gql from 'graphql-tag';
 
 import { renderApollo, cleanup, fireEvent } from '../../test-utils';
+import { cache, isLoggedInVar } from '../../cache';
 
 describe('logout button', () => {
   // automatically unmount and cleanup DOM after the test is finished.
@@ -14,24 +13,13 @@ describe('logout button', () => {
   });
 
   it('complete logout', async () => {
-    const cache = new InMemoryCache();
-    cache.writeData({ data: { isLoggedIn: true } });
+    isLoggedInVar(true);
     localStorage.setItem('token', 'testTokenValue');
+    localStorage.setItem('userId', 'abc123');
     const { getByTestId } = renderApollo(<LogoutButton />, { cache });
-
     fireEvent.click(getByTestId('logout-button'));
-
-    // check to make sure the cache's contents have been updated
-    const response: any = cache.readQuery({
-      query: gql`
-        query IsUserLoggedIn {
-          isLoggedIn @client
-        }
-      `
-    });
-    const { isLoggedIn } = response;
-
-    expect(isLoggedIn).toBeFalsy();
+    expect(isLoggedInVar()).toBeFalsy();
     expect(localStorage.getItem('token')).toBeNull();
+    expect(localStorage.getItem('userId')).toBeNull();
   });
 });

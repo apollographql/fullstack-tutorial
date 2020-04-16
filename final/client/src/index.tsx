@@ -2,21 +2,26 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {
   ApolloClient,
-  InMemoryCache,
   NormalizedCacheObject,
   ApolloProvider,
   useQuery,
-  gql
+  gql,
 } from '@apollo/client';
 
 import Pages from './pages';
 import Login from './pages/login';
-import { resolvers, typeDefs } from './resolvers';
 import injectStyles from './styles';
+import { cache } from './cache';
+
+export const typeDefs = gql`
+  extend type Query {
+    isLoggedIn: Boolean!
+    cartItems: [ID!]!
+  }
+`;
 
 // Set up our apollo-client to point at the server we created
 // this can be local or a remote endpoint
-const cache = new InMemoryCache();
 const client: ApolloClient<NormalizedCacheObject> = new ApolloClient({
   cache,
   uri: 'http://localhost:4000/graphql',
@@ -25,15 +30,8 @@ const client: ApolloClient<NormalizedCacheObject> = new ApolloClient({
     'client-name': 'Space Explorer [web]',
     'client-version': '1.0.0',
   },
-  resolvers,
   typeDefs,
-});
-
-cache.writeData({
-  data: {
-    isLoggedIn: !!localStorage.getItem('token'),
-    cartItems: [],
-  },
+  resolvers: {},
 });
 
 /**
@@ -59,7 +57,6 @@ function IsLoggedIn() {
 
 injectStyles();
 ReactDOM.render(
-
   <ApolloProvider client={client}>
     <IsLoggedIn />
   </ApolloProvider>,

@@ -10,7 +10,6 @@ import * as LaunchDetailsTypes from './__generated__/LaunchDetails';
 export const GET_LAUNCH_DETAILS = gql`
   query LaunchDetails($launchId: ID!) {
     launch(id: $launchId) {
-      isInCart @client
       site
       rocket {
         type
@@ -29,7 +28,7 @@ const Launch: React.FC<LaunchProps> = ({ launchId }) => {
   const {
     data,
     loading,
-    error
+    error,
   } = useQuery<
     LaunchDetailsTypes.LaunchDetails,
     LaunchDetailsTypes.LaunchDetailsVariables
