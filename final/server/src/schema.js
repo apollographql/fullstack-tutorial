@@ -24,6 +24,9 @@ const typeDefs = gql`
     cancelTrip(launchId: ID!): TripUpdateResponse!
 
     login(email: String): User!
+
+    # for use with the iOS tutorial
+    uploadProfileImage(file: Upload!): User
   }
 
   type TripUpdateResponse {
@@ -60,6 +63,7 @@ const typeDefs = gql`
   type User {
     id: ID!
     email: String!
+    profileImage: String
     trips: [Launch]!
     token: String
   }
