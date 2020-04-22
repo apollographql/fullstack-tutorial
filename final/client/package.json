@@ -19,7 +19,7 @@
     "react": "^16.9.0-alpha.0",
     "react-dom": "^16.9.0-alpha.0",
     "react-emotion": "^9.2.12",
-    "react-scripts": "3.0.1",
+    "react-scripts": "^3.4.1",
     "typescript": "^3.7.3"
   },
   "scripts": {
