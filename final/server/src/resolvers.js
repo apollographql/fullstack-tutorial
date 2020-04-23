@@ -67,6 +67,8 @@ module.exports = {
       const user = await dataSources.userAPI.findOrCreateUser({ email });
       if (user) return new Buffer(email).toString('base64');
     },
+    uploadProfileImage: async(_, { file }, { dataSources }) =>
+      dataSources.userAPI.uploadProfileImage({ file }),
   },
   Launch: {
     isBooked: async (launch, _, { dataSources }) =>
