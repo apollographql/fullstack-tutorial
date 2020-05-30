@@ -20,7 +20,7 @@ module.exports = {
         // last item in _all_ results, then there are no more results after this
         hasMore: launches.length
           ? launches[launches.length - 1].cursor !==
-            allLaunches[allLaunches.length - 1].cursor
+          allLaunches[allLaunches.length - 1].cursor
           : false,
       };
     },
@@ -42,8 +42,8 @@ module.exports = {
           results.length === launchIds.length
             ? 'trips booked successfully'
             : `the following launches couldn't be booked: ${launchIds.filter(
-                id => !results.includes(id),
-              )}`,
+              id => !results.includes(id),
+            )}`,
         launches,
       };
     },
@@ -70,7 +70,7 @@ module.exports = {
         return user;
       }
     },
-    uploadProfileImage: async(_, { file }, { dataSources }) =>
+    uploadProfileImage: async (_, { file }, { dataSources }) =>
       dataSources.userAPI.uploadProfileImage({ file }),
   },
   Launch: {

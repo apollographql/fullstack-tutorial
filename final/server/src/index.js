@@ -5,7 +5,7 @@ const isEmail = require('isemail');
 
 const typeDefs = require('./schema');
 const resolvers = require('./resolvers');
-const { createStore } = require('./utils');
+const { createContext } = require('./utils');
 
 const LaunchAPI = require('./datasources/launch');
 const UserAPI = require('./datasources/user');
@@ -13,12 +13,12 @@ const UserAPI = require('./datasources/user');
 const internalEngineDemo = require('./engine-demo');
 
 // creates a sequelize connection once. NOT for every request
-const store = createStore();
+const { prisma } = createContext();
 
 // set up any dataSources our resolvers need
 const dataSources = () => ({
   launchAPI: new LaunchAPI(),
-  userAPI: new UserAPI({ store }),
+  userAPI: new UserAPI({ prisma }),
 });
 
 // the function that sets up the global context for each resolver, using the req
@@ -30,7 +30,7 @@ const context = async ({ req }) => {
   // if the email isn't formatted validly, return null for user
   if (!isEmail.validate(email)) return { user: null };
   // find a user by their email
-  const users = await store.users.findOrCreate({ where: { email } });
+  const users = await prisma.users.find({ where: { email } });
   const user = users && users[0] ? users[0] : null;
 
   return { user };
@@ -69,6 +69,6 @@ module.exports = {
   ApolloServer,
   LaunchAPI,
   UserAPI,
-  store,
+  prisma,
   server,
 };

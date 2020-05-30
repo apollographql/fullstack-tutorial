@@ -3,19 +3,21 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@apollo/client": "^3.0.0-beta.43",
+    "@apollo/client": "^3.0.0-beta.50",
+    "@emotion/styled": "^10.0.28",
+    "@emotion/styled": "^10.0.27",
     "@reach/router": "^1.2.1",
-    "@types/node": "^12.12.14",
+    "@types/node": "^14.0.6",
     "@types/reach__router": "^1.2.6",
     "@types/react": "^16.9.15",
     "@types/react-dom": "^16.9.4",
-    "emotion": "^9.2.12",
+    "emotion": "^10.0.27",
     "graphql": "^14.4.2",
     "polished": "^3.4.1",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
-    "react-emotion": "^9.2.12",
-    "react-scripts": "3.0.1",
+    "@emotion/styled": "^10.0.0",
+    "react-scripts": "3.4.1",
     "typescript": "^3.7.3"
   },
   "scripts": {
@@ -36,9 +38,9 @@
     "not op_mini all"
   ],
   "devDependencies": {
-    "@testing-library/jest-dom": "^4.0.0",
-    "@testing-library/react": "^8.0.7",
-    "@types/jest": "^24.0.23",
+    "@testing-library/jest-dom": "^5.9.0",
+    "@testing-library/react": "^10.0.4",
+    "@types/jest": "^25.2.3",
     "apollo": "^2.16.3",
     "artillery": "^1.6.0-26",
     "npm-watch": "^0.6.0"

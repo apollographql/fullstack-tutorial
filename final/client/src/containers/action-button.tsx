@@ -22,7 +22,7 @@ export const CANCEL_TRIP = gql`
   }
 `;
 
-interface ActionButtonProps extends Partial<LaunchDetailTypes.LaunchDetails_launch> {}
+interface ActionButtonProps extends Partial<LaunchDetailTypes.LaunchDetails_launch> { }
 
 const CancelTripButton: React.FC<ActionButtonProps> = ({ id }) => {
   const [mutate, { loading, error }] = useMutation(
@@ -33,17 +33,17 @@ const CancelTripButton: React.FC<ActionButtonProps> = ({ id }) => {
         // Update the users list of trips in the cache to remove the trip that
         // was just cancelled.
         const launch = cancelTrip.launches[0];
-        cache.modify(
-          `User:${localStorage.getItem('userId')}`,
-          {
-            trips(existingTrips, { toReference }) {
-              const launchRef = toReference(launch);
-              return existingTrips.filter(
-                (tripRef: Reference) => tripRef === launchRef
-              );
-            }
-          }
-        );
+        // cache.modify(
+        //   `User:${localStorage.getItem('userId')}`,
+        //   {
+        //     trips(existingTrips, { toReference }) {
+        //       const launchRef = toReference(launch);
+        //       return existingTrips.filter(
+        //         (tripRef: Reference) => tripRef === launchRef
+        //       );
+        //     }
+        //   }
+        // );
       }
     }
   );

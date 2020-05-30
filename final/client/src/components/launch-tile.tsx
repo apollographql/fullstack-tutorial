@@ -1,5 +1,6 @@
 import React from 'react';
-import styled, { css } from 'react-emotion';
+import styled from '@emotion/styled';
+import { css } from '@emotion/core';
 import { Link } from '@reach/router';
 
 import galaxy from '../assets/images/galaxy.jpg';

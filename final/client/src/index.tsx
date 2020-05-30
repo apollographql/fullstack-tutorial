@@ -10,7 +10,7 @@ import {
 
 import Pages from './pages';
 import Login from './pages/login';
-import injectStyles from './styles';
+import Global from './styles';
 import { cache } from './cache';
 
 export const typeDefs = gql`
@@ -55,9 +55,10 @@ function IsLoggedIn() {
   return data.isLoggedIn ? <Pages /> : <Login />;
 }
 
-injectStyles();
+
 ReactDOM.render(
   <ApolloProvider client={client}>
+    <Global />
     <IsLoggedIn />
   </ApolloProvider>,
   document.getElementById('root'),

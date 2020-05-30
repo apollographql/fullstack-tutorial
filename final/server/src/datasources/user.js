@@ -5,9 +5,9 @@ const uuidv4 = require('uuid/v4');
 const { DataSource } = require('apollo-datasource');
 
 class UserAPI extends DataSource {
-  constructor({ store }) {
+  constructor({ prisma }) {
     super();
-    this.store = store;
+    this.prisma = prisma;
   }
 
   /**
@@ -30,8 +30,14 @@ class UserAPI extends DataSource {
       this.context && this.context.user ? this.context.user.email : emailArg;
     if (!email || !isEmail.validate(email)) return null;
 
-    const users = await this.store.users.findOrCreate({ where: { email } });
-    return users && users[0] ? users[0] : null;
+    // const users = await this.prisma.users.findMany();
+    // const user = await this.prisma.users.findOne({ where: { email } });
+    // console.log(user);
+    // if (user) return user;
+
+    const user = await this.prisma.users.create({ data: { email } });
+    console.log(user);
+    return user || null;
   }
 
   async bookTrips({ launchIds }) {
@@ -52,20 +58,20 @@ class UserAPI extends DataSource {
 
   async bookTrip({ launchId }) {
     const userId = this.context.user.id;
-    const res = await this.store.trips.findOrCreate({
-      where: { userId, launchId },
+    const res = await this.prisma.trips.create({
+      data: { userId, launchId },
     });
-    return res && res.length ? res[0].get() : false;
+    return !!res;
   }
 
   async cancelTrip({ launchId }) {
     const userId = this.context.user.id;
-    return !!this.store.trips.destroy({ where: { userId, launchId } });
+    return !!this.prisma.trips.delete({ where: { userId, launchId } });
   }
 
   async getLaunchIdsByUser() {
     const userId = this.context.user.id;
-    const found = await this.store.trips.findAll({
+    const found = await this.prisma.trips.findMany({
       where: { userId },
     });
     return found && found.length
@@ -76,7 +82,7 @@ class UserAPI extends DataSource {
   async isBookedOnLaunch({ launchId }) {
     if (!this.context || !this.context.user) return false;
     const userId = this.context.user.id;
-    const found = await this.store.trips.findAll({
+    const found = await this.prisma.trips.findMany({
       where: { userId, launchId },
     });
     return found && found.length > 0;
@@ -118,5 +124,5 @@ class UserAPI extends DataSource {
     });
   }
 }
-    
+
 module.exports = UserAPI;
