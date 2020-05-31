@@ -5,9 +5,9 @@ const uuidv4 = require('uuid/v4');
 const { DataSource } = require('apollo-datasource');
 
 class UserAPI extends DataSource {
-  constructor({ prisma }) {
+  constructor({ store }) {
     super();
-    this.prisma = prisma;
+    this.store = store;
   }
 
   /**
@@ -26,15 +26,16 @@ class UserAPI extends DataSource {
    * instead
    */
   async findOrCreateUser({ email: emailArg } = {}) {
-     const email =
+    const email =
       this.context && this.context.user ? this.context.user.email : emailArg;
+
     if (!email || !isEmail.validate(email)) return null;
 
-    const users = await this.prisma.user.findMany({ where: { email } });
-    if (users.length) return users[0] ? users[0] : null;
+    const users = await this.store.user.findMany({ where: { email } });
+    if (users && users.length) return users[0] ? users[0] : null;
 
-    const user = await this.prisma.user.create({ data: { email } });
-    return user;
+    const user = await this.store.user.create({ data: { email } });
+    return user || null;
   }
 
   async bookTrips({ launchIds }) {
@@ -47,8 +48,10 @@ class UserAPI extends DataSource {
     // if successful
     for (const launchId of launchIds) {
       const res = await this.bookTrip({ launchId });
+      console.log(res);
       if (res) results.push(res);
     }
+    console.log(results);
 
     return results;
   }
@@ -57,7 +60,7 @@ class UserAPI extends DataSource {
     const userId = this.context.user.id;
     if (!userId) return null;
 
-    const res = await this.prisma.trip.create({
+    const res = await this.store.trip.create({
       data: {
         launchId,
         User: {
@@ -65,18 +68,19 @@ class UserAPI extends DataSource {
         }
       },
     });
-    return res;
+
+    return launchId;
   }
 
   async cancelTrip({ launchId }) {
     const userId = this.context.user.id;
-    return this.prisma.trip.deleteMany({ where: { userId, launchId } });
+    return this.store.trip.deleteMany({ where: { userId, launchId } });
   }
 
   async getLaunchIdsByUser() {
     const userId = this.context.user.id;
 
-    const found = await this.prisma.trip.findMany({
+    const found = await this.store.trip.findMany({
       where: { userId },
     });
 
@@ -89,7 +93,7 @@ class UserAPI extends DataSource {
     if (!this.context || !this.context.user) return false;
     const userId = this.context.user.id;
 
-    const found = await this.prisma.trip.findMany({
+    const found = await this.store.trip.findMany({
       where: { userId },
     });
 

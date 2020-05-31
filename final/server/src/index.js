@@ -18,7 +18,7 @@ const { prisma } = createContext();
 // set up any dataSources our resolvers need
 const dataSources = () => ({
   launchAPI: new LaunchAPI(),
-  userAPI: new UserAPI({ prisma }),
+  userAPI: new UserAPI({ store: prisma }),
 });
 
 // the function that sets up the global context for each resolver, using the req
