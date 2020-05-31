@@ -34,6 +34,7 @@ class LaunchAPI extends RESTDataSource {
   }
 
   async getLaunchById({ launchId }) {
+    console.log(launchId);
     const res = await this.get('launches', { flight_number: launchId });
     return this.launchReducer(res[0]);
   }

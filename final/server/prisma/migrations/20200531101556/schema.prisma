@@ -4,7 +4,7 @@ generator client {
 
 datasource db {
   provider = "sqlite"
-  url      = "file:dev.db"
+  url = "***"
 }
 
 model User {
@@ -17,7 +17,7 @@ model User {
 
 model Trip {
   id       Int  @default(autoincrement()) @id
-  launchId String?
+  launchId Int?
   User     User @relation(fields: [userId], references: [id])
   userId Int
 }

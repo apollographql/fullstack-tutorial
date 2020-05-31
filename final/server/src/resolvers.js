@@ -66,7 +66,7 @@ module.exports = {
     login: async (_, { email }, { dataSources }) => {
       const user = await dataSources.userAPI.findOrCreateUser({ email });
       if (user) {
-        user.token = new Buffer(email).toString('base64');
+        user.token = new Buffer.from(email).toString('base64');
         return user;
       }
     },
@@ -89,6 +89,8 @@ module.exports = {
     trips: async (_, __, { dataSources }) => {
       // get ids of launches by user
       const launchIds = await dataSources.userAPI.getLaunchIdsByUser();
+
+      console.log('getLaunchIdsByUser:', launchIds);
 
       if (!launchIds.length) return [];
 
