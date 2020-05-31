@@ -48,10 +48,8 @@ class UserAPI extends DataSource {
     // if successful
     for (const launchId of launchIds) {
       const res = await this.bookTrip({ launchId });
-      console.log(res);
       if (res) results.push(res);
     }
-    console.log(results);
 
     return results;
   }
@@ -69,12 +67,12 @@ class UserAPI extends DataSource {
       },
     });
 
-    return launchId;
+    return res && res.length ? res[0].get() : false;
   }
 
   async cancelTrip({ launchId }) {
     const userId = this.context.user.id;
-    return this.store.trip.deleteMany({ where: { userId, launchId } });
+    return !!this.store.trip.deleteMany({ where: { userId, launchId } });
   }
 
   async getLaunchIdsByUser() {
@@ -84,9 +82,11 @@ class UserAPI extends DataSource {
       where: { userId },
     });
 
-    return found && found.length
-      ? found.map(({ launchId }) => launchId).filter(l => !!l)
+    const res = found && found.length
+      ? found.map(({ launchId }) => launchId)
       : [];
+    
+    return res;
   }
 
   async isBookedOnLaunch({ launchId }) {

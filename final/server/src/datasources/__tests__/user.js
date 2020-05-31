@@ -70,44 +70,44 @@ describe('[UserAPI.bookTrips]', () => {
   });
 });
 
-// describe('[UserAPI.cancelTrip]', () => {
-//   it('calls store destroy and returns result', async () => {
-//     const args = { userId: 1, launchId: 1 };
-//     mockStore.trips.destroy.mockReturnValueOnce('heya');
+describe('[UserAPI.cancelTrip]', () => {
+  it('calls store destroy and returns result', async () => {
+    const args = { userId: 1, launchId: 1 };
+    mockStore.trip.deleteMany.mockReturnValueOnce('heya');
 
-//     // check the result of the fn
-//     const res = await ds.cancelTrip(args);
-//     expect(res).toEqual(true);
+    // check the result of the fn
+    const res = await ds.cancelTrip(args);
+    expect(res).toEqual(true);
 
-//     // make sure store is called properly
-//     expect(mockStore.trips.destroy).toBeCalledWith({ where: args });
-//   });
-// });
+    // make sure store is called properly
+    expect(mockStore.trip.deleteMany).toBeCalledWith({ where: args });
+  });
+});
 
-// describe('[UserAPI.getLaunchIdsByUser]', () => {
-//   it('looks up launches by user', async () => {
-//     const args = { userId: 1 };
-//     const launches = [
-//       { dataValues: { launchId: 1 } },
-//       { dataValues: { launchId: 2 } },
-//     ];
-//     mockStore.trips.findAll.mockReturnValueOnce(launches);
+describe('[UserAPI.getLaunchIdsByUser]', () => {
+  it('looks up launches by user', async () => {
+    const args = { userId: 1 };
+    const launches = [
+      { launchId: 1 },
+      { launchId: 2 },
+    ];
+    mockStore.trip.findMany.mockReturnValueOnce(launches);
 
-//     // check the result of the fn
-//     const res = await ds.getLaunchIdsByUser(args);
-//     expect(res).toEqual([1, 2]);
+    // check the result of the fn
+    const res = await ds.getLaunchIdsByUser(args);
+    expect(res).toEqual([1, 2]);
 
-//     // make sure store is called properly
-//     expect(mockStore.trips.findAll).toBeCalledWith({ where: args });
-//   });
+    // make sure store is called properly
+    expect(mockStore.trip.findMany).toBeCalledWith({ where: args });
+  });
 
-//   it('returns empty array if nothing found', async () => {
-//     const args = { userId: 1 };
-//     // store lookup is not mocked to return anything, so this
-//     // simulates a failed lookup
+  it('returns empty array if nothing found', async () => {
+    const args = { userId: 1 };
+    // store lookup is not mocked to return anything, so this
+    // simulates a failed lookup
 
-//     // check the result of the fn
-//     const res = await ds.getLaunchIdsByUser(args);
-//     expect(res).toEqual([]);
-//   });
-// });
+    // check the result of the fn
+    const res = await ds.getLaunchIdsByUser(args);
+    expect(res).toEqual([]);
+  });
+});
