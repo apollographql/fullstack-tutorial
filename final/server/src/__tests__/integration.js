@@ -79,8 +79,8 @@ describe('Queries', () => {
     // lookup in the RESTDataSource or the store query in the Sequelize datasource
     launchAPI.get = jest.fn(() => [mockLaunchResponse]);
     userAPI.store = mockStore;
-    userAPI.store.trips.findAll.mockReturnValueOnce([
-      {dataValues: {launchId: 1}},
+    userAPI.store.trip.findMany.mockReturnValueOnce([
+      { launchId: 1 },
     ]);
 
     // use our test server as input to the createTestClient fn
@@ -98,8 +98,8 @@ describe('Queries', () => {
 
     launchAPI.get = jest.fn(() => [mockLaunchResponse]);
     userAPI.store = mockStore;
-    userAPI.store.trips.findAll.mockReturnValueOnce([
-      {dataValues: {launchId: 1}},
+    userAPI.store.trip.findMany.mockReturnValueOnce([
+      { launchId: 1 },
     ]);
 
     const {query} = createTestClient(server);
@@ -115,7 +115,7 @@ describe('Mutations', () => {
     });
 
     userAPI.store = mockStore;
-    userAPI.store.users.findOrCreate.mockReturnValueOnce([
+    userAPI.store.user.findMany.mockReturnValueOnce([
       {id: 1, email: 'a@a.a'},
     ]);
 
@@ -142,12 +142,12 @@ describe('Mutations', () => {
 
     // book the trip in the store
     userAPI.store = mockStore;
-    userAPI.store.trips.findOrCreate
+    userAPI.store.trip.create
       .mockReturnValueOnce([{get: () => ({launchId: 1})}])
       .mockReturnValueOnce([{get: () => ({launchId: 2})}]);
 
     // check if user is booked
-    userAPI.store.trips.findAll.mockReturnValue([{}]);
+    userAPI.store.trip.findMany.mockReturnValue([{}]);
 
     const {mutate} = createTestClient(server);
     const res = await mutate({
