@@ -49,7 +49,8 @@ const Launches: React.FC<LaunchesProps> = () => {
   const [isLoadingMore, setIsLoadingMore] = useState(false);
 
   if (loading) return <Loading />;
-  if (error || !data) return <p>ERROR</p>;
+  if (error || !data) return <p>ERROR {error?.message}</p>;
+  if (!data) return <p>ERROR: Not Found</p>;
 
   return (
     <Fragment>

@@ -27,12 +27,10 @@ const context = async ({ req }) => {
   const auth = (req.headers && req.headers.authorization) || '';
   const email = new Buffer.from(auth, 'base64').toString('ascii');
 
-  console.log('email:', email);
-
   if (!isEmail.validate(email)) return { user: null };
 
   // find a user by their email
-  const users = await prisma.user.findMany({ where: email });
+  const users = await prisma.user.findMany({ where: { email } });
   const user = users && users[0] ? users[0] : null;
 
   return { user };

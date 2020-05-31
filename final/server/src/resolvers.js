@@ -90,8 +90,6 @@ module.exports = {
       // get ids of launches by user
       const launchIds = await dataSources.userAPI.getLaunchIdsByUser();
 
-      console.log('getLaunchIdsByUser:', launchIds);
-
       if (!launchIds.length) return [];
 
       // look up those launches by their ids

@@ -38,12 +38,8 @@ class UserAPI extends DataSource {
   }
 
   async bookTrips({ launchIds }) {
-    console.log('trying to book a trip');
-    let userId = 1.
-
-    // let userId = this.context.user.id;
-    console.log('context.user:', this.context.user);
-    console.log('booking launches', userId);
+    const userId = this.context.user.id;
+    if (!userId) return null;
 
     let results = [];
 
@@ -58,8 +54,8 @@ class UserAPI extends DataSource {
   }
 
   async bookTrip({ launchId }) {
-    const userId = 1;
-    console.log('context.user:', this.context.user);
+    const userId = this.context.user.id;
+    if (!userId) return null;
 
     const res = await this.prisma.trip.create({
       data: {
@@ -74,30 +70,29 @@ class UserAPI extends DataSource {
 
   async cancelTrip({ launchId }) {
     const userId = this.context.user.id;
-    return !!this.prisma.trip.delete({ where: { userId, launchId } });
+    return this.prisma.trip.deleteMany({ where: { userId, launchId } });
   }
 
   async getLaunchIdsByUser() {
     const userId = this.context.user.id;
-    console.log(userId);
 
     const found = await this.prisma.trip.findMany({
-      where: { userId: 1 },
+      where: { userId },
     });
 
-    console.log(found);
-
     return found && found.length
-      ? found.map(l => l.dataValues.launchId).filter(l => !!l)
+      ? found.map(({ launchId }) => launchId).filter(l => !!l)
       : [];
   }
 
   async isBookedOnLaunch({ launchId }) {
     if (!this.context || !this.context.user) return false;
     const userId = this.context.user.id;
+
     const found = await this.prisma.trip.findMany({
-      where: { userId, launchId },
+      where: { userId },
     });
+
     return found && found.length > 0;
   }
 
