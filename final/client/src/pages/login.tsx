@@ -16,8 +16,8 @@ export const LOGIN_USER = gql`
 
 export default function Login() {
   const [login, { loading, error }] = useMutation<
-    LoginTypes.login,
-    LoginTypes.loginVariables
+    LoginTypes.Login,
+    LoginTypes.LoginVariables
   >(
     LOGIN_USER,
     {

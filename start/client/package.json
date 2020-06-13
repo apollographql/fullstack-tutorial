@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@apollo/client": "^3.0.0-beta.24",
+    "@apollo/client": "^3.0.0-rc.4",
     "@reach/router": "^1.2.1",
     "@types/node": "^12.12.14",
     "@types/reach__router": "^1.2.6",
