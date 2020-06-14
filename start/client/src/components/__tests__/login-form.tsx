@@ -8,6 +8,6 @@ describe('Login Form', () => {
   afterEach(cleanup);
 
   it('renders without error', () => {
-    render(<LoginForm />);
+    render(<LoginForm login={() => {}}/>);
   });
 });
