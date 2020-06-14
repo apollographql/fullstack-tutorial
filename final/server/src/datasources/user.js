@@ -118,5 +118,5 @@ class UserAPI extends DataSource {
     });
   }
 }
-    
+
 module.exports = UserAPI;
