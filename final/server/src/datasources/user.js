@@ -82,6 +82,10 @@ class UserAPI extends DataSource {
     return found && found.length > 0;
   }
 
+  countTrips() {
+    return this.store.trips.count();
+  }
+
   /**
    * This function is currently only used by the iOS tutorial to upload a
    * profile image to S3 and update the user row

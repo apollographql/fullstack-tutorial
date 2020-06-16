@@ -16,6 +16,7 @@
     "react-dom": "^16.12.0",
     "react-emotion": "^9.2.12",
     "react-scripts": "^3.4.1",
+    "subscriptions-transport-ws": "^0.9.16",
     "typescript": "^3.7.3"
   },
   "scripts": {

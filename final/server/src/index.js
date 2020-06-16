@@ -20,7 +20,11 @@ const dataSources = () => ({
 });
 
 // the function that sets up the global context for each resolver, using the req
-const context = async ({ req }) => {
+const context = async ({ req, connection }) => {
+  if (connection) {
+    return connection.context;
+  }
+
   // simple auth check on every request
   const auth = (req.headers && req.headers.authorization) || '';
   const email = Buffer.from(auth, 'base64').toString('ascii');
@@ -49,13 +53,12 @@ const server = new ApolloServer({
 // Start our server if we're not in a test env.
 // if we're in a test env, we'll manually start it in a test
 if (process.env.NODE_ENV !== 'test') {
-  server.listen().then(() => {
-    console.log(`
-      Server is running!
-      Listening on port 4000
-      Explore at https://studio.apollographql.com/sandbox
-    `);
-  });
+  server
+    .listen({ port: process.env.PORT || 4000 })
+    .then(({ url, subscriptionsUrl }) => {
+      console.log(`🚀 Server ready at ${url}`)
+      console.log(`🚀 Subscriptions ready at ${subscriptionsUrl}`)
+    });
 }
 
 // export all the important pieces for integration/e2e tests to use
