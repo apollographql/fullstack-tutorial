@@ -18,7 +18,7 @@ const typeDefs = gql`
     ): LaunchConnection!
     launch(id: ID!): Launch
     me: User
-    tripsBooked: Int
+    totalTripsBooked: Int
   }
 
   type Mutation {

@@ -5,7 +5,7 @@ import gql from 'graphql-tag';
 
 const TRIPS_QUERY = gql`
   query TripsQuery {
-    tripsBooked
+    totalTripsBooked
   }
 `;
 
@@ -16,13 +16,22 @@ const TRIPS_SUBSCRIPTION = gql`
 `;
 
 function TripCounterInner(props: any) {
-  useEffect(() => props.subscribeToMore({
-    document: TRIPS_SUBSCRIPTION,
-    updateQuery: (prev: any, { subscriptionData }: { subscriptionData: any }) => ({
-      ...prev,
-      tripsBooked: prev.tripsBooked + subscriptionData.data.tripsBooked
+  useEffect(() =>
+    props.subscribeToMore({
+      document: TRIPS_SUBSCRIPTION,
+      updateQuery: (
+        prev: any,
+        { subscriptionData }: { subscriptionData: any }
+      ) => {
+        const totalTripsBooked =
+          prev.totalTripsBooked + subscriptionData.data.tripsBooked;
+        return {
+          ...prev,
+          totalTripsBooked
+        };
+      }
     })
-  }))
+  )
 
   return <p>Trips booked: {props.tripsBooked}</p>
 }
@@ -40,7 +49,7 @@ export default function TripCounter() {
 
   return (
     <TripCounterInner
-      tripsBooked={data.tripsBooked}
+      tripsBooked={data.totalTripsBooked}
       subscribeToMore={subscribeToMore}
     />
   )
