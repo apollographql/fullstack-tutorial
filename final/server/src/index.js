@@ -22,7 +22,11 @@ const dataSources = () => ({
 });
 
 // the function that sets up the global context for each resolver, using the req
-const context = async ({ req }) => {
+const context = async ({ req, connection }) => {
+  if (connection) {
+    return connection.context;
+  }
+
   // simple auth check on every request
   const auth = (req.headers && req.headers.authorization) || '';
   const email = new Buffer(auth, 'base64').toString('ascii');
@@ -55,8 +59,9 @@ const server = new ApolloServer({
 if (process.env.NODE_ENV !== 'test') {
   server
     .listen({ port: process.env.PORT || 4000 })
-    .then(({ url }) => {
-      console.log(`🚀 app running at ${url}`)
+    .then(({ url, subscriptionsUrl }) => {
+      console.log(`🚀 Server ready at ${url}`)
+      console.log(`🚀 Subscriptions ready at ${subscriptionsUrl}`)
     });
 }
 

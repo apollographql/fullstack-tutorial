@@ -1,6 +1,15 @@
 const { paginateResults } = require('./utils');
+const { PubSub } = require('apollo-server');
+
+const TRIPS_BOOKED = 'TRIPS_BOOKED';
+const pubsub = new PubSub();
 
 module.exports = {
+  Subscription: {
+    tripsBooked: {
+      subscribe: () => pubsub.asyncIterator(TRIPS_BOOKED)
+    }
+  },
   Query: {
     launches: async (_, { pageSize = 20, after }, { dataSources }) => {
       const allLaunches = await dataSources.launchAPI.getAllLaunches();
@@ -28,6 +37,7 @@ module.exports = {
       dataSources.launchAPI.getLaunchById({ launchId: id }),
     me: async (_, __, { dataSources }) =>
       dataSources.userAPI.findOrCreateUser(),
+    tripsBooked: (_, __, { dataSources }) => dataSources.userAPI.countTrips()
   },
   Mutation: {
     bookTrips: async (_, { launchIds }, { dataSources }) => {
@@ -35,6 +45,8 @@ module.exports = {
       const launches = await dataSources.launchAPI.getLaunchesByIds({
         launchIds,
       });
+      
+      pubsub.publish(TRIPS_BOOKED, { tripsBooked: launches.length });
 
       return {
         success: results && results.length === launchIds.length,
@@ -55,6 +67,8 @@ module.exports = {
           success: false,
           message: 'failed to cancel trip',
         };
+
+      pubsub.publish(TRIPS_BOOKED, { tripsBooked: -1 });
 
       const launch = await dataSources.launchAPI.getLaunchById({ launchId });
       return {
