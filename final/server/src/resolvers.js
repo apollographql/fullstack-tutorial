@@ -37,7 +37,7 @@ module.exports = {
       dataSources.launchAPI.getLaunchById({ launchId: id }),
     me: async (_, __, { dataSources }) =>
       dataSources.userAPI.findOrCreateUser(),
-    tripsBooked: (_, __, { dataSources }) => dataSources.userAPI.countTrips()
+    totalTripsBooked: (_, __, { dataSources }) => dataSources.userAPI.countTrips()
   },
   Mutation: {
     bookTrips: async (_, { launchIds }, { dataSources }) => {
