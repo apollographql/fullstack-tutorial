@@ -3,7 +3,7 @@ import { gql, useMutation } from '@apollo/client';
 
 import { LoginForm, Loading } from '../components';
 import { isLoggedInVar } from '../cache';
-import * as LoginTypes from './__generated__/login';
+import * as LoginTypes from './__generated__/Login';
 
 export const LOGIN_USER = gql`
   mutation Login($email: String!) {
@@ -16,8 +16,8 @@ export const LOGIN_USER = gql`
 
 export default function Login() {
   const [login, { loading, error }] = useMutation<
-    LoginTypes.login,
-    LoginTypes.loginVariables
+    LoginTypes.Login,
+    LoginTypes.LoginVariables
   >(
     LOGIN_USER,
     {
