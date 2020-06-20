@@ -4,9 +4,10 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL query operation: GetCartItems
+// GraphQL fragment: RemoveLaunch
 // ====================================================
 
-export interface GetCartItems {
-  cartItems: string[];
+export interface RemoveLaunch {
+  __typename: "Launch";
+  id: string;
 }

@@ -1,7 +1,7 @@
 const S3 = require('aws-sdk/clients/s3');
 const isEmail = require('isemail');
 const mime = require('mime');
-const uuidv4 = require('uuid/v4');
+const { v4: uuidv4 } = require('uuid');
 const { DataSource } = require('apollo-datasource');
 
 class UserAPI extends DataSource {

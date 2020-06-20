@@ -33,17 +33,24 @@ const CancelTripButton: React.FC<ActionButtonProps> = ({ id }) => {
         // Update the users list of trips in the cache to remove the trip that
         // was just cancelled.
         const launch = cancelTrip.launches[0];
-        // cache.modify(
-        //   `User:${localStorage.getItem('userId')}`,
-        //   {
-        //     trips(existingTrips, { toReference }) {
-        //       const launchRef = toReference(launch);
-        //       return existingTrips.filter(
-        //         (tripRef: Reference) => tripRef === launchRef
-        //       );
-        //     }
-        //   }
-        // );
+        cache.modify({
+          id: `User:${localStorage.getItem('userId')}`,
+          fields: {
+            trips(existingTrips) {
+              const launchRef = cache.writeFragment({
+                data: launch,
+                fragment: gql`
+                  fragment RemoveLaunch on Launch {
+                    id
+                  }
+                `
+              });
+              return existingTrips.filter(
+                (tripRef: Reference) => tripRef === launchRef
+              );
+            }
+          }
+        });
       }
     }
   );
