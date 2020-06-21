@@ -55,7 +55,6 @@ function IsLoggedIn() {
   return data.isLoggedIn ? <Pages /> : <Login />;
 }
 
-
 ReactDOM.render(
   <ApolloProvider client={client}>
     <Global />

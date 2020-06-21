@@ -18,7 +18,7 @@ const LogoutButton = () => {
         // query in `profile.tsx`. Then trigger garbage collection using
         // `cache.gc()` to remove the cached `User` object that is no longer
         // reachable.
-        client.cache.evict({ id: 'ROOT_QUERY', fieldName: 'me' });
+        client.cache.evict({ fieldName: 'me' });
         client.cache.gc();
 
         // Remove user details from localStorage.

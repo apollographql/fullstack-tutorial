@@ -25,14 +25,14 @@ const Cart: React.FC<CartProps> = () => {
   return (
     <Fragment>
       <Header>My Cart</Header>
-      {!data || (!!data && data.cartItems.length === 0) ? (
+      {data?.cartItems.length === 0 ? (
         <p data-testid="empty-message">No items in your cart</p>
       ) : (
         <Fragment>
-          {!!data && data.cartItems.map((launchId: any) => (
+          {data?.cartItems.map((launchId: any) => (
             <CartItem key={launchId} launchId={launchId} />
           ))}
-          <BookTrips cartItems={!!data ? data.cartItems : []} />
+          <BookTrips cartItems={data?.cartItems || []} />
         </Fragment>
       )}
     </Fragment>

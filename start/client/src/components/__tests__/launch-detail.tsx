@@ -10,9 +10,9 @@ describe('Launch Detail View', () => {
   it('renders without error', () => {
     render(
       <LaunchDetail
-        id={1}
+        id={'1'}
         site={'earth'}
-        rocket={{ name: 'that one', type: 'big' }}
+        rocket={{ name: 'that one', type: 'big', __typename: 'Rocket', id: '1' }}
       />,
     );
   });

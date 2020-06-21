@@ -25,4 +25,3 @@ const Launches: React.FC<LaunchesProps> = () => {
 }
 
 export default Launches;
-

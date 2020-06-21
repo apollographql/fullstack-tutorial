@@ -1,14 +1,9 @@
 import React from 'react';
-import { print } from 'graphql';
-import { gql, InMemoryCache } from '@apollo/client';
 
 import {
   renderApollo,
   cleanup,
-  getByTestId,
-  fireEvent,
   waitForElement,
-  render,
 } from '../../test-utils';
 import Profile, { GET_MY_TRIPS } from '../profile';
 
@@ -36,7 +31,7 @@ const mockMe = {
   trips: [mockLaunch],
 };
 
-xdescribe('Profile Page', () => {
+describe('Profile Page', () => {
   // automatically unmount and cleanup DOM after the test is finished.
   afterEach(cleanup);
 
@@ -48,7 +43,7 @@ xdescribe('Profile Page', () => {
       },
     ];
 
-    const { getByText } = renderApollo(<Profile />, { mocks, resolvers: {} });
+    const { getByText } = renderApollo(<Profile />, { mocks });
 
     // if the profile renders, it will have the list of missions booked
     await waitForElement(() => getByText(/test mission/i));
