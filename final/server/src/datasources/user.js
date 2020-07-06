@@ -4,12 +4,11 @@ const mime = require('mime');
 const { v4: uuidv4 } = require('uuid');
 const { DataSource } = require('apollo-datasource');
 
-class UserAPI extends DataSource {
-  constructor({ store }) {
-    super();
-    this.store = store;
-  }
+const { PrismaClient } = require('@prisma/client')
 
+const prisma = new PrismaClient();
+
+class UserAPI extends DataSource {
   /**
    * This is a function that gets called by ApolloServer when being setup.
    * This function gets called with the datasource config including things
@@ -31,10 +30,10 @@ class UserAPI extends DataSource {
 
     if (!email || !isEmail.validate(email)) return null;
 
-    const users = await this.store.user.findMany({ where: { email } });
+    const users = await prisma.user.findMany({ where: { email } });
     if (users && users.length) return users[0] ? users[0] : null;
 
-    const user = await this.store.user.create({ data: { email } });
+    const user = await prisma.user.create({ data: { email } });
     return user || null;
   }
 
@@ -58,7 +57,7 @@ class UserAPI extends DataSource {
     const userId = this.context.user.id;
     if (!userId) return null;
 
-    const res = await this.store.trip.create({
+    const res = await prisma.trip.create({
       data: {
         launchId,
         User: {
@@ -72,20 +71,20 @@ class UserAPI extends DataSource {
 
   async cancelTrip({ launchId }) {
     const userId = this.context.user.id;
-    return !!this.store.trip.deleteMany({ where: { userId, launchId } });
+    return !!prisma.trip.deleteMany({ where: { userId, launchId } });
   }
 
   async getLaunchIdsByUser() {
     const userId = this.context.user.id;
 
-    const found = await this.store.trip.findMany({
+    const found = await prisma.trip.findMany({
       where: { userId },
     });
 
     const res = found && found.length
       ? found.map(({ launchId }) => launchId)
       : [];
-    
+
     return res;
   }
 
@@ -93,7 +92,7 @@ class UserAPI extends DataSource {
     if (!this.context || !this.context.user) return false;
     const userId = this.context.user.id;
 
-    const found = await this.store.trip.findMany({
+    const found = await prisma.trip.findMany({
       where: { userId },
     });
 

@@ -18,7 +18,7 @@ const { prisma } = createContext();
 // set up any dataSources our resolvers need
 const dataSources = () => ({
   launchAPI: new LaunchAPI(),
-  userAPI: new UserAPI({ store: prisma }),
+  userAPI: new UserAPI({ prisma }),
 });
 
 // the function that sets up the global context for each resolver, using the req
@@ -31,6 +31,7 @@ const context = async ({ req }) => {
 
   // find a user by their email
   const users = await prisma.user.findMany({ where: { email } });
+  const res = await prisma.user.findMany({});
   const user = users && users[0] ? users[0] : null;
 
   return { user };
