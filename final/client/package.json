@@ -22,7 +22,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "react-scripts test --env=jest-environment-jsdom-sixteen",
     "eject": "react-scripts eject",
     "run:ios-demo": "npx artillery run apollo-internal-demos/ios-workload.yml",
     "codegen": "apollo client:codegen --target typescript --watch"
@@ -42,6 +42,7 @@
     "@types/jest": "^26.0.3",
     "apollo": "^2.28.3",
     "artillery": "^1.6.1",
+    "jest-environment-jsdom-sixteen": "^1.0.3",
     "npm-watch": "^0.6.0"
   }
 }
