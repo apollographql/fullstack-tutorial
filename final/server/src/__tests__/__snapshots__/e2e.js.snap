@@ -17,6 +17,37 @@ Object {
 }
 `;
 
+exports[`Server - e2e gets a single launch 2`] = `
+Object {
+  "data": Object {
+    "launch": null,
+  },
+  "errors": Array [
+    Object {
+      "extensions": Object {
+        "code": "Not Found",
+        "response": Object {
+          "body": "Not Found",
+          "status": 404,
+          "statusText": "Not Found",
+          "url": "https://api.spacexdata.com/v2/launch?flight_number=30",
+        },
+      },
+      "locations": Array [
+        Object {
+          "column": 3,
+          "line": 2,
+        },
+      ],
+      "message": "NOT_FOUND",
+      "path": Array [
+        "launch",
+      ],
+    },
+  ],
+}
+`;
+
 exports[`Server - e2e gets list of launches 1`] = `
 Object {
   "data": Object {

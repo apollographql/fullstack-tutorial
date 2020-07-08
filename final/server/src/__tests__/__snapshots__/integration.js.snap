@@ -82,3 +82,20 @@ Object {
   },
 }
 `;
+
+exports[`Queries returns error for single launch 1`] = `
+Object {
+  "data": Object {
+    "launch": null,
+  },
+  "errors": Array [
+    [GraphQLError: Unexpected error value: "Not Found"],
+  ],
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;
