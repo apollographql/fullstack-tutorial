@@ -3,7 +3,7 @@ version: 2
 jobs:
   Apollo Client:
     docker:
-      - image: circleci/node:8
+      - image: circleci/node:10
 
     steps:
       - checkout
@@ -18,7 +18,7 @@ jobs:
 
   Apollo Server:
     docker:
-      - image: circleci/node:8
+      - image: circleci/node:10
 
     steps:
       - checkout
