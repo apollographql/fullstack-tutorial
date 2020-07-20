@@ -1,13 +1,9 @@
 import React from 'react';
-import { print } from 'graphql';
 
 import {
   renderApollo,
   cleanup,
-  getByTestId,
-  fireEvent,
   waitForElement,
-  render,
 } from '../../test-utils';
 import Launch, { GET_LAUNCH_DETAILS } from '../launch';
 
@@ -31,8 +27,7 @@ const mockLaunch = {
   isInCart: false,
 };
 
-// TODO: un-skip after local state fixes
-xdescribe('Launch Page', () => {
+describe('Launch Page', () => {
   // automatically unmount and cleanup DOM after the test is finished.
   afterEach(cleanup);
 

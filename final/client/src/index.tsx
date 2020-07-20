@@ -1,39 +1,37 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-
-import { ApolloClient } from 'apollo-client';
-import { InMemoryCache, NormalizedCacheObject } from 'apollo-cache-inmemory';
-import { HttpLink } from 'apollo-link-http';
-import { ApolloProvider, useQuery } from '@apollo/react-hooks';
-import gql from 'graphql-tag';
+import {
+  ApolloClient,
+  NormalizedCacheObject,
+  ApolloProvider,
+  useQuery,
+  gql,
+} from '@apollo/client';
 
 import Pages from './pages';
 import Login from './pages/login';
-import { resolvers, typeDefs } from './resolvers';
 import injectStyles from './styles';
+import { cache } from './cache';
+
+export const typeDefs = gql`
+  extend type Query {
+    isLoggedIn: Boolean!
+    cartItems: [ID!]!
+  }
+`;
 
 // Set up our apollo-client to point at the server we created
 // this can be local or a remote endpoint
-const cache = new InMemoryCache();
 const client: ApolloClient<NormalizedCacheObject> = new ApolloClient({
   cache,
-  link: new HttpLink({
-    uri: 'http://localhost:4000/graphql',
-    headers: {
-      authorization: localStorage.getItem('token'),
-      'client-name': 'Space Explorer [web]',
-      'client-version': '1.0.0',
-    },
-  }),
-  resolvers,
-  typeDefs,
-});
-
-cache.writeData({
-  data: {
-    isLoggedIn: !!localStorage.getItem('token'),
-    cartItems: [],
+  uri: 'http://localhost:4000/graphql',
+  headers: {
+    authorization: localStorage.getItem('token') || '',
+    'client-name': 'Space Explorer [web]',
+    'client-version': '1.0.0',
   },
+  typeDefs,
+  resolvers: {},
 });
 
 /**
@@ -59,7 +57,6 @@ function IsLoggedIn() {
 
 injectStyles();
 ReactDOM.render(
-
   <ApolloProvider client={client}>
     <IsLoggedIn />
   </ApolloProvider>,

@@ -1,6 +1,5 @@
 import React, { Fragment } from 'react';
-import { useQuery } from '@apollo/react-hooks';
-import gql from 'graphql-tag';
+import { gql, useQuery } from '@apollo/client';
 
 import { LAUNCH_TILE_DATA } from './launches';
 import { Loading, Header, LaunchDetail } from '../components';
@@ -11,7 +10,6 @@ import * as LaunchDetailsTypes from './__generated__/LaunchDetails';
 export const GET_LAUNCH_DETAILS = gql`
   query LaunchDetails($launchId: ID!) {
     launch(id: $launchId) {
-      isInCart @client
       site
       rocket {
         type
@@ -27,17 +25,17 @@ interface LaunchProps extends RouteComponentProps {
 }
 
 const Launch: React.FC<LaunchProps> = ({ launchId }) => {
-  const { 
-    data, 
-    loading, 
-    error 
+  const {
+    data,
+    loading,
+    error,
   } = useQuery<
-    LaunchDetailsTypes.LaunchDetails, 
+    LaunchDetailsTypes.LaunchDetails,
     LaunchDetailsTypes.LaunchDetailsVariables
-  >(GET_LAUNCH_DETAILS, 
+  >(GET_LAUNCH_DETAILS,
     { variables: { launchId } }
   );
-  
+
   if (loading) return <Loading />;
   if (error) return <p>ERROR: {error.message}</p>;
   if (!data) return <p>Not found</p>;

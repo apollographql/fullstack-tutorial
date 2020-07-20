@@ -46,7 +46,9 @@ const GET_LAUNCH = gql`
 
 const LOGIN = gql`
   mutation login($email: String!) {
-    login(email: $email)
+    login(email: $email) {
+      token
+    }
   }
 `;
 
@@ -122,7 +124,7 @@ describe('Mutations', () => {
       mutation: LOGIN,
       variables: {email: 'a@a.a'},
     });
-    expect(res.data.login).toEqual('YUBhLmE=');
+    expect(res.data.login.token).toEqual('YUBhLmE=');
   });
 
   it('books trips', async () => {

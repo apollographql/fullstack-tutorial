@@ -1,25 +1,30 @@
 import React from 'react';
-import { useApolloClient, useMutation } from '@apollo/react-hooks';
-import gql from 'graphql-tag';
+import { gql, useMutation } from '@apollo/client';
 
 import { LoginForm, Loading } from '../components';
-import ApolloClient from 'apollo-client';
+import { isLoggedInVar } from '../cache';
 import * as LoginTypes from './__generated__/login';
 
 export const LOGIN_USER = gql`
   mutation Login($email: String!) {
-    login(email: $email)
+    login(email: $email) {
+      id
+      token
+    }
   }
 `;
 
 export default function Login() {
-  const client: ApolloClient<any> = useApolloClient();
-  const [login, { loading, error }] = useMutation<LoginTypes.login, LoginTypes.loginVariables>(
+  const [login, { loading, error }] = useMutation<
+    LoginTypes.Login,
+    LoginTypes.LoginVariables
+  >(
     LOGIN_USER,
     {
       onCompleted({ login }) {
-        localStorage.setItem('token', login as string);
-        client.writeData({ data: { isLoggedIn: true } });
+        localStorage.setItem('token', login.token as string);
+        localStorage.setItem('userId', login.id as string);
+        isLoggedInVar(true);
       }
     }
   );
