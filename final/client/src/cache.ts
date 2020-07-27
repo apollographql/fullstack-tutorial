@@ -11,6 +11,7 @@ export const cache: InMemoryCache = new InMemoryCache({
           return cartItemsVar();
         },
         launches: {
+          keyArgs: false,
           merge(existing, incoming) {
             let launches: Reference[] = [];
             if (existing && existing.launches) {
