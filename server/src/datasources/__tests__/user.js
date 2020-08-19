@@ -2,13 +2,15 @@ const UserAPI = require('../user');
 
 const mockStore = {
   users: {
-    findOrCreate: jest.fn(),
     findAll: jest.fn(),
+    find: jest.fn(),
+    create: jest.fn(),
   },
   trips: {
-    findOrCreate: jest.fn(),
     destroy: jest.fn(),
     findAll: jest.fn(),
+    find: jest.fn(),
+    create: jest.fn(),
   },
 };
 module.exports.mockStore = mockStore;
@@ -23,14 +25,14 @@ describe('[UserAPI.findOrCreateUser]', () => {
   });
 
   it('looks up/creates user in store', async () => {
-    mockStore.users.findOrCreate.mockReturnValueOnce([{ id: 1 }]);
+    mockStore.users.find.mockReturnValueOnce([{ id: 1 }]);
 
     // check the result of the fn
     const res = await ds.findOrCreateUser({ email: 'a@a.a' });
     expect(res).toEqual({ id: 1 });
 
     // make sure store is called properly
-    expect(mockStore.users.findOrCreate).toBeCalledWith({
+    expect(mockStore.users.find).toBeCalledWith({
       where: { email: 'a@a.a' },
     });
   });
@@ -46,14 +48,14 @@ describe('[UserAPI.findOrCreateUser]', () => {
 
 describe('[UserAPI.bookTrip]', () => {
   it('calls store creator and returns result', async () => {
-    mockStore.trips.findOrCreate.mockReturnValueOnce([{ get: () => 'heya' }]);
+    mockStore.trips.find.mockReturnValueOnce(['heya']);
 
     // check the result of the fn
     const res = await ds.bookTrip({ launchId: 1 });
     expect(res).toBeTruthy();
 
     // make sure store is called properly
-    expect(mockStore.trips.findOrCreate).toBeCalledWith({
+    expect(mockStore.trips.find).toBeCalledWith({
       where: { launchId: 1, userId: 1 },
     });
   });
@@ -61,8 +63,8 @@ describe('[UserAPI.bookTrip]', () => {
 
 describe('[UserAPI.bookTrips]', () => {
   it('returns multiple lookups from bookTrip', async () => {
-    mockStore.trips.findOrCreate.mockReturnValueOnce([{ get: () => 'heya' }]);
-    mockStore.trips.findOrCreate.mockReturnValueOnce([{ get: () => 'okay' }]);
+    mockStore.trips.find.mockReturnValueOnce(['heya']);
+    mockStore.trips.find.mockReturnValueOnce(['okay']);
 
     const res = await ds.bookTrips({ launchIds: [1, 2] });
     expect(res).toEqual(['heya', 'okay']);
@@ -87,8 +89,8 @@ describe('[UserAPI.getLaunchIdsByUser]', () => {
   it('looks up launches by user', async () => {
     const args = { userId: 1 };
     const launches = [
-      { dataValues: { launchId: 1 } },
-      { dataValues: { launchId: 2 } },
+      { launchId: 1 },
+      { launchId: 2 },
     ];
     mockStore.trips.findAll.mockReturnValueOnce(launches);
 
