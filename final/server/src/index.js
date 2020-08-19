@@ -34,14 +34,21 @@ const server = new ApolloServer({
   },
   context: async ({ event, context }) => {
     const auth = (event.headers && event.headers.authorization) || '';
-    const email = new Buffer(auth, 'base64').toString('ascii');
+    const email = Buffer.from(auth, 'base64').toString('ascii');
 
     // if the email isn't formatted validly, return null for user
     if (!isEmail.validate(email)) return { user: null };
-    // find a user by their email
-    const users = await store.users.findOrCreate({ where: { email } });
-    const user = users && users[0] ? users[0] : null;
 
+    // find a user by their email
+    const existingUsers = await store.users.find({ where: { email } });
+    const users = existingUsers && existingUsers[0] ? existingUsers : [store.users.create({
+      id: new Date().getTime(),
+      email,
+      updatedAt: new Date(),
+      createdAt: new Date()
+    })];
+
+    const user = users && users[0] ? users[0] : null;
     return { user };
   }
 });

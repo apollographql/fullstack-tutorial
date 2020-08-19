@@ -30,7 +30,14 @@ class UserAPI extends DataSource {
       this.context && this.context.user ? this.context.user.email : emailArg;
     if (!email || !isEmail.validate(email)) return null;
 
-    const users = await this.store.users.findOrCreate({ where: { email } });
+    const existingUsers = await this.store.users.find({ where: { email } });
+    const users = existingUsers && existingUsers[0] ? existingUsers : [await this.store.users.create({
+      id: new Date().getTime(),
+      email,
+      updatedAt: new Date(),
+      createdAt: new Date() 
+    })];
+
     return users && users[0] ? users[0] : null;
   }
 
@@ -52,10 +59,16 @@ class UserAPI extends DataSource {
 
   async bookTrip({ launchId }) {
     const userId = this.context.user.id;
-    const res = await this.store.trips.findOrCreate({
+    const existingRes = await this.store.trips.find({
       where: { userId, launchId },
     });
-    return res && res.length ? res[0].get() : false;
+    const res = existingRes && existingRes.length ? existingRes : [await this.store.trips.create({ 
+      userId, 
+      launchId,
+      updatedAt: new Date(),
+      createdAt: new Date() 
+    })];
+    return res && res.length ? res[0] : false;
   }
 
   async cancelTrip({ launchId }) {
@@ -68,8 +81,9 @@ class UserAPI extends DataSource {
     const found = await this.store.trips.findAll({
       where: { userId },
     });
+
     return found && found.length
-      ? found.map(l => l.dataValues.launchId).filter(l => !!l)
+      ? found.map(l => l.launchId).filter(l => !!l)
       : [];
   }
 

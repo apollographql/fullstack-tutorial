@@ -1,4 +1,5 @@
 const {Sequelize} = require('sequelize');
+const SequelizeDynamo = require('dynamo-sequelize').default;
 
 module.exports.paginateResults = ({
   after: cursor,
@@ -29,24 +30,48 @@ module.exports.paginateResults = ({
 };
 
 module.exports.createStore = () => {
-  const db = new Sequelize({
-    dialect: 'sqlite',
-    storage: './store.sqlite'
-  });
+  const db = new SequelizeDynamo(
+    {
+      dialect: 'dynamo',
+    }
+  );
 
   const users = db.define('user', {
-    createdAt: Sequelize.DATE,
-    updatedAt: Sequelize.DATE,
-    email: Sequelize.STRING,
-    profileImage: Sequelize.STRING,
-    token: Sequelize.STRING,
+    id: {
+      type: Sequelize.INTEGER,
+      primaryKey: true
+    },
+    email: {
+      type: Sequelize.STRING
+    },
+    createdAt: {
+      type: Sequelize.DATE
+    },
+    updatedAt: {
+      type: Sequelize.DATE
+    },
+    profileImage: {
+      type: Sequelize.STRING
+    },
+    token: {
+      type: Sequelize.STRING
+    }
   });
 
   const trips = db.define('trip', {
-    createdAt: Sequelize.DATE,
-    updatedAt: Sequelize.DATE,
-    launchId: Sequelize.INTEGER,
-    userId: Sequelize.INTEGER,
+    launchId: {
+      type: Sequelize.INTEGER,
+      primaryKey: true
+    },
+    createdAt: {
+      type: Sequelize.DATE
+    },
+    updatedAt: {
+      type: Sequelize.DATE
+    },
+    userId: {
+      type: Sequelize.INTEGER
+    }
   });
 
   return { db, users, trips };

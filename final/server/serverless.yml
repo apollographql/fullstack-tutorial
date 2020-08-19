@@ -9,8 +9,10 @@ provider:
   runtime: nodejs12.x
 functions:
   graphql:
-    # this is formatted as <FILENAME>.<HANDLER>
     handler: src/index.graphqlHandler
+    environment:
+      DYNAMODB_LOCALHOST: http://localhost:8000
+      AWS_REGION: ap-southeast-2
     events:
     - http:
         path: graphql
