@@ -115,7 +115,7 @@ describe('Mutations', () => {
     });
 
     userAPI.store = mockStore;
-    userAPI.store.users.findOrCreate.mockReturnValueOnce([
+    userAPI.store.users.find.mockReturnValueOnce([
       {id: 1, email: 'a@a.a'},
     ]);
 
@@ -142,9 +142,9 @@ describe('Mutations', () => {
 
     // book the trip in the store
     userAPI.store = mockStore;
-    userAPI.store.trips.findOrCreate
-      .mockReturnValueOnce([{get: () => ({launchId: 1})}])
-      .mockReturnValueOnce([{get: () => ({launchId: 2})}]);
+    userAPI.store.trips.find
+      .mockReturnValueOnce([{launchId: 1}])
+      .mockReturnValueOnce([{launchId: 2}]);
 
     // check if user is booked
     userAPI.store.trips.findAll.mockReturnValue([{}]);
