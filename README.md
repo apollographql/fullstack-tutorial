@@ -12,10 +12,16 @@ From within the `start` and `final` directories, there are two folders (one for 
 
 ## Installation
 
-To run the app, run these commands in two separate terminal windows from the root:
+To run the app, run these commands in three separate terminal windows from the root:
 
 ```bash
-cd final/server && npm i && npm start
+cd final/server && npm i
+npm run start-dynamo-local
+```
+
+```bash
+cd final/server
+npm start
 ```
 
 and
