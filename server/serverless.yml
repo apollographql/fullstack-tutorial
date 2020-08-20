@@ -7,12 +7,12 @@ custom:
 provider:
   name: aws
   runtime: nodejs12.x
+  dynamodbLocalhost: ${opt:dynamodbLocalhost, ''}
 functions:
   graphql:
     handler: src/index.graphqlHandler
     environment:
-      DYNAMODB_LOCALHOST: http://localhost:8000
-      AWS_REGION: ap-southeast-2
+      DYNAMODB_LOCALHOST: ${self:provider.dynamodbLocalhost}
     events:
     - http:
         path: graphql

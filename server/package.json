@@ -6,7 +6,7 @@
   "scripts": {
     "test": "jest",
     "start-dynamo-local": "docker run -p 8000:8000 amazon/dynamodb-local:latest",
-    "start": "node_modules/.bin/sls offline",
+    "start": "node_modules/.bin/sls --dynamodbLocalhost http://localhost:8000 offline",
     "start:ci": "node src/index.js"
   },
   "author": "",
