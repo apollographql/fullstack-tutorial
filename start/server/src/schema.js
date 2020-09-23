@@ -30,14 +30,8 @@ const typeDefs = gql`
   }
 
   type Query {
-    launches(
-        """
-        The number of results to show. Must be >= 1. Default = 20
-        """
+    launches( 
         pageSize: Int
-        """
-        If you add a cursor here, it will only return results _after_ this cursor
-        """
         after: String
       ): LaunchConnection!
     launch(id: ID!): Launch
