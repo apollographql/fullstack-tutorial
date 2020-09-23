@@ -53,7 +53,7 @@ const typeDefs = gql`
   type TripUpdateResponse {
     success: Boolean!
     message: String
-    launcher: [Launch]
+    launches: [Launch]
   }
 `;
 
