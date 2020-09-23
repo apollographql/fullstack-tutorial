@@ -21,7 +21,7 @@ module.exports = {
                   allLaunches[allLaunches.length - 1].cursor
                 : false
             };
-          },
+          },                                               
       launch: (_, { id }, { dataSources }) =>
         dataSources.launchAPI.getLaunchById({ launchId: id }),
       me: (_, __, { dataSources }) => dataSources.userAPI.findOrCreateUser()
