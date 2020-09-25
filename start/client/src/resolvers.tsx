@@ -34,10 +34,12 @@ interface ResolverMap {
 }
 
 interface AppResolvers extends Resolvers {
-  Launch: ResolverMap
+  Launch: ResolverMap;
+  Mutation: ResolverMap;
 }
 
 export const resolvers: AppResolvers = {
+    
     Launch: {
       isInCart: (launch: LaunchTileTypes.LaunchTile, _, { cache }): boolean => {
         const queryResult = cache.readQuery<GetCartItemTypes.GetCartItems>({
@@ -49,4 +51,24 @@ export const resolvers: AppResolvers = {
         return false;
       }
     },
+    Mutation: {
+        addOrRemoveFromCart: (_, { id }: { id: string }, { cache }): string[] => {
+          const queryResult = cache
+            .readQuery<GetCartItemTypes.GetCartItems, any>({
+              query: GET_CART_ITEMS
+            });
+          if (queryResult) {
+            const { cartItems } = queryResult;
+            const data = {
+              cartItems: cartItems.includes(id)
+                ? cartItems.filter((i) => i !== id)
+                : [...cartItems, id],
+            };
+            cache.writeQuery({ query: GET_CART_ITEMS, data });
+            return data.cartItems;
+          }
+          return [];
+        },
+      },
+    };
   };

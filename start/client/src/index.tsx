@@ -5,7 +5,7 @@ import {
   ApolloProvider,
   HttpLink,
   gql,
-  useQuery,
+  useQuery,, ApolloCache
 } from "@apollo/client";
 import React from "react";
 import ReactDOM from "react-dom";
@@ -24,6 +24,7 @@ const client: ApolloClient<NormalizedCacheObject> = new ApolloClient({
   }),
   typeDefs,
   resolvers,
+  
 });
 
 cache.writeData({
