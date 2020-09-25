@@ -18,7 +18,7 @@ export default function Login() {
     {
       onCompleted({ login }) {
         localStorage.setItem('token', login as string);
-        client.writeData({ data: { isLoggedIn: true } });
+       
       }
     }
   );

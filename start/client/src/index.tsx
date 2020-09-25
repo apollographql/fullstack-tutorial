@@ -5,14 +5,17 @@ import {
   ApolloProvider,
   HttpLink,
   gql,
-  useQuery,, ApolloCache
+  useQuery
 } from "@apollo/client";
+
 import React from "react";
 import ReactDOM from "react-dom";
 import Pages from "./pages";
 import injectStyles from "./styles";
 import { resolvers, typeDefs } from "./resolvers";
 import Login from "./pages/login";
+
+import {cache} from './chache'
 
 const client: ApolloClient<NormalizedCacheObject> = new ApolloClient({
   cache,
@@ -27,12 +30,12 @@ const client: ApolloClient<NormalizedCacheObject> = new ApolloClient({
   
 });
 
-cache.writeData({
-  data: {
-    isLoggedIn: !!localStorage.getItem("token"),
-    cartItems: [],
-  },
-});
+// cache.writeData({
+//   data: {
+//     isLoggedIn: !!localStorage.getItem("token"),
+//     cartItems: [],
+//   },
+// });
 
 const IS_LOGGED_IN = gql`
   query IsUserLoggedIn {
