@@ -4,3 +4,4 @@ node_modules
 final/server/store.sqlite
 final/package-lock.json
 
+chromedriver.exe
