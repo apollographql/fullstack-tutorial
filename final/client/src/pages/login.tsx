@@ -7,10 +7,7 @@ import * as LoginTypes from './__generated__/login';
 
 export const LOGIN_USER = gql`
   mutation Login($email: String!) {
-    login(email: $email) {
-      id
-      token
-    }
+    login(email: $email)
   }
 `;
 
@@ -22,8 +19,7 @@ export default function Login() {
     LOGIN_USER,
     {
       onCompleted({ login }) {
-        localStorage.setItem('token', login.token as string);
-        localStorage.setItem('userId', login.id as string);
+        localStorage.setItem('token', login as string);
         isLoggedInVar(true);
       }
     }

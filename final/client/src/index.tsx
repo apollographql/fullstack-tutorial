@@ -4,8 +4,8 @@ import {
   ApolloClient,
   NormalizedCacheObject,
   ApolloProvider,
-  useQuery,
   gql,
+  useQuery
 } from '@apollo/client';
 
 import Pages from './pages';
