@@ -5,7 +5,7 @@ const By = webdriver.By;
 
 const sleeptime = 3000; //how long to wait after each command to make tests visually percievable 
 
-function clickWhenClickable(locator,timeout=2000){
+async function clickWhenClickable(locator,timeout=2000){
     driver.wait(function(){
       return driver.findElement(locator).then(function(element){        
         return element.click().then(function(){
@@ -19,10 +19,10 @@ function clickWhenClickable(locator,timeout=2000){
     }, timeout, 'Timeout waiting for ' + locator.value);    ;
   }
 
- function sendKeysWhenSendable(locator,keys, timeout=2000){
+ async function sendKeysWhenSendable(locator,keys, timeout=2000){
     driver.wait(function(){
       return driver.findElement(locator).then(function(element){        
-        return element.sendKeys(keys).then(function(){
+        return element.sendKeys(keys).then(async function(){
           return true;
         }, function(err){
           return false;
@@ -32,12 +32,21 @@ function clickWhenClickable(locator,timeout=2000){
       });
     }, timeout, 'Timeout waiting for ' + locator.value);    ;
   }
-function LogInLogOutTest(driver){
+async function LogInLogOutTest(driver){
     try{
         driver.navigate().to("http://localhost:3000");
-        sendKeysWhenSendable(By.name('email'),"Email@site.com" );
-        clickWhenClickable(By.xpath('/html/body/div/div/form/button'), 10*1000); 
-        clickWhenClickable(By.xpath("//*[contains(@data-testid, 'logout')]"), 10*1000); 
+        driver.sleep(sleeptime).then(()=> {
+            sendKeysWhenSendable(By.name('email'),"Email@site.com" ).then(()=>{ 
+                driver.sleep(sleeptime).then(()=> {
+                    clickWhenClickable(By.xpath('/html/body/div/div/form/button'), 10*1000).then(()=>{
+                        driver.sleep(sleeptime).then(()=> {
+                            clickWhenClickable(By.xpath("//*[contains(@data-testid, 'logout')]"), 10*1000); 
+                        }); 
+                    }); 
+                });
+            });
+        });
+        
     }
     catch(e){
         console.log(e);
