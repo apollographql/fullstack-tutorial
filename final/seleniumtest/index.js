@@ -3,41 +3,45 @@ const { elementIsNotSelected } = require("selenium-webdriver/lib/until");
 const driver = new webdriver.Builder().forBrowser("chrome").build();
 const By = webdriver.By;
 
+const sleeptime = 3000; //how long to wait after each command to make tests visually percievable 
 
- function LoginButton(){
-      driver.findElement(By.xpath('/html/body/div/div/form/button')).then(element => 
-        element.click(), 
-        function(err){ console.log(err)});
+function clickWhenClickable(locator,timeout=2000){
+    driver.wait(function(){
+      return driver.findElement(locator).then(function(element){        
+        return element.click().then(function(){
+          return true;
+        }, function(err){
+          return false;
+        })
+      }, function(err){
+        return false;
+      });
+    }, timeout, 'Timeout waiting for ' + locator.value);    ;
+  }
+
+ function sendKeysWhenSendable(locator,keys, timeout=2000){
+    driver.wait(function(){
+      return driver.findElement(locator).then(function(element){        
+        return element.sendKeys(keys).then(function(){
+          return true;
+        }, function(err){
+          return false;
+        })
+      }, function(err){
+        return false;
+      });
+    }, timeout, 'Timeout waiting for ' + locator.value);    ;
+  }
+function LogInLogOutTest(driver){
+    try{
+        driver.navigate().to("http://localhost:3000");
+        sendKeysWhenSendable(By.name('email'),"Email@site.com" );
+        clickWhenClickable(By.xpath('/html/body/div/div/form/button'), 10*1000); 
+        clickWhenClickable(By.xpath("//*[contains(@data-testid, 'logout')]"), 10*1000); 
+    }
+    catch(e){
+        console.log(e);
+    }
+
 }
-function inputEmail(element, email){
-    element.sendKeys('Email@site.com').then(()=>
-    LoginButton(),
-    function(err){ console.log(err)});
-}
-function findLoginElement(email){
-    driver.findElement(By.name('email')).then(element => 
-        inputEmail(element, email), 
-        function(err){ console.log(err)});
-}
-// function Login(email="address@server.com"){
-//     element = findLoginElement(email);
-// }
-
-async function navigate(driver){
-    await driver.navigate().to("http://localhost:3000");
-    var element= driver.findElement(By.name('email'));
-    await element.sendKeys('Email@site.com');
-    var clickElement = driver.findElement(By.xpath('/html/body/div/div/form/button'))
-    clickElement.click();
-
-}
-navigate(driver);
-
-
-//Driver into the Client
-// driver.navigate()
-//     .to("http://localhost:3000")
-//     .then(() => Login())
-//     .catch(error => console.log(error))
-
-// console.log("In Selenium Test")
+LogInLogOutTest(driver);
