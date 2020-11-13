@@ -4,6 +4,12 @@ const driver = new webdriver.Builder().forBrowser("chrome").build();
 const By = webdriver.By;
 const sleeptime = 3000; //how long to wait after each command to make tests visually percievable 
 
+/*To Do:
+Find element function with time out
+
+
+*/
+
 
 async function clickWhenClickable(locator,timeout=2000, webdriver=driver){
     webdriver.wait(function(){
@@ -63,21 +69,7 @@ async function clickWhenClickable(locator,timeout=2000, webdriver=driver){
     }
 }
 
-async function LogInLogOutTestAsync(driver){
-    try{
-        await driver.navigate().to("http://localhost:3000");
-        await driver.sleep(sleeptime)
-        await sendKeysWhenSendable(By.name('email'),"Email@site.com" )
-        await driver.sleep(sleeptime)
-        await clickWhenClickable(By.xpath('/html/body/div/div/form/button'), 2*1000)
-        await driver.sleep(sleeptime)
-        await clickWhenClickable(By.xpath("//*[contains(@data-testid, 'logout')]"), 2*1000);      
-    }
-    catch(e){
-        console.log(e);
-    }
 
-}
 var driverTest = new DriverWrapper(driver);
 driverTest.navigate("http://localhost:3000");
 driverTest.sendKeys(By.name('email'),"Email@site.com");
@@ -87,7 +79,7 @@ driverTest.execute();
 
 
 
-//Old way (for reference only)
+//Old ways (for reference only)
 function LogInLogOutTest(driver){
     try{
         driver.navigate().to("http://localhost:3000");
@@ -103,6 +95,21 @@ function LogInLogOutTest(driver){
             });
         });
         
+    }
+    catch(e){
+        console.log(e);
+    }
+
+}
+async function LogInLogOutTestAsync(driver){
+    try{
+        await driver.navigate().to("http://localhost:3000");
+        await driver.sleep(sleeptime)
+        await sendKeysWhenSendable(By.name('email'),"Email@site.com" )
+        await driver.sleep(sleeptime)
+        await clickWhenClickable(By.xpath('/html/body/div/div/form/button'), 2*1000)
+        await driver.sleep(sleeptime)
+        await clickWhenClickable(By.xpath("//*[contains(@data-testid, 'logout')]"), 2*1000);      
     }
     catch(e){
         console.log(e);
