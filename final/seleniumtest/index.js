@@ -4,7 +4,7 @@ const driver = new webdriver.Builder().forBrowser("chrome").build();
 const By = webdriver.By;
 
 const defaultTimeout=1000;
-const sleeptime = 3000; //how long to wait after each command to make tests visually percievable 
+const sleeptime = 1000; //how long to wait after each command to make tests visually percievable 
 
 
 /*To Do:
@@ -22,6 +22,8 @@ var Locators = {
     Home: By.xpath("//*[@href='/']"),
     LogOut: By.xpath("//*[@data-testid='logout-button']"),
     UserName: By.xpath("//*[@class='css-1sykydy']"),
+    Email: By.name('email'),
+    Submit: By.xpath("//*[contains(@type, 'submit')]")
 }
 async function elementExists(locator,timeout=defaultTimeout, webdriver=driver){
     await webdriver.wait(function(){
@@ -39,30 +41,25 @@ async function elementDoesNotExist(locator,timeout=defaultTimeout, webdriver=dri
 }
 async function clickWhenClickable(locator,timeout=defaultTimeout, webdriver=driver){
     return await webdriver.wait(function(){
-        return webdriver.findElement(locator).then(function(element){        
-            return element.click().then(function(){
-            return true;
-            }, function(err){
-            return false;
-            })
-        }, function(err){
-            return false;
-        });
+        return webdriver.findElement(locator).then(
+            function(element){        
+                return element.click().then(()=>{return true;}, ()=>{return false;})}, 
+            function(err){
+                return false;
+            });
     }, timeout, 'Timeout waiting for ' + locator.value).then(()=>{return true}, ()=>{return false} );
   }
 
  async function sendKeysWhenSendable(locator,keys, timeout=defaultTimeout, webdriver=driver){
-    return await webdriver.wait(async function(){
-      return webdriver.findElement(locator).then(async function(element){        
-        return element.sendKeys(keys).then(async function(){
-          return true;
-        }, function(err){
-          return false;
-        })
-      }, function(err){
-        return false;
-      });
-    }, timeout, 'Timeout waiting for ' + locator.value).then(()=>{return true}, ()=>{return false} );    
+    return await webdriver.wait(function(){
+        return webdriver.findElement(locator).then(
+            function(element){        
+                return element.sendKeys(keys).then(()=>{return true;}, ()=>{return false;})}, 
+            function(err){
+                return false;
+            });
+    }, timeout, 'Timeout waiting for ' + locator.value).then(()=>{return true}, ()=>{return false} );
+
   }
   class DriverWrapper{
     constructor(driver){
@@ -85,13 +82,13 @@ async function clickWhenClickable(locator,timeout=defaultTimeout, webdriver=driv
             function() { that.url=that.driver.getCurrentUrl(); return true;}
         );       
     }
-    checkUrl(url=None){ //checks if current URL matches the provided. If none provided, uses last stored url (from noteUrl)
-        if (url==None)
+    checkUrl(url=null){ //checks if current URL matches the provided. If none provided, uses last stored url (from noteUrl)
+        if (url==null)
             url=this.url;
         var that=this;
         this.ActionList.push(
             function() {
-                console.log(!(url==that.driver.getCurrentUrl()));
+                console.log("Check URL " + url+ ": " + !(url==that.driver.getCurrentUrl()));
                 return !(url==that.driver.getCurrentUrl());
             }
         );   
@@ -130,7 +127,7 @@ async function clickWhenClickable(locator,timeout=defaultTimeout, webdriver=driv
 }
 async function login(testDriver, email){
     testDriver.navigate("http://localhost:3000");
-    testDriver.sendKeys(By.name('email'),email); //type in your email
+    testDriver.sendKeys(Locators.Email,email); //type in your email
     testDriver.click(By.xpath("//*[contains(@type, 'submit')]")); //press submit button
     await testDriver.execute();
 }
@@ -141,17 +138,24 @@ async function logout(testDriver, failOnError=false){
 async function testDriver(){
     var testDriver = new DriverWrapper(driver);
     //Test Bad Login
-    await login(testDriver, "a" );
+    await login(testDriver, "ThisEmailAddressHasNoAt" );
     await logout(testDriver, false );
     //Test Bad Login
-    await login(testDriver, "a@" );
+    await login(testDriver, "ThisEmailHasAnAtButNoAddress@" );
     await logout(testDriver, false );
+    
     //Test Successful Login
-    await login(testDriver, "a@b" );
+    await login(testDriver, "ValidEmail@ValidWebsite" );
+    await driver.navigate().refresh();
+    //Click to navigate to each page and confirm Urls
     testDriver.click(Locators.Cart);
-    testDriver.click(Locators.Profile);
+    testDriver.checkUrl("http://localhost:3000/cart")
+    testDriver.click("Locators.Profile");
+    testDriver.checkUrl("http://localhost:3000/profile")
     testDriver.click(Locators.Home);
-    await logout(testDriver, false );
+    testDriver.checkUrl("http://localhost:3000/")
+    // await logout(testDriver, false );
+
     // testDriver.navigate("http://localhost:3000");
     // testDriver.noteUrl();
     // testDriver.checkElementExists(By.name('email'));
