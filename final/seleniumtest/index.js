@@ -6,7 +6,6 @@ const By = webdriver.By;
 const defaultTimeout=1000;
 const sleeptime = 1000; //how long to wait after each command to make tests visually percievable 
 
-
 /*To Do:
 Catching Timeout errors
 */
@@ -17,13 +16,24 @@ Cart, Profile, and Home buttons aren't of button type
 */
 
 var Locators = {
-    Cart: By.xpath("//*[contains(@href, 'cart')]"),
-    Profile: By.xpath("//*[@href='/profile']"),
-    Home: By.xpath("//*[@href='/']"),
     LogOut: By.xpath("//*[@data-testid='logout-button']"),
     UserName: By.xpath("//*[@class='css-1sykydy']"),
     Email: By.name('email'),
-    Submit: By.xpath("//*[contains(@type, 'submit')]")
+    Submit: By.xpath("//*[contains(@type, 'submit')]"),
+
+    Cart: By.xpath("//*[contains(@href, 'cart')]"),
+    BookAll: By.xpath("//*[@data-testid='book-button']"),
+
+    AddToCart: By.xpath("//*[@data-testid='action-button']"),
+    RemoveFromCart: By.xpath("//*[@data-testid='action-button']"),
+    
+    Profile: By.xpath("//*[@href='/profile']"),
+    CancelTrip: By.xpath("//*[@data-testid='action-button']"),
+
+    Home: By.xpath("//*[@href='/']"),
+    LoadMore: By.xpath("//*[text()='Load More']"),
+    Sacagawea: By.xpath("//*[@href='/launch/106']"),
+    StarLink14: By.xpath("//*[@href='/launch/105']"),
 }
 async function elementExists(locator,timeout=defaultTimeout, webdriver=driver){
     await webdriver.wait(function(){
@@ -42,8 +52,10 @@ async function elementDoesNotExist(locator,timeout=defaultTimeout, webdriver=dri
 async function clickWhenClickable(locator,timeout=defaultTimeout, webdriver=driver){
     return await webdriver.wait(function(){
         return webdriver.findElement(locator).then(
-            function(element){        
-                return element.click().then(()=>{return true;}, ()=>{return false;})}, 
+            function(element){     
+                driver.executeScript("arguments[0].scrollIntoView()", element);
+                driver.sleep(300);     
+                return  element.click().then(()=>{return true;}, ()=>{return false;})}, 
             function(err){
                 return false;
             });
@@ -53,7 +65,9 @@ async function clickWhenClickable(locator,timeout=defaultTimeout, webdriver=driv
  async function sendKeysWhenSendable(locator,keys, timeout=defaultTimeout, webdriver=driver){
     return await webdriver.wait(function(){
         return webdriver.findElement(locator).then(
-            function(element){        
+            function(element){   
+                // driver.executeScript("arguments[0].scrollIntoView()", element);
+                // driver.sleep(300);     
                 return element.sendKeys(keys).then(()=>{return true;}, ()=>{return false;})}, 
             function(err){
                 return false;
@@ -154,7 +168,21 @@ async function testDriver(){
     testDriver.checkUrl("http://localhost:3000/profile")
     testDriver.click(Locators.Home);
     testDriver.checkUrl("http://localhost:3000/")
-    // await logout(testDriver, false );
+    testDriver.click(Locators.Sacagawea);
+    testDriver.click(Locators.AddToCart);
+    testDriver.click(Locators.Home);
+    testDriver.click(Locators.StarLink14);
+    testDriver.click(Locators.AddToCart);
+    testDriver.click(Locators.Cart);
+    testDriver.click(Locators.BookAll);
+    testDriver.click(Locators.Profile);
+    testDriver.click(Locators.Sacagawea);
+    testDriver.click(Locators.CancelTrip);
+    testDriver.click(Locators.Profile);
+    testDriver.click(Locators.StarLink14);
+    testDriver.click(Locators.CancelTrip);
+    // await testDriver.execute();
+    await logout(testDriver, false );
 
     // testDriver.navigate("http://localhost:3000");
     // testDriver.noteUrl();
