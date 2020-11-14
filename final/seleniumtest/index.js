@@ -35,10 +35,27 @@ var Locators = {
     Sacagawea: By.xpath("//*[@href='/launch/106']"),
     StarLink14: By.xpath("//*[@href='/launch/105']"),
 }
+async function checkElementHasText(locator, text, timeout=defaultTimeout, webdriver=driver){
+    var elemHasText;
+    return await webdriver.wait(function(){
+        return webdriver.findElement(locator).then(
+            function(element){       
+                return  element.getText().then((elemText)=>
+                {             
+                    elemHasText=(elemText.toUpperCase()==text.toUpperCase());
+                    console.log("ELement has Text " + text + "? : " +elemHasText);
+                    return true;
+                }, 
+                ()=>{return false;}
+                )}, 
+            function(err){
+                return false;
+            });
+    }, timeout, 'Timeout waiting for ' + locator.value).then(()=>{return elemHasText}, ()=>{return false} );
+  }
 async function elementExists(locator,timeout=defaultTimeout, webdriver=driver){
     await webdriver.wait(function(){
         return webdriver.findElement(locator).then(element=>{
-            elem=element;
             return true;
             },function(err){
                 return false;
@@ -54,7 +71,7 @@ async function clickWhenClickable(locator,timeout=defaultTimeout, webdriver=driv
         return webdriver.findElement(locator).then(
             function(element){     
                 driver.executeScript("arguments[0].scrollIntoView()", element);
-                driver.sleep(300);     
+                // driver.sleep(300);     
                 return  element.click().then(()=>{return true;}, ()=>{return false;})}, 
             function(err){
                 return false;
@@ -65,9 +82,7 @@ async function clickWhenClickable(locator,timeout=defaultTimeout, webdriver=driv
  async function sendKeysWhenSendable(locator,keys, timeout=defaultTimeout, webdriver=driver){
     return await webdriver.wait(function(){
         return webdriver.findElement(locator).then(
-            function(element){   
-                // driver.executeScript("arguments[0].scrollIntoView()", element);
-                // driver.sleep(300);     
+            function(element){     
                 return element.sendKeys(keys).then(()=>{return true;}, ()=>{return false;})}, 
             function(err){
                 return false;
@@ -102,7 +117,7 @@ async function clickWhenClickable(locator,timeout=defaultTimeout, webdriver=driv
         var that=this;
         this.ActionList.push(
             function() {
-                console.log("Check URL " + url+ ": " + !(url==that.driver.getCurrentUrl()));
+                console.log("Assert: Check URL " + url+ ": " + !(url==that.driver.getCurrentUrl()));
                 return !(url==that.driver.getCurrentUrl());
             }
         );   
@@ -123,6 +138,12 @@ async function clickWhenClickable(locator,timeout=defaultTimeout, webdriver=driv
         var that=this;
         this.ActionList.push(
             function() {return sendKeysWhenSendable(locator, keys, timeout, that.driver);}
+        );
+    }
+    checkText(locator, text, timeout=defaultTimeout){
+        var that=this;
+        this.ActionList.push(
+            function() {return checkElementHasText(locator, text, timeout, that.driver);}
         );
     }
     async execute(failOnError=true){
@@ -168,6 +189,7 @@ async function testDriver(){
     testDriver.checkUrl("http://localhost:3000/profile")
     testDriver.click(Locators.Home);
     testDriver.checkUrl("http://localhost:3000/")
+    testDriver.checkText(Locators.UserName,"ValidEmail@ValidWebsite" );
     testDriver.click(Locators.Sacagawea);
     testDriver.click(Locators.AddToCart);
     testDriver.click(Locators.Home);
