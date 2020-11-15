@@ -195,6 +195,16 @@ async function urlChecks(testDriver, failOnError=false){
     testDriver.checkUrl("http://localhost:3000/")
     await testDriver.execute();
 }
+async function loadChecks(testDriver, failOnError=false){
+    //check that there are 20 launches and that "Load More" loads 20 more
+    console.log("Assert: " + await checkAmountOfElementsWithLocator(Locators.GenericLaunch, 20));
+    testDriver.click(Locators.LoadMore);
+    await testDriver.execute();
+    await driver.sleep(2000);
+    console.log("Assert: " + await checkAmountOfElementsWithLocator(Locators.GenericLaunch, 40));
+    //check that it displays the right email
+    testDriver.checkText(Locators.UserName,"ValidEmail@ValidWebsite" );
+}
 
 async function testDriver(){
     var testDriver = new DriverWrapper(driver);
@@ -211,14 +221,7 @@ async function testDriver(){
     //Click to navigate to each page and confirm Urls
     await urlChecks(testDriver);
 
-    //check that there are 20 launches and that "Load More" loads 20 more
-    console.log("Assert: " + await checkAmountOfElementsWithLocator(Locators.GenericLaunch, 20));
-    testDriver.click(Locators.LoadMore);
-    await testDriver.execute();
-    await driver.sleep(2000);
-    console.log("Assert: " + await checkAmountOfElementsWithLocator(Locators.GenericLaunch, 40));
-    //check that it displays the right email
-    testDriver.checkText(Locators.UserName,"ValidEmail@ValidWebsite" );
+    await loadChecks(testDriver);
 
     
     testDriver.click(Locators.Sacagawea);
