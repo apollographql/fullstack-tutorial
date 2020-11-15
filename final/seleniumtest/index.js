@@ -1,10 +1,11 @@
 const webdriver = require("selenium-webdriver");
 const { elementIsNotSelected } = require("selenium-webdriver/lib/until");
+
 const driver = new webdriver.Builder().forBrowser("chrome").build();
 const By = webdriver.By;
 
-const defaultTimeout=1000;
-const sleeptime = 1000; //how long to wait after each command to make tests visually percievable 
+const defaultTimeout=5000;
+const sleeptime = 2000; //how long to wait after each command to make tests visually percievable 
 
 /*To Do:
 Catching Timeout errors
@@ -34,7 +35,13 @@ var Locators = {
     LoadMore: By.xpath("//*[text()='Load More']"),
     Sacagawea: By.xpath("//*[@href='/launch/106']"),
     StarLink14: By.xpath("//*[@href='/launch/105']"),
+    GenericLaunch: By.xpath("//*[contains(@href,'/launch/')]"),
 }
+async function checkAmountOfElementsWithLocator(locator, numberExpected, webdriver=driver){
+    var elements = (await webdriver.findElements(locator)).length;
+    console.log(elements);
+    return elements==numberExpected;
+  }
 async function checkElementHasText(locator, text, timeout=defaultTimeout, webdriver=driver){
     var elemHasText;
     return await webdriver.wait(function(){
@@ -67,16 +74,20 @@ async function elementDoesNotExist(locator,timeout=defaultTimeout, webdriver=dri
     return !elementExists(locator,timeout=defaultTimeout, webdriver=driver);
 }
 async function clickWhenClickable(locator,timeout=defaultTimeout, webdriver=driver){
+    try{
     return await webdriver.wait(function(){
         return webdriver.findElement(locator).then(
-            function(element){     
-                driver.executeScript("arguments[0].scrollIntoView()", element);
-                // driver.sleep(300);     
+            function(element){                   
+                webdriver.executeScript("arguments[0].scrollIntoView()", element).catch((e)=>console.log("Ignore this Error :/"));
                 return  element.click().then(()=>{return true;}, ()=>{return false;})}, 
             function(err){
                 return false;
             });
     }, timeout, 'Timeout waiting for ' + locator.value).then(()=>{return true}, ()=>{return false} );
+    }
+    catch(e){
+        console.log(e);
+    }
   }
 
  async function sendKeysWhenSendable(locator,keys, timeout=defaultTimeout, webdriver=driver){
@@ -131,7 +142,7 @@ async function clickWhenClickable(locator,timeout=defaultTimeout, webdriver=driv
     click(locator, timeout=defaultTimeout){
         var that=this;
         this.ActionList.push(
-            async function() {return clickWhenClickable(locator, timeout, that.driver);}
+            function() {return clickWhenClickable(locator, timeout, that.driver);}
         );
     }
     sendKeys(locator, keys, timeout=defaultTimeout){
@@ -148,13 +159,18 @@ async function clickWhenClickable(locator,timeout=defaultTimeout, webdriver=driv
     }
     async execute(failOnError=true){
         while(this.ActionList.length>0) {
-            var success =  this.ActionList.shift()();
-            if(success)
-                await this.driver.sleep(sleeptime)
-            else{
-                if(failOnError){
-                    console.log("Assert Failure");
+            try{
+                var success =  this.ActionList.shift()();
+                if(success)
+                    await this.driver.sleep(sleeptime).catch((e)=>console.log(e));
+                else{
+                    if(failOnError){
+                        console.log("Assert Failure");
+                    }
                 }
+            }
+            catch(e){
+                console.log("Assert Error");
             }
         }
 
@@ -170,6 +186,16 @@ async function logout(testDriver, failOnError=false){
     testDriver.click(Locators.LogOut);
     await testDriver.execute(failOnError);
 }
+async function urlChecks(testDriver, failOnError=false){
+    testDriver.click(Locators.Cart);
+    testDriver.checkUrl("http://localhost:3000/cart")
+    testDriver.click("Locators.Profile");
+    testDriver.checkUrl("http://localhost:3000/profile")
+    testDriver.click(Locators.Home);
+    testDriver.checkUrl("http://localhost:3000/")
+    await testDriver.execute();
+}
+
 async function testDriver(){
     var testDriver = new DriverWrapper(driver);
     //Test Bad Login
@@ -183,13 +209,18 @@ async function testDriver(){
     await login(testDriver, "ValidEmail@ValidWebsite" );
     await driver.navigate().refresh();
     //Click to navigate to each page and confirm Urls
-    testDriver.click(Locators.Cart);
-    testDriver.checkUrl("http://localhost:3000/cart")
-    testDriver.click("Locators.Profile");
-    testDriver.checkUrl("http://localhost:3000/profile")
-    testDriver.click(Locators.Home);
-    testDriver.checkUrl("http://localhost:3000/")
+    await urlChecks(testDriver);
+
+    //check that there are 20 launches and that "Load More" loads 20 more
+    console.log("Assert: " + await checkAmountOfElementsWithLocator(Locators.GenericLaunch, 20));
+    testDriver.click(Locators.LoadMore);
+    await testDriver.execute();
+    await driver.sleep(2000);
+    console.log("Assert: " + await checkAmountOfElementsWithLocator(Locators.GenericLaunch, 40));
+    //check that it displays the right email
     testDriver.checkText(Locators.UserName,"ValidEmail@ValidWebsite" );
+
+    
     testDriver.click(Locators.Sacagawea);
     testDriver.click(Locators.AddToCart);
     testDriver.click(Locators.Home);
@@ -205,19 +236,6 @@ async function testDriver(){
     testDriver.click(Locators.CancelTrip);
     // await testDriver.execute();
     await logout(testDriver, false );
-
-    // testDriver.navigate("http://localhost:3000");
-    // testDriver.noteUrl();
-    // testDriver.checkElementExists(By.name('email'));
-    // testDriver.sendKeys(By.name('email'),"Email@site.com");
-    // testDriver.click(By.xpath('/html/body/div/div/form/button'));
-    // testDriver.didUrlChange();
-    // testDriver.click(By.xpath("//*[contains(@data-testid, 'logout')]"));
-    // await testDriver.execute();
-    // testDriver.sendKeys(By.name('email'),"Email@site.com");
-    // testDriver.click(By.xpath('/html/body/div/div/form/button'));
-    // testDriver.click(By.xpath("//*[contains(@data-testid, 'logout')]"));
-    // await testDriver.execute();
 }
 
 testDriver();
