@@ -192,25 +192,7 @@ async function logout(testDriver, failOnError=false){
     await testDriver.click(Locators.LogOut);
     // await testDriver.execute(failOnError);
 }
-async function urlChecks(testDriver, failOnError=false){
-    testDriver.click(Locators.Cart);
-    testDriver.checkUrl("http://localhost:3000/cart")
-    testDriver.click("Locators.Profile");
-    testDriver.checkUrl("http://localhost:3000/profile")
-    testDriver.click(Locators.Home);
-    testDriver.checkUrl("http://localhost:3000/")
-    await testDriver.execute();
-}
-async function loadChecks(testDriver, failOnError=false){
-    //check that there are 20 launches and that "Load More" loads 20 more
-    console.log("Assert: " + await checkAmountOfElementsWithLocator(Locators.GenericLaunch, 20));
-    testDriver.click(Locators.LoadMore);
-    await testDriver.execute();
-    await driver.sleep(2000);
-    console.log("Assert: " + await checkAmountOfElementsWithLocator(Locators.GenericLaunch, 40));
-    //check that it displays the right email
-    testDriver.checkText(Locators.UserName,"ValidEmail@ValidWebsite" );
-}
+
 
 async function testDriverfunc(){
     var testDriver = new DriverWrapper(driver);
@@ -270,13 +252,22 @@ describe('Selenium Tests', ()=> {
         var exists= await elementExists(Locators.Submit);
         expect(exists).toBe(true);
         })
-
+    test('Navigation while Logged Out', async () => {
+        //Even if user tries to navigate, ensure he's still on the login screen
+        await testDriver.navigate("http://localhost:3000/cart");
+        var exists= await elementExists(Locators.Submit);
+        expect(exists).toBe(true);
+        await testDriver.navigate("http://localhost:3000/profile");
+        var exists= await elementExists(Locators.Submit);
+        expect(exists).toBe(true);
+        await testDriver.navigate("http://localhost:3000/");
+    })
     test('Good Login Test', async () => {
         await login(testDriver, "InvalidEmail@valid")
         expect(await elementExists(Locators.Submit)).toBe(false);
     })
     test('URL Checks', async () => {
-        await driver.navigate().refresh();
+        
         await testDriver.click(Locators.Cart);
         expect( await testDriver.checkUrl()).toBe("http://localhost:3000/cart");
         await testDriver.click(Locators.Profile);
@@ -286,15 +277,77 @@ describe('Selenium Tests', ()=> {
     })
     test('Load Launches', async () => {
         //check that there are 20 launches and that "Load More" loads 20 more
-        var loadTime=2000;
+        var loadTime=4000;
         expect(await checkAmountOfElementsWithLocator(Locators.GenericLaunch)).toBe(20);
         await testDriver.click(Locators.LoadMore);
         await driver.sleep(loadTime);
         expect(await checkAmountOfElementsWithLocator(Locators.GenericLaunch)).toBe(40);
         await testDriver.click(Locators.LoadMore);
-        await driver.sleep(loadTime);
+        await driver.sleep(loadTime+2000);
         expect(await checkAmountOfElementsWithLocator(Locators.GenericLaunch)).toBe(60);
     })
+    var launchesList=[Locators.Sacagawea, Locators.StarLink14];
+    test('Add Launches to Cart', async() =>{
+        await driver.navigate().refresh();
+        for(loc of launchesList){
+            await testDriver.click(loc);
+            await testDriver.click(Locators.AddToCart);
+            await testDriver.click(Locators.Home);
+        }
+        await testDriver.click(Locators.Cart);
+        for(loc of launchesList){
+            var exists= await elementExists(loc);
+            expect(exists).toBe(true);
+        }
+    })
+    test('Remove Launches From Cart', async() =>{
+        for(loc of launchesList){
+            await testDriver.click(loc);
+            await testDriver.click(Locators.RemoveFromCart);
+            await testDriver.click(Locators.Cart);
+        }
+    })
+    test('Add Launches to Cart Again', async() =>{
+        await testDriver.click(Locators.Home);
+        for(loc of launchesList){
+            await testDriver.click(loc);
+            await testDriver.click(Locators.AddToCart);
+            await testDriver.click(Locators.Home);
+        }
+        await testDriver.click(Locators.Cart);
+        for(loc of launchesList){
+            var exists= await elementExists(loc);
+            expect(exists).toBe(true);
+        }
+    })
+    test('Book All', async() =>{
+        await testDriver.click(Locators.BookAll);
+        await testDriver.click(Locators.Profile);
+        for(loc of launchesList){
+            var exists= await elementExists(loc);
+            expect(exists).toBe(true);
+        }
+    })
+    test('Remove From Profile', async() =>{
+        for(loc of launchesList){
+            await testDriver.click(loc);
+            await testDriver.click(Locators.CancelTrip);
+            await testDriver.click(Locators.Profile);
+        }
+        await testDriver.click(Locators.Home);
+        await driver.sleep(1000);
+        for(loc of launchesList){
+            var exists= await elementExists(loc);
+            expect(exists).toBe(true);
+        }
+    })
+    test('Test Username', async() =>{
+        var success = await testDriver.checkText(Locators.UserName, "InvalidEmail@valid");
+        expect(success).toBe(true);
+    })
+    test('Test LogOut', async() =>{
+        await testDriver.click(Locators.LogOut);
+        var exists= await elementExists(Locators.Submit);
+        expect(exists).toBe(true);
+    })
 })
-
-
