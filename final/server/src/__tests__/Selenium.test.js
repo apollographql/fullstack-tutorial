@@ -5,7 +5,7 @@ const driver = new webdriver.Builder().forBrowser("chrome").build();
 const By = webdriver.By;
 
 const defaultTimeout=5000;
-const sleeptime = 2000; //how long to wait after each command to make tests visually percievable 
+const sleeptime = 500; //how long to wait after each command to make tests visually percievable 
 
 // jest.config.js
 module.exports = {
@@ -48,11 +48,10 @@ var Locators = {
     GenericLaunch: By.xpath("//*[contains(@href,'/launch/')]"),
 }
 
-async function checkAmountOfElementsWithLocator(locator, numberExpected, webdriver=driver){
+async function checkAmountOfElementsWithLocator(locator, webdriver=driver){
     var elements = (await webdriver.findElements(locator)).length;
-    console.log(elements);
-    return elements==numberExpected;
-  }
+    return elements;
+}
 
 
 async function bestLaCroixFlavor(){
@@ -260,6 +259,12 @@ beforeAll(()=>{
 }
 )
 describe('Selenium Tests', ()=> {
+    test('NullLogin Test', async () => {
+        await login(testDriver, "")
+        var exists= await elementExists(Locators.Submit);
+        expect(exists).toBe(true);
+        })
+
     test('Bad Login Test', async () => {
         await login(testDriver, "InvalidEmail")
         var exists= await elementExists(Locators.Submit);
@@ -271,13 +276,24 @@ describe('Selenium Tests', ()=> {
         expect(await elementExists(Locators.Submit)).toBe(false);
     })
     test('URL Checks', async () => {
+        await driver.navigate().refresh();
         await testDriver.click(Locators.Cart);
         expect( await testDriver.checkUrl()).toBe("http://localhost:3000/cart");
         await testDriver.click(Locators.Profile);
-        // await driver.sleep(2000);
         expect (await testDriver.checkUrl()).toBe("http://localhost:3000/profile");
         await testDriver.click(Locators.Home);
         expect( await testDriver.checkUrl()).toBe("http://localhost:3000/");
+    })
+    test('Load Launches', async () => {
+        //check that there are 20 launches and that "Load More" loads 20 more
+        var loadTime=2000;
+        expect(await checkAmountOfElementsWithLocator(Locators.GenericLaunch)).toBe(20);
+        await testDriver.click(Locators.LoadMore);
+        await driver.sleep(loadTime);
+        expect(await checkAmountOfElementsWithLocator(Locators.GenericLaunch)).toBe(40);
+        await testDriver.click(Locators.LoadMore);
+        await driver.sleep(loadTime);
+        expect(await checkAmountOfElementsWithLocator(Locators.GenericLaunch)).toBe(60);
     })
 })
 
