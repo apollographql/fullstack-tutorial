@@ -85,7 +85,7 @@ async function checkElementHasText(locator, text, timeout=defaultTimeout, webdri
     }, timeout, 'Timeout waiting for ' + locator.value).then(()=>{return elemHasText}, ()=>{return false} );
   }
 async function elementExists(locator,timeout=defaultTimeout, webdriver=driver){
-    return await webdriver.wait(function(){
+    await webdriver.wait(function(){
         return webdriver.findElement(locator).then(element=>{
             return true;
             },function(err){
@@ -131,37 +131,52 @@ async function clickWhenClickable(locator,timeout=defaultTimeout, webdriver=driv
         this.ActionList=[];
         this.url;
     }
-    async navigate(url){
-        driver.navigate().to("http://localhost:3000");
-        await this.driver.sleep(sleeptime).catch((e)=>console.log(e));
+    navigate(url){
+        var that=this;
+        this.ActionList.push(
+            function() {
+                that.driver.navigate().to("http://localhost:3000");
+                return true;
+            }
+        );
     }
-    async noteUrl(){
-        this.url=this.driver.getCurrentUrl();
-        await this.driver.sleep(sleeptime);
-    
+    noteUrl(){
+        var that=this;
+        this.ActionList.push(
+            function() { that.url=that.driver.getCurrentUrl(); return true;}
+        );       
     }
-    async checkUrl(){ //checks if current URL matches the provided. If none provided, uses last stored url (from noteUrl)
-        return await this.driver.getCurrentUrl();
+    checkUrl(url=null){ //checks if current URL matches the provided. If none provided, uses last stored url (from noteUrl)
+        if (url==null)
+            url=this.url;
+        var that=this;
+        this.ActionList.push(
+            function() {
+                console.log("Assert: Check URL " + url+ ": " + !(url==that.driver.getCurrentUrl()));
+                return !(url==that.driver.getCurrentUrl());
+            }
+        );   
     }
-    async checkElementExists(locator, timeout=defaultTimeout){
-        return await elementExists(locator, timeout, this.driver);
+    checkElementExists(locator, timeout=defaultTimeout){
+        return elementExists(locator, timeout, this.driver).then((answer)=>{return answer;});
     }
-    async click(locator, timeout=defaultTimeout){
-        var success = await clickWhenClickable(locator, timeout, this.driver);
-        await this.driver.sleep(sleeptime);
-        return success;
-
+    click(locator, timeout=defaultTimeout){
+        var that=this;
+        this.ActionList.push(
+            function() {return clickWhenClickable(locator, timeout, that.driver);}
+        );
     }
-    async sendKeys(locator, keys, timeout=defaultTimeout){
-        var success = await sendKeysWhenSendable(locator, keys, timeout, this.driver);
-        await this.driver.sleep(sleeptime);
-        return success;
-
+    sendKeys(locator, keys, timeout=defaultTimeout){
+        var that=this;
+        this.ActionList.push(
+            function() {return sendKeysWhenSendable(locator, keys, timeout, that.driver);}
+        );
     }
-    async checkText(locator, text, timeout=defaultTimeout){
-        var success = await checkElementHasText(locator, text, timeout, this.driver);
-        await this.driver.sleep(sleeptime);
-        return success;
+    checkText(locator, text, timeout=defaultTimeout){
+        var that=this;
+        this.ActionList.push(
+            function() {return checkElementHasText(locator, text, timeout, that.driver);}
+        );
     }
     async execute(failOnError=true){
         while(this.ActionList.length>0) {
@@ -183,15 +198,16 @@ async function clickWhenClickable(locator,timeout=defaultTimeout, webdriver=driv
     }
 }
 async function login(testDriver, email){
-    await testDriver.navigate("http://localhost:3000");
-    await testDriver.sendKeys(Locators.Email,email); //type in your email
-    await testDriver.click(By.xpath("//*[contains(@type, 'submit')]")); //press submit button
-    // await testDriver.execute();
+    testDriver.navigate("http://localhost:3000");
+    testDriver.sendKeys(Locators.Email,email); //type in your email
+    testDriver.click(By.xpath("//*[contains(@type, 'submit')]")); //press submit button
+    await testDriver.execute();
 }
 
+
 async function logout(testDriver, failOnError=false){
-    await testDriver.click(Locators.LogOut);
-    // await testDriver.execute(failOnError);
+    testDriver.click(Locators.LogOut);
+    await testDriver.execute(failOnError);
 }
 async function urlChecks(testDriver, failOnError=false){
     testDriver.click(Locators.Cart);
@@ -247,38 +263,4 @@ async function testDriverfunc(){
     await logout(testDriver, false );
 }
 
-// testDriver();
-
-//test('testDriver', () => {
-//    return testDriver().then(data => {
-//       expect(data).toBe(true)
-//    })
-//})
-var testDriver;
-beforeAll(()=>{
-    testDriver = new DriverWrapper(driver);
-}
-)
-describe('Selenium Tests', ()=> {
-    test('Bad Login Test', async () => {
-        await login(testDriver, "InvalidEmail")
-        var exists= await elementExists(Locators.Submit);
-        expect(exists).toBe(true);
-        })
-
-    test('Good Login Test', async () => {
-        await login(testDriver, "InvalidEmail@valid")
-        expect(await elementExists(Locators.Submit)).toBe(false);
-    })
-    test('URL Checks', async () => {
-        await testDriver.click(Locators.Cart);
-        expect( await testDriver.checkUrl()).toBe("http://localhost:3000/cart");
-        await testDriver.click(Locators.Profile);
-        // await driver.sleep(2000);
-        expect (await testDriver.checkUrl()).toBe("http://localhost:3000/profile");
-        await testDriver.click(Locators.Home);
-        expect( await testDriver.checkUrl()).toBe("http://localhost:3000/");
-    })
-})
-
-
+testDriver();
