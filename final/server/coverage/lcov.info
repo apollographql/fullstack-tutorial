@@ -1,5 +1,5 @@
 TN:
-SF:C:\Users\matt\Desktop\524FullstackTutorial\final\server\src\engine-demo.js
+SF:src/engine-demo.js
 FN:3,(anonymous_0)
 FNF:1
 FNH:0
@@ -19,7 +19,7 @@ BRF:4
 BRH:0
 end_of_record
 TN:
-SF:C:\Users\matt\Desktop\524FullstackTutorial\final\server\src\index.js
+SF:src/index.js
 FN:19,(anonymous_0)
 FN:25,(anonymous_1)
 FN:58,(anonymous_2)
@@ -70,7 +70,7 @@ BRF:13
 BRH:5
 end_of_record
 TN:
-SF:C:\Users\matt\Desktop\524FullstackTutorial\final\server\src\resolvers.js
+SF:src/resolvers.js
 FN:5,(anonymous_0)
 FN:27,(anonymous_1)
 FN:29,(anonymous_2)
@@ -148,7 +148,7 @@ BRF:20
 BRH:17
 end_of_record
 TN:
-SF:C:\Users\matt\Desktop\524FullstackTutorial\final\server\src\schema.js
+SF:src/schema.js
 FNF:0
 FNH:0
 DA:1,2
@@ -160,7 +160,7 @@ BRF:0
 BRH:0
 end_of_record
 TN:
-SF:C:\Users\matt\Desktop\524FullstackTutorial\final\server\src\utils.js
+SF:src/utils.js
 FN:3,(anonymous_0)
 FN:8,(anonymous_1)
 FN:13,(anonymous_2)
@@ -205,7 +205,7 @@ BRF:14
 BRH:8
 end_of_record
 TN:
-SF:C:\Users\matt\Desktop\524FullstackTutorial\final\server\src\__tests__\__utils.js
+SF:src/__tests__/__utils.js
 FN:21,(anonymous_0)
 FN:28,(anonymous_1)
 FN:41,(anonymous_2)
@@ -247,7 +247,7 @@ BRF:3
 BRH:0
 end_of_record
 TN:
-SF:C:\Users\matt\Desktop\524FullstackTutorial\final\server\src\datasources\launch.js
+SF:src/datasources/launch.js
 FN:4,(anonymous_0)
 FN:10,(anonymous_1)
 FN:28,(anonymous_2)
@@ -288,7 +288,7 @@ BRF:6
 BRH:4
 end_of_record
 TN:
-SF:C:\Users\matt\Desktop\524FullstackTutorial\final\server\src\datasources\user.js
+SF:src/datasources/user.js
 FN:8,(anonymous_0)
 FN:19,(anonymous_1)
 FN:28,(anonymous_2)

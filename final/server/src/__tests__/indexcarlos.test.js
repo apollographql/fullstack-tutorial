@@ -7,6 +7,16 @@ const By = webdriver.By;
 const defaultTimeout=5000;
 const sleeptime = 2000; //how long to wait after each command to make tests visually percievable 
 
+// jest.config.js
+module.exports = {
+    // setupTestFrameworkScriptFile has been deprecated in
+    // favor of setupFilesAfterEnv in jest 24
+    setupFilesAfterEnv: ['./jest.setup.js']
+  }
+  
+  // jest.setup.js
+  jest.setTimeout(100000)
+
 /*To Do:
 Catching Timeout errors
 */
@@ -37,11 +47,25 @@ var Locators = {
     StarLink14: By.xpath("//*[@href='/launch/105']"),
     GenericLaunch: By.xpath("//*[contains(@href,'/launch/')]"),
 }
+
 async function checkAmountOfElementsWithLocator(locator, numberExpected, webdriver=driver){
     var elements = (await webdriver.findElements(locator)).length;
     console.log(elements);
     return elements==numberExpected;
   }
+
+
+async function bestLaCroixFlavor(){
+    return 'grapefruit'
+}
+// test
+//test('the data is peanut butter', () => {
+//    return checkAmountOfElementsWithLocator().then(data => {
+//      expect(data).toBe(22);
+//    });
+//  });
+// test end
+
 async function checkElementHasText(locator, text, timeout=defaultTimeout, webdriver=driver){
     var elemHasText;
     return await webdriver.wait(function(){
@@ -180,8 +204,18 @@ async function login(testDriver, email){
     testDriver.navigate("http://localhost:3000");
     testDriver.sendKeys(Locators.Email,email); //type in your email
     testDriver.click(By.xpath("//*[contains(@type, 'submit')]")); //press submit button
+    console.log('login function')
     await testDriver.execute();
 }
+// login test start
+test('Login Test', () => {
+    var testDriver = new DriverWrapper(driver);
+    return login(testDriver,'carlosgibson@gmail.com').then(data => {
+      expect(data).toBe();
+    });
+  });
+// login test end
+
 async function logout(testDriver, failOnError=false){
     testDriver.click(Locators.LogOut);
     await testDriver.execute(failOnError);
@@ -222,7 +256,6 @@ async function testDriver(){
     await urlChecks(testDriver);
 
     await loadChecks(testDriver);
-
     
     testDriver.click(Locators.Sacagawea);
     testDriver.click(Locators.AddToCart);
@@ -242,6 +275,21 @@ async function testDriver(){
 }
 
 testDriver();
+
+//test('testDriver', () => {
+//    return testDriver().then(data => {
+//       expect(data).toBe(true)
+//    })
+//})
+
+test('Test test', () => {
+    return testDriver().then(data => {
+        expect(
+            3 + 3
+        ).toBe(6)
+    })
+})
+
 
 
 //Old ways (for reference only)

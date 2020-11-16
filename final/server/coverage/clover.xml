@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1605283887993" clover="3.2.0">
-  <project timestamp="1605283887993" name="All files">
+<coverage generated="1605487174804" clover="3.2.0">
+  <project timestamp="1605487174804" name="All files">
     <metrics statements="145" coveredstatements="126" conditionals="93" coveredconditionals="60" methods="42" coveredmethods="37" elements="280" coveredelements="223" complexity="0" loc="145" ncloc="145" packages="3" files="8" classes="8"/>
     <package name="src">
       <metrics statements="72" coveredstatements="61" conditionals="51" coveredconditionals="30" methods="19" coveredmethods="15"/>
-      <file name="engine-demo.js" path="C:\Users\matt\Desktop\524FullstackTutorial\final\server\src\engine-demo.js">
+      <file name="engine-demo.js" path="/Users/carlosgibson/Documents/GitHub/fullstack-tutorial/final/server/src/engine-demo.js">
         <metrics statements="5" coveredstatements="1" conditionals="4" coveredconditionals="0" methods="1" coveredmethods="0"/>
         <line num="1" count="2" type="stmt"/>
         <line num="4" count="0" type="cond" truecount="0" falsecount="4"/>
@@ -12,7 +12,7 @@
         <line num="6" count="0" type="stmt"/>
         <line num="7" count="0" type="stmt"/>
       </file>
-      <file name="index.js" path="C:\Users\matt\Desktop\524FullstackTutorial\final\server\src\index.js">
+      <file name="index.js" path="/Users/carlosgibson/Documents/GitHub/fullstack-tutorial/final/server/src/index.js">
         <metrics statements="23" coveredstatements="18" conditionals="13" coveredconditionals="5" methods="3" coveredmethods="2"/>
         <line num="1" count="2" type="stmt"/>
         <line num="3" count="2" type="stmt"/>
@@ -38,7 +38,7 @@
         <line num="59" count="0" type="stmt"/>
         <line num="64" count="2" type="stmt"/>
       </file>
-      <file name="resolvers.js" path="C:\Users\matt\Desktop\524FullstackTutorial\final\server\src\resolvers.js">
+      <file name="resolvers.js" path="/Users/carlosgibson/Documents/GitHub/fullstack-tutorial/final/server/src/resolvers.js">
         <metrics statements="27" coveredstatements="26" conditionals="20" coveredconditionals="17" methods="11" coveredmethods="10"/>
         <line num="1" count="6" type="stmt"/>
         <line num="3" count="6" type="stmt"/>
@@ -68,13 +68,13 @@
         <line num="93" count="2" type="cond" truecount="2" falsecount="0"/>
         <line num="96" count="1" type="stmt"/>
       </file>
-      <file name="schema.js" path="C:\Users\matt\Desktop\524FullstackTutorial\final\server\src\schema.js">
+      <file name="schema.js" path="/Users/carlosgibson/Documents/GitHub/fullstack-tutorial/final/server/src/schema.js">
         <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
         <line num="1" count="2" type="stmt"/>
         <line num="3" count="2" type="stmt"/>
         <line num="82" count="2" type="stmt"/>
       </file>
-      <file name="utils.js" path="C:\Users\matt\Desktop\524FullstackTutorial\final\server\src\utils.js">
+      <file name="utils.js" path="/Users/carlosgibson/Documents/GitHub/fullstack-tutorial/final/server/src/utils.js">
         <metrics statements="14" coveredstatements="13" conditionals="14" coveredconditionals="8" methods="4" coveredmethods="3"/>
         <line num="1" count="6" type="stmt"/>
         <line num="3" count="6" type="stmt"/>
@@ -94,7 +94,7 @@
     </package>
     <package name="src.__tests__">
       <metrics statements="20" coveredstatements="20" conditionals="3" coveredconditionals="0" methods="5" coveredmethods="5"/>
-      <file name="__utils.js" path="C:\Users\matt\Desktop\524FullstackTutorial\final\server\src\__tests__\__utils.js">
+      <file name="__utils.js" path="/Users/carlosgibson/Documents/GitHub/fullstack-tutorial/final/server/src/__tests__/__utils.js">
         <metrics statements="20" coveredstatements="20" conditionals="3" coveredconditionals="0" methods="5" coveredmethods="5"/>
         <line num="1" count="2" type="stmt"/>
         <line num="2" count="2" type="stmt"/>
@@ -120,7 +120,7 @@
     </package>
     <package name="src.datasources">
       <metrics statements="53" coveredstatements="45" conditionals="39" coveredconditionals="30" methods="18" coveredmethods="17"/>
-      <file name="launch.js" path="C:\Users\matt\Desktop\524FullstackTutorial\final\server\src\datasources\launch.js">
+      <file name="launch.js" path="/Users/carlosgibson/Documents/GitHub/fullstack-tutorial/final/server/src/datasources/launch.js">
         <metrics statements="12" coveredstatements="12" conditionals="6" coveredconditionals="4" methods="7" coveredmethods="7"/>
         <line num="1" count="3" type="stmt"/>
         <line num="5" count="8" type="stmt"/>
@@ -135,7 +135,7 @@
         <line num="43" count="6" type="stmt"/>
         <line num="48" count="3" type="stmt"/>
       </file>
-      <file name="user.js" path="C:\Users\matt\Desktop\524FullstackTutorial\final\server\src\datasources\user.js">
+      <file name="user.js" path="/Users/carlosgibson/Documents/GitHub/fullstack-tutorial/final/server/src/datasources/user.js">
         <metrics statements="41" coveredstatements="33" conditionals="33" coveredconditionals="26" methods="11" coveredmethods="10"/>
         <line num="1" count="3" type="stmt"/>
         <line num="2" count="3" type="stmt"/>
