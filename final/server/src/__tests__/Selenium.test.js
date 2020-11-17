@@ -5,7 +5,7 @@ const driver = new webdriver.Builder().forBrowser("chrome").build();
 const By = webdriver.By;
 
 const defaultTimeout=5000;
-const sleeptime = 500; //how long to wait after each command to make tests visually percievable 
+const sleeptime = 0; //how long to wait after each command to make tests visually percievable 
 
 // jest.config.js
 module.exports = {
@@ -15,7 +15,7 @@ module.exports = {
   }
   
   // jest.setup.js
-  jest.setTimeout(100000)
+  jest.setTimeout(30000)
 
 /*To Do:
 Catching Timeout errors
@@ -48,10 +48,22 @@ var Locators = {
     GenericLaunch: By.xpath("//*[contains(@href,'/launch/')]"),
 }
 
-async function checkAmountOfElementsWithLocator(locator, webdriver=driver){
-    var elements = (await webdriver.findElements(locator)).length;
-    return elements;
-}
+async function checkAmountOfElementsWithLocator(locator, number, timeout= defaultTimeout, webdriver=driver){
+    // var elements = (await webdriver.findElements(locator)).length;
+    // return elements;
+    // var elemHasText;
+    return await webdriver.wait(function(){
+        return webdriver.findElements(locator).then(
+            (elements) => {       
+                return  elements.length==number
+            },
+            ()=>{
+                return false;
+            }
+        );
+    }, timeout, 'Timeout waiting for ' + locator.value).then(()=>{return true;}, ()=>{return false;} );
+  }
+
 
 
 async function bestLaCroixFlavor(){
@@ -236,11 +248,13 @@ async function testDriverfunc(){
 //    })
 //})
 var testDriver;
+var launchesList;
 beforeAll(()=>{
     testDriver = new DriverWrapper(driver);
+    launchesList=[Locators.Sacagawea, Locators.StarLink14];
 }
 )
-describe('Selenium Tests', ()=> {
+describe('Selenium Login Tests', ()=> {
     test('NullLogin Test', async () => {
         await login(testDriver, "")
         var exists= await elementExists(Locators.Submit);
@@ -266,6 +280,8 @@ describe('Selenium Tests', ()=> {
         await login(testDriver, "InvalidEmail@valid")
         expect(await elementExists(Locators.Submit)).toBe(false);
     })
+})
+describe('Selenium Button Checks Tests', ()=> {
     test('URL Checks', async () => {
         
         await testDriver.click(Locators.Cart);
@@ -278,15 +294,17 @@ describe('Selenium Tests', ()=> {
     test('Load Launches', async () => {
         //check that there are 20 launches and that "Load More" loads 20 more
         var loadTime=4000;
-        expect(await checkAmountOfElementsWithLocator(Locators.GenericLaunch)).toBe(20);
+        expect(await checkAmountOfElementsWithLocator(Locators.GenericLaunch, 20)).toBe(true);
         await testDriver.click(Locators.LoadMore);
-        await driver.sleep(loadTime);
-        expect(await checkAmountOfElementsWithLocator(Locators.GenericLaunch)).toBe(40);
+        // await driver.sleep(loadTime);
+        expect(await checkAmountOfElementsWithLocator(Locators.GenericLaunch, 40)).toBe(true);
         await testDriver.click(Locators.LoadMore);
-        await driver.sleep(loadTime+2000);
-        expect(await checkAmountOfElementsWithLocator(Locators.GenericLaunch)).toBe(60);
+        // await driver.sleep(loadTime+2000);
+        expect(await checkAmountOfElementsWithLocator(Locators.GenericLaunch, 60)).toBe(true);
     })
-    var launchesList=[Locators.Sacagawea, Locators.StarLink14];
+})
+describe('Selenium Cart Checks Tests', ()=> {
+
     test('Add Launches to Cart', async() =>{
         await driver.navigate().refresh();
         for(loc of launchesList){
@@ -320,6 +338,8 @@ describe('Selenium Tests', ()=> {
             expect(exists).toBe(true);
         }
     })
+})
+describe('Selenium Profile and Logout Checks Tests', ()=> {
     test('Book All', async() =>{
         await testDriver.click(Locators.BookAll);
         await testDriver.click(Locators.Profile);
