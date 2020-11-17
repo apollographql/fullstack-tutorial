@@ -58,10 +58,10 @@ describe('book trips', () => {
       <BookTrips cartItems={['1']} />,
       { mocks, addTypename: false },
     );
-    
-    //console.log( wrapper.find('book-button') );//.simulate('click');
     //console.log( wrapper.debug());
     //console.log( wrapper.instance() );//.simulate('click');
+    
+    //find the button and click
     wrapper.find('button').simulate('click');
     
     // Let's wait until our mocked mutation resolves and
