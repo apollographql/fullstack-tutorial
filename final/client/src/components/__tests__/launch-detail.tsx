@@ -19,10 +19,14 @@ describe('Launch Detail View', () => {
     );
   });
 
-  it('renders correctly', () => {
+  it('launch detail matches the snapshot', () => {
     const tree = renderer.create(
-      <div>Hello</div>  
+      <LaunchDetail
+        id={'1'}
+        site={'earth'}
+        rocket={{ name: 'that one', type: 'big', __typename: 'Rocket', id: '1' }}
+      />,  
     ).toJSON();
-    console.log(tree);
+    expect(tree).toMatchSnapshot();
   });
 });
