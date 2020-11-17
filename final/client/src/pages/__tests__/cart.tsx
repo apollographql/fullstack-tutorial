@@ -1,4 +1,6 @@
 import React from 'react';
+import { render } from 'enzyme';
+import { MockedProvider, MockedResponse } from '@apollo/client/testing';
 
 import {
   renderApollo,
@@ -28,8 +30,19 @@ describe('Cart Page', () => {
   afterEach(cleanup);
 
   it('renders with message for empty carts', () => {
-    const { getByTestId } = renderApollo(<Cart />, { cache });
-    return waitForElement(() => getByTestId('empty-message'));
+    // const { getByTestId } = renderApollo(<Cart />, { cache });
+    // return waitForElement(() => getByTestId('empty-message'));
+
+    let wrapper  = render(
+      <MockedProvider
+        cache={cache}
+        addTypename={false}
+      >
+        {<Cart />}
+      </MockedProvider>
+    )
+    console.log(wrapper.find('*'))
+    expect(wrapper.find('empty-message')).toHaveLength(0)
   });
 
   it('renders cart', () => {
@@ -40,8 +53,21 @@ describe('Cart Page', () => {
       },
     ];
 
-    const { getByTestId } = renderApollo(<Cart />, { cache, mocks });
-    cartItemsVar(['1']);
-    return waitForElement(() => getByTestId('book-button'));
+    // const { getByTestId } = renderApollo(<Cart />, { cache, mocks });
+    // cartItemsVar(['1']);
+    // return waitForElement(() => getByTestId('book-button'));
+
+    let wrapper  = render(
+      <MockedProvider
+        cache={cache}
+        mocks={mocks}
+        addTypename={false}
+      >
+        {<Cart />}
+      </MockedProvider>
+    )
+
+    //  console.log(wrapper.val())
+     expect(wrapper.find('book-button'))
   });
 });
