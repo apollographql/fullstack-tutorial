@@ -32,13 +32,13 @@ describe('book trips', () => {
   let wrapper;
 
   it('renders without error', () => {
-    //const ecomp = renderApollo(<BookTrips cartItems={[]} />);
-    const  ecomp  = render(
+    const ecomp = renderApollo(<BookTrips cartItems={[]} />);
+    /*const  ecomp  = mount(
         <MockedProvider
         >
           {<BookTrips cartItems={[]} />}
         </MockedProvider>
-    )
+    )*/
     expect( ecomp.find('button') ).toBeTruthy();
     //expect(getByTestId('book-button')).toBeTruthy();
   });
@@ -61,32 +61,29 @@ describe('book trips', () => {
     ];
     
      
-    /*const ecomp  = renderApollo(
+    const wrapper  = renderApollo(
       <BookTrips cartItems={['1']} />,
       { mocks, addTypename: false },
-    );*/
-//    wrapper = mount( <BookTrips cartItems={[]} />)
-    wrapper  = render(
-      <MockedProvider
-        mocks={mocks}
-        addTypename={false}
-      >
-        {<BookTrips cartItems={[]} />}
-      </MockedProvider>
-  )
-    console.log( wrapper );
-    console.log( wrapper.state() );
-    console.log( wrapper.props() );
-    //wrapper.find('#submit').click();
-    //console.log( wrapper.find('button') );
-    wrapper.find('#submit').simulate('click');
-    //fireEvent.click(wrapper.find('button'));
-
+    );
+    //wrapper  = render(
+    //wrapper  = mount(
+    //  <MockedProvider
+    //    mocks={mocks}
+    //    addTypename={false}
+    //  >
+    //    {<BookTrips cartItems={['1']} />}
+    //  </MockedProvider>
+    //)
+    console.log( wrapper.find('book-button') );//.simulate('click');
+    console.log( wrapper.debug());
+    //console.log( wrapper.instance() );//.simulate('click');
+    wrapper.find('button').simulate('click');
+    
     // Let's wait until our mocked mutation resolves and
     // the component re-renders.
     // getByTestId throws an error if it cannot find an element with the given ID
     // and waitForElement will wait until the callback doesn't throw an error
-    await waitForElement(() => wrapper.find( { prop: 'message'} ));
+    await waitForElement(() => wrapper.find( 'message' ));
   });
 
   // >>>> TODO
