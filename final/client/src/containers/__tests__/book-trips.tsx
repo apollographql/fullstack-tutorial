@@ -33,14 +33,7 @@ describe('book trips', () => {
 
   it('renders without error', () => {
     const ecomp = renderApollo(<BookTrips cartItems={[]} />);
-    /*const  ecomp  = mount(
-        <MockedProvider
-        >
-          {<BookTrips cartItems={[]} />}
-        </MockedProvider>
-    )*/
     expect( ecomp.find('button') ).toBeTruthy();
-    //expect(getByTestId('book-button')).toBeTruthy();
   });
 
   it('completes mutation and shows message', async () => {
@@ -65,17 +58,9 @@ describe('book trips', () => {
       <BookTrips cartItems={['1']} />,
       { mocks, addTypename: false },
     );
-    //wrapper  = render(
-    //wrapper  = mount(
-    //  <MockedProvider
-    //    mocks={mocks}
-    //    addTypename={false}
-    //  >
-    //    {<BookTrips cartItems={['1']} />}
-    //  </MockedProvider>
-    //)
-    console.log( wrapper.find('book-button') );//.simulate('click');
-    console.log( wrapper.debug());
+    
+    //console.log( wrapper.find('book-button') );//.simulate('click');
+    //console.log( wrapper.debug());
     //console.log( wrapper.instance() );//.simulate('click');
     wrapper.find('button').simulate('click');
     
