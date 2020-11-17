@@ -3,6 +3,8 @@ import React from 'react';
 import { render, cleanup } from '../../test-utils';
 import LaunchDetail from '../launch-detail';
 
+import renderer from 'react-test-renderer';
+
 describe('Launch Detail View', () => {
   // automatically unmount and cleanup DOM after the test is finished.
   afterEach(cleanup);
@@ -15,5 +17,12 @@ describe('Launch Detail View', () => {
         rocket={{ name: 'that one', type: 'big', __typename: 'Rocket', id: '1' }}
       />,
     );
+  });
+
+  it('renders correctly', () => {
+    const tree = renderer.create(
+      <div>Hello</div>  
+    ).toJSON();
+    console.log(tree);
   });
 });
