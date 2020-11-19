@@ -6,10 +6,10 @@
 // GraphQL mutation operation: login
 // ====================================================
 
-export interface login {
+export interface Login {
   login: string | null;
 }
 
-export interface loginVariables {
+export interface LoginVariables {
   email: string;
 }
