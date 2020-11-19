@@ -1,12 +1,16 @@
-import React, { useState } from 'react';
-import { gql, useMutation, Reference } from '@apollo/client';
+import React from 'react';
+import {
+  gql,
+  useMutation,
+  useReactiveVar,
+  Reference
+} from '@apollo/client';
 
 import { GET_LAUNCH_DETAILS } from '../pages/launch';
 import Button from '../components/button';
 import { cartItemsVar } from '../cache';
 import * as LaunchDetailTypes from '../pages/__generated__/LaunchDetails';
 
-// export all queries used in this file for testing
 export { GET_LAUNCH_DETAILS };
 
 export const CANCEL_TRIP = gql`
@@ -30,11 +34,14 @@ const CancelTripButton: React.FC<ActionButtonProps> = ({ id }) => {
     {
       variables: { launchId: id },
       update(cache, { data: { cancelTrip } }) {
-        // Update the users list of trips in the cache to remove the trip that
-        // was just cancelled.
+        // Update the user's cached list of trips to remove the trip that
+        // was just canceled.
         const launch = cancelTrip.launches[0];
         cache.modify({
-          id: `User:${localStorage.getItem('userId')}`,
+          id: cache.identify({
+            __typename: 'User',
+            id: localStorage.getItem('userId'),
+          }),
           fields: {
             trips(existingTrips) {
               const launchRef = cache.writeFragment({
@@ -71,9 +78,8 @@ const CancelTripButton: React.FC<ActionButtonProps> = ({ id }) => {
 };
 
 const ToggleTripButton: React.FC<ActionButtonProps> = ({ id }) => {
-  const cartItems = cartItemsVar();
+  const cartItems = useReactiveVar(cartItemsVar);
   const isInCart = id ? cartItems.includes(id) : false;
-  const [, toggleTrip] = useState(isInCart);
   return (
     <div>
       <Button
@@ -81,11 +87,9 @@ const ToggleTripButton: React.FC<ActionButtonProps> = ({ id }) => {
           if (id) {
             cartItemsVar(
               isInCart
-                ? cartItems.filter((i) => i !== id)
+                ? cartItems.filter(itemId => itemId !== id)
                 : [...cartItems, id]
             );
-            // Trigger a re-render to pick up the `cartItemsVar` changes.
-            toggleTrip(!isInCart);
           }
         }}
         data-testid={'action-button'}
