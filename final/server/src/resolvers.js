@@ -66,7 +66,8 @@ module.exports = {
     login: async (_, { email }, { dataSources }) => {
       const user = await dataSources.userAPI.findOrCreateUser({ email });
       if (user) {
-        return new Buffer(email).toString('base64');
+        user.token = new Buffer(email).toString('base64');
+        return user;
       }
     },
     uploadProfileImage: async(_, { file }, { dataSources }) =>

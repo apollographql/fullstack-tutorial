@@ -6,8 +6,14 @@
 // GraphQL mutation operation: login
 // ====================================================
 
+export interface login_login {
+  __typename: "User";
+  id: string;
+  token: string | null;
+}
+
 export interface login {
-  login: string | null;
+  login: login_login;
 }
 
 export interface loginVariables {

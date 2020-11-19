@@ -22,7 +22,8 @@ const LogoutButton = () => {
         client.cache.gc();
 
         // Remove user details from localStorage.
-        localStorage.clear();
+        localStorage.removeItem('token');
+        localStorage.removeItem('userId');
 
         // Let other parts of the application that are relying on logged in
         // state know we're now logged out.
