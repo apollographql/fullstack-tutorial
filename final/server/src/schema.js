@@ -23,7 +23,7 @@ const typeDefs = gql`
     # if false, cancellation failed -- check errors
     cancelTrip(launchId: ID!): TripUpdateResponse!
 
-    login(email: String): String
+    login(email: String): User
 
     # for use with the iOS tutorial
     uploadProfileImage(file: Upload!): User
