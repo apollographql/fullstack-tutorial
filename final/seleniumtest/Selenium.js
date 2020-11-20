@@ -158,7 +158,7 @@ async function clickWhenClickable(locator,timeout=defaultTimeout, webdriver=driv
         );   
     }
     checkElementExists(locator, timeout=defaultTimeout){
-        return elementExists(locator, timeout, this.driver).then((answer)=>{return answer;});
+        return elementExists(locator, timeout, this.driver);
     }
     click(locator, timeout=defaultTimeout){
         var that=this;

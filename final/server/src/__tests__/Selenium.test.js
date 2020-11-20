@@ -32,12 +32,14 @@ var Locators = {
     Email: By.name('email'),
     Submit: By.xpath("//*[contains(@type, 'submit')]"),
 
+    MyCart: By.xpath("//*[text()='My Cart']"),
     Cart: By.xpath("//*[contains(@href, 'cart')]"),
     BookAll: By.xpath("//*[@data-testid='book-button']"),
 
     AddToCart: By.xpath("//*[@data-testid='action-button']"),
     RemoveFromCart: By.xpath("//*[@data-testid='action-button']"),
     
+    MyProfile: By.xpath("//*[text()='My Trips']"),
     Profile: By.xpath("//*[@href='/profile']"),
     CancelTrip: By.xpath("//*[@data-testid='action-button']"),
 
@@ -143,7 +145,7 @@ async function clickWhenClickable(locator,timeout=defaultTimeout, webdriver=driv
         this.url;
     }
     async navigate(url){
-        driver.navigate().to("http://localhost:3000");
+        driver.navigate().to(url);
         await this.driver.sleep(sleeptime).catch((e)=>console.log(e));
     }
     async noteUrl(){
@@ -193,8 +195,9 @@ async function clickWhenClickable(locator,timeout=defaultTimeout, webdriver=driv
 
     }
 }
-async function login(testDriver, email){
-    await testDriver.navigate("http://localhost:3000");
+async function login(testDriver, email, navFirst=true){
+    if(navFirst)
+        await testDriver.navigate("http://localhost:3000");
     await testDriver.sendKeys(Locators.Email,email); //type in your email
     await testDriver.click(By.xpath("//*[contains(@type, 'submit')]")); //press submit button
     // await testDriver.execute();
@@ -276,8 +279,22 @@ describe('Selenium Login Tests', ()=> {
         expect(exists).toBe(true);
         await testDriver.navigate("http://localhost:3000/");
     })
+    test('Navigate before the Login', async () => {
+        //Even if user tries to navigate, ensure he's still on the login screen
+        await testDriver.navigate("http://localhost:3000/cart");
+        await login(testDriver, "Email@Server", false)
+        var exists= await elementExists(Locators.MyCart);
+        expect(exists).toBe(true);
+        await testDriver.click(Locators.LogOut);
+        
+        await testDriver.navigate("http://localhost:3000/profile");
+        await login(testDriver, "Email@Server", false)
+        var exists= await elementExists(Locators.MyProfile);
+        expect(exists).toBe(true);
+        await testDriver.click(Locators.LogOut);
+    })
     test('Good Login Test', async () => {
-        await login(testDriver, "InvalidEmail@valid")
+        await login(testDriver, "ValidEmail@validAddress")
         expect(await elementExists(Locators.Submit)).toBe(false);
     })
 })
@@ -362,7 +379,7 @@ describe('Selenium Profile and Logout Checks Tests', ()=> {
         }
     })
     test('Test Username', async() =>{
-        var success = await testDriver.checkText(Locators.UserName, "InvalidEmail@valid");
+        var success = await testDriver.checkText(Locators.UserName, "ValidEmail@validAddress");
         expect(success).toBe(true);
     })
     test('Test LogOut', async() =>{

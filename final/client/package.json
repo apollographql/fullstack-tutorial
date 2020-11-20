@@ -41,11 +41,12 @@
       "enzyme-to-json/serializer"
     ],
     "collectCoverageFrom": [
-      "src/**/*.js",
-      "!src/index.js"
+      "src/**/*.{js,jsx,ts,tsx}",
+      "!<rootDir>/node_modules/"
     ],
     "coverageReporters": [
-      "text"
+      "text",
+      "html"
     ]
   },
   "devDependencies": {

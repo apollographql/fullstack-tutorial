@@ -12,10 +12,10 @@ module.exports = {
     // setupTestFrameworkScriptFile has been deprecated in
     // favor of setupFilesAfterEnv in jest 24
     setupFilesAfterEnv: ['./jest.setup.js'],
-    preset: 'ts-jest',
-    transform: {
-      '^.+\\.tsx?$': 'babel-jest',
-    },
+    // preset: 'ts-jest',
+    // transform: {
+    //   '^.+\\.tsx?$': 'babel-jest',
+    // },
   }
   
   // jest.setup.js
@@ -246,11 +246,13 @@ async function testDriverfunc(){
 
 // testDriver();
 
-//test('testDriver', () => {
+// test('testDriver', () => {
 //    return testDriver().then(data => {
 //       expect(data).toBe(true)
 //    })
-//})
+// })
+
+
 var testDriver;
 var launchesList;
 beforeAll(()=>{
