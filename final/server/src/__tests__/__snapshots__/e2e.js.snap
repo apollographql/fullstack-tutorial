@@ -17,6 +17,23 @@ Object {
 }
 `;
 
+exports[`Server - e2e gets a single launch 2`] = `
+Object {
+  "data": Object {
+    "launch": Object {
+      "id": "30",
+      "isBooked": false,
+      "mission": Object {
+        "name": "Thaicom 8",
+      },
+      "rocket": Object {
+        "type": "FT",
+      },
+    },
+  },
+}
+`;
+
 exports[`Server - e2e gets list of launches 1`] = `
 Object {
   "data": Object {
