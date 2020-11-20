@@ -11,7 +11,9 @@ import {
 import CartItem, { GET_LAUNCH } from '../cart-item';
 
 import waitForExpect from 'wait-for-expect';
-import { act, wait } from '@testing-library/react';
+//import { findByTestId, findByText, getByText, wait } from '@testing-library/react';
+//import { act, wait } from '@testing-library/react';
+const all_wait = () => new Promise( resolve => setTimeout( resolve, 10 ));
 
 const mockLaunch = {
   __typename: 'Launch',
@@ -31,7 +33,7 @@ describe('cart item', () => {
   // automatically unmount and cleanup DOM after the test is finished.
   afterEach(cleanup);
 
-  it('queries item and renders without error',  async () => {
+  it('queries item and renders without error',  async() => {
     let mocks = [
       {
         request: { query: GET_LAUNCH, variables: { launchId: '1' } },
@@ -47,44 +49,47 @@ describe('cart item', () => {
       addTypename: false,
     });
 
-    // check the loading state
-    //console.log( wrapper.debug());
+    console.log( wrapper.debug() );
+    //console.log( wrapper.state() );
     expect( wrapper.find('[launchId="1"]').text() ).toMatch(/loading/i);
-    
-    //this comes from the wait-for-expect library
-    await waitForExpect( () => {
+    await all_wait().then( () => {
       wrapper.update();
-      expect( wrapper.find('[launchId="1"]').text() ).toMatch(/test mission/i);
+      console.log( wrapper.debug() );
+      //expect( wrapper.find('[launchId="1"]').text() ).toMatch(/test mission/i);
+      expect( wrapper.find('[launchId="1"]').text() ).toMatch(/tost mission/i); //intentionally fail tests
     });
-    //return wrapper;
-    //return waitForElement(() => wrapper.findWhere(x=>x.text().toUpperCase() === 'test mission'.toUpperCase() ));
-//    return waitForElement(() => wrapper.findWhere(x=>x.text().toUpperCase() === 'test mission'.toUpperCase() ));
   });
-
-  /*
-  it('renders with error state', async () => {
-    let mocks = [
-      {
+  
+  it('renders with error state', async() => {
+    let mocks2 = [
+      /*{
         request: { query: GET_LAUNCH, variables: { launchId: 1 } },
         error: new Error('aw shucks'),
+      },
+      */
+      {
+        request: { query: GET_LAUNCH, variables: { launchId: '1' } },
+        result: { data: { launch: mockLaunch } },
       },
     ];
 
     // since we know the error message, we can use getByText
     // to recognize the error
-    let wrapper2 = renderApollo(<CartItem launchId={'1'} />, {
-      mocks,
+    /*let wrapper2 = renderApollo(<CartItem launchId={'1'} />, {
+      mocks2,
       addTypename: false,
+      defaultOptions: {
+        watchQuery: { fetchPolicy: 'no-cache' },
+        query: { fetchPolicy: 'no-cache'}
     });
-    console.log( wrapper2.debug());
-    console.log( wrapper2.find('[launchId="1"]').text());
-    //wrapper.update();
+    }*/
     
-
-    //waitForElement(() => wrapper.find(/error: aw shucks/i));
-    //waitForElement(() => wrapper.findWhere(x=>x.text().toUpperCase() === 'error: aw shocks'.toUpperCase() ));
-    return waitForElement( () => {
-      wrapper2.findWhere(x=>x.text().toUpperCase() === 'error: aw shocks'.toUpperCase() );
-    });
-  });*/
+    //await waitForElement(() => wrapper2.findWhere(x=>x.text().toUpperCase() === 'error: aw shocks'.toUpperCase() ));
+    //console.log( wrapper2.debug() );
+    await all_wait().then( () => {
+        //expect(true).toBe(true);
+        expect(true).toBe(false);
+        //expect( wrapper2.text() ).toMatch(/error: aw shocks/i); 
+      });
+  });
 });

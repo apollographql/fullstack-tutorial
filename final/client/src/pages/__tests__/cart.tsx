@@ -28,8 +28,10 @@ describe('Cart Page', () => {
   afterEach(cleanup);
 
   it('renders with message for empty carts', () => {
-    const { getByTestId } = renderApollo(<Cart />, { cache });
-    return waitForElement(() => getByTestId('empty-message'));
+    const wrapper = renderApollo(<Cart />, { cache });
+    console.log( wrapper.debug());
+    return waitForElement(() => wrapper.find('[data-testid="empty-message"]'));
+//    return waitForElement(() => wrapper.find('empty-message'));
   });
 
   it('renders cart', () => {
@@ -40,8 +42,8 @@ describe('Cart Page', () => {
       },
     ];
 
-    const { getByTestId } = renderApollo(<Cart />, { cache, mocks });
+    const wrapper = renderApollo(<Cart />, { cache, mocks });
     cartItemsVar(['1']);
-    return waitForElement(() => getByTestId('book-button'));
+    return waitForElement(() => wrapper.find('book-button'));
   });
 });
