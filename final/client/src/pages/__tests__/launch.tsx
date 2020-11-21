@@ -7,7 +7,7 @@ import {
 } from '../../test-utils';
 import Launch, { GET_LAUNCH_DETAILS } from '../launch';
 
-const all_wait = () => new Promise( resolve => setTimeout( resolve, 10 ));
+const all_wait = () => new Promise( resolve => setTimeout( resolve, 30 ));
 
 const mockLaunch = {
   __typename: 'Launch',
@@ -48,7 +48,7 @@ describe('Launch Page', () => {
       wrapper.update();
       //console.log( wrapper.debug() );
       expect(wrapper.text()).toMatch(/test mission/i);
-      //expect(wrapper.find('Launch').text()).toMatch(/tost mission/i); //intentioally fail to test tests
+      //expect(wrapper.text()).toMatch(/tost mission/i); //intentioally fail to test tests
     });
   });
 });
