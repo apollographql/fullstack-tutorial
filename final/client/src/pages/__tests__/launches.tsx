@@ -28,6 +28,8 @@ const mockLaunch = {
   isInCart: false,
 };
 
+const all_wait = () => new Promise( resolve => setTimeout( resolve, 30 ));
+
 describe('Launches Page', () => {
   // automatically unmount and cleanup DOM after the test is finished.
   afterEach(cleanup);
@@ -48,10 +50,18 @@ describe('Launches Page', () => {
         },
       },
     ];
-    const { getByText } = await renderApollo(<Launches />, {
+      const wrapper = renderApollo(<Launches />, {
       mocks,
+      addTypename: false,
       cache,
+    }); 
+    //console.log( wrapper.debug() );
+    await all_wait().then( () => {
+      wrapper.update();
+      //console.log( wrapper.debug() );
+      expect(wrapper.text()).toMatch(/test mission/i);
+      //expect(wrapper.text()).toMatch(/tost mission/i); //intentioally fail to test tests
     });
-    await waitForElement(() => getByText(/test mission/i));
+    //await waitForElement(() => wrapper.find('tost mission'));
   });
 });
