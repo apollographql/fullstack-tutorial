@@ -34,20 +34,29 @@ describe('Login Page', () => {
       },
     ];
 
-    const {getByText, getByTestId} = await renderApollo(<Login />, {
+    const wrapper = await renderApollo(<Login />, {
       mocks,
       cache,
     });
 
-    fireEvent.change(getByTestId('login-input'), {
-      target: {value: 'a@a.a'},
-    });
+    await wrapper.find('button').simulate('click')
+    console.log(wrapper.debug())
+    
 
-    fireEvent.click(getByText(/log in/i));
+    // const {getByText, getByTestId} = await renderApollo(<Login />, {
+    //   mocks,
+    //   cache,
+    // });
 
-    // login is done if loader is gone
-    await waitForElement(() => getByText(/log in/i));
+    // fireEvent.change(getByTestId('login-input'), {
+    //   target: {value: 'a@a.a'},
+    // });
 
-    expect(isLoggedInVar()).toBeTruthy();
+    // fireEvent.click(getByText(/log in/i));
+
+    // // login is done if loader is gone
+    // await waitForElement(() => getByText(/log in/i));
+
+    // expect(isLoggedInVar()).toBeTruthy();
   });
 });
