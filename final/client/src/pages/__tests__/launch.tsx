@@ -7,6 +7,8 @@ import {
 } from '../../test-utils';
 import Launch, { GET_LAUNCH_DETAILS } from '../launch';
 
+const all_wait = () => new Promise( resolve => setTimeout( resolve, 30 ));
+
 const mockLaunch = {
   __typename: 'Launch',
   id: 1,
@@ -42,7 +44,16 @@ describe('Launch Page', () => {
       mocks,
       resolvers: {}
     });
+<<<<<<< HEAD
     
     expect(wrapper.find('launchId')).toBeTruthy()
+=======
+    await all_wait().then( () => {
+      wrapper.update();
+      //console.log( wrapper.debug() );
+      expect(wrapper.text()).toMatch(/test mission/i);
+      //expect(wrapper.text()).toMatch(/tost mission/i); //intentioally fail to test tests
+    });
+>>>>>>> 51e15d5f5191fbc7853dcc2170e5fac290a42b2f
   });
 });
