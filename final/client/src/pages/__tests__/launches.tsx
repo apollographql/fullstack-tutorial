@@ -49,13 +49,12 @@ describe('Launches Page', () => {
       },
     ];
 
-    const wrapper = await renderApollo(<Launches />, {
+    const wrapper = renderApollo(<Launches />, {
       mocks,
       cache,
     });
 
+    expect(wrapper.contains(<Launches />)).toBe(true)
     expect(wrapper.contains(<svg className="css-kahotv">logo.svg</svg>)).toBe(true)
-
-    // await waitForElement(() => getByText(/test mission/i));
   });
 });

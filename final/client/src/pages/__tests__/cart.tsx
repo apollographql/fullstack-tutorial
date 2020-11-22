@@ -31,9 +31,8 @@ describe('Cart Page', () => {
 
   it('renders with message for empty carts', () => {
     const wrapper = renderApollo(<Cart />, { cache });
-    console.log( wrapper.debug());
-    return waitForElement(() => wrapper.find('[data-testid="empty-message"]'));
-//    return waitForElement(() => wrapper.find('empty-message'));
+
+    expect(wrapper.find('[data-testid="empty-message"]')).toBeTruthy();
   });
 
   it('renders cart', () => {
@@ -45,7 +44,8 @@ describe('Cart Page', () => {
     ];
 
     const wrapper = renderApollo(<Cart />, { cache, mocks });
+    
     cartItemsVar(['1']);
-    return waitForElement(() => wrapper.find('book-button'));
+    expect(wrapper.find('book-button')).toBeTruthy();
   });
 });
