@@ -1,11 +1,11 @@
 const webdriver = require("selenium-webdriver");
 const { elementIsNotSelected } = require("selenium-webdriver/lib/until");
+
 const driver = new webdriver.Builder().forBrowser("chrome").build();
 const By = webdriver.By;
 
-const defaultTimeout=1000;
-const sleeptime = 1000; //how long to wait after each command to make tests visually percievable 
-
+const defaultTimeout=5000;
+const sleeptime = 2000; //how long to wait after each command to make tests visually percievable 
 
 /*To Do:
 Catching Timeout errors
@@ -17,18 +17,52 @@ Cart, Profile, and Home buttons aren't of button type
 */
 
 var Locators = {
-    Cart: By.xpath("//*[contains(@href, 'cart')]"),
-    Profile: By.xpath("//*[@href='/profile']"),
-    Home: By.xpath("//*[@href='/']"),
     LogOut: By.xpath("//*[@data-testid='logout-button']"),
     UserName: By.xpath("//*[@class='css-1sykydy']"),
     Email: By.name('email'),
-    Submit: By.xpath("//*[contains(@type, 'submit')]")
+    Submit: By.xpath("//*[contains(@type, 'submit')]"),
+
+    Cart: By.xpath("//*[contains(@href, 'cart')]"),
+    BookAll: By.xpath("//*[@data-testid='book-button']"),
+
+    AddToCart: By.xpath("//*[@data-testid='action-button']"),
+    RemoveFromCart: By.xpath("//*[@data-testid='action-button']"),
+    
+    Profile: By.xpath("//*[@href='/profile']"),
+    CancelTrip: By.xpath("//*[@data-testid='action-button']"),
+
+    Home: By.xpath("//*[@href='/']"),
+    LoadMore: By.xpath("//*[text()='Load More']"),
+    Sacagawea: By.xpath("//*[@href='/launch/106']"),
+    StarLink14: By.xpath("//*[@href='/launch/105']"),
+    GenericLaunch: By.xpath("//*[contains(@href,'/launch/')]"),
 }
+async function checkAmountOfElementsWithLocator(locator, numberExpected, webdriver=driver){
+    var elements = (await webdriver.findElements(locator)).length;
+    console.log(elements);
+    return elements==numberExpected;
+  }
+async function checkElementHasText(locator, text, timeout=defaultTimeout, webdriver=driver){
+    var elemHasText;
+    return await webdriver.wait(function(){
+        return webdriver.findElement(locator).then(
+            function(element){       
+                return  element.getText().then((elemText)=>
+                {             
+                    elemHasText=(elemText.toUpperCase()==text.toUpperCase());
+                    console.log("ELement has Text " + text + "? : " +elemHasText);
+                    return true;
+                }, 
+                ()=>{return false;}
+                )}, 
+            function(err){
+                return false;
+            });
+    }, timeout, 'Timeout waiting for ' + locator.value).then(()=>{return elemHasText}, ()=>{return false} );
+  }
 async function elementExists(locator,timeout=defaultTimeout, webdriver=driver){
     await webdriver.wait(function(){
         return webdriver.findElement(locator).then(element=>{
-            elem=element;
             return true;
             },function(err){
                 return false;
@@ -40,20 +74,26 @@ async function elementDoesNotExist(locator,timeout=defaultTimeout, webdriver=dri
     return !elementExists(locator,timeout=defaultTimeout, webdriver=driver);
 }
 async function clickWhenClickable(locator,timeout=defaultTimeout, webdriver=driver){
+    try{
     return await webdriver.wait(function(){
         return webdriver.findElement(locator).then(
-            function(element){        
-                return element.click().then(()=>{return true;}, ()=>{return false;})}, 
+            function(element){                   
+                webdriver.executeScript("arguments[0].scrollIntoView()", element).catch((e)=>console.log("Ignore this Error :/"));
+                return  element.click().then(()=>{return true;}, ()=>{return false;})}, 
             function(err){
                 return false;
             });
     }, timeout, 'Timeout waiting for ' + locator.value).then(()=>{return true}, ()=>{return false} );
+    }
+    catch(e){
+        console.log(e);
+    }
   }
 
  async function sendKeysWhenSendable(locator,keys, timeout=defaultTimeout, webdriver=driver){
     return await webdriver.wait(function(){
         return webdriver.findElement(locator).then(
-            function(element){        
+            function(element){     
                 return element.sendKeys(keys).then(()=>{return true;}, ()=>{return false;})}, 
             function(err){
                 return false;
@@ -88,7 +128,7 @@ async function clickWhenClickable(locator,timeout=defaultTimeout, webdriver=driv
         var that=this;
         this.ActionList.push(
             function() {
-                console.log("Check URL " + url+ ": " + !(url==that.driver.getCurrentUrl()));
+                console.log("Assert: Check URL " + url+ ": " + !(url==that.driver.getCurrentUrl()));
                 return !(url==that.driver.getCurrentUrl());
             }
         );   
@@ -102,7 +142,7 @@ async function clickWhenClickable(locator,timeout=defaultTimeout, webdriver=driv
     click(locator, timeout=defaultTimeout){
         var that=this;
         this.ActionList.push(
-            async function() {return clickWhenClickable(locator, timeout, that.driver);}
+            function() {return clickWhenClickable(locator, timeout, that.driver);}
         );
     }
     sendKeys(locator, keys, timeout=defaultTimeout){
@@ -111,15 +151,26 @@ async function clickWhenClickable(locator,timeout=defaultTimeout, webdriver=driv
             function() {return sendKeysWhenSendable(locator, keys, timeout, that.driver);}
         );
     }
+    checkText(locator, text, timeout=defaultTimeout){
+        var that=this;
+        this.ActionList.push(
+            function() {return checkElementHasText(locator, text, timeout, that.driver);}
+        );
+    }
     async execute(failOnError=true){
         while(this.ActionList.length>0) {
-            var success =  this.ActionList.shift()();
-            if(success)
-                await this.driver.sleep(sleeptime)
-            else{
-                if(failOnError){
-                    console.log("Assert Failure");
+            try{
+                var success =  this.ActionList.shift()();
+                if(success)
+                    await this.driver.sleep(sleeptime).catch((e)=>console.log(e));
+                else{
+                    if(failOnError){
+                        console.log("Assert Failure");
+                    }
                 }
+            }
+            catch(e){
+                console.log("Assert Error");
             }
         }
 
@@ -135,6 +186,26 @@ async function logout(testDriver, failOnError=false){
     testDriver.click(Locators.LogOut);
     await testDriver.execute(failOnError);
 }
+async function urlChecks(testDriver, failOnError=false){
+    testDriver.click(Locators.Cart);
+    testDriver.checkUrl("http://localhost:3000/cart")
+    testDriver.click("Locators.Profile");
+    testDriver.checkUrl("http://localhost:3000/profile")
+    testDriver.click(Locators.Home);
+    testDriver.checkUrl("http://localhost:3000/")
+    await testDriver.execute();
+}
+async function loadChecks(testDriver, failOnError=false){
+    //check that there are 20 launches and that "Load More" loads 20 more
+    console.log("Assert: " + await checkAmountOfElementsWithLocator(Locators.GenericLaunch, 20));
+    testDriver.click(Locators.LoadMore);
+    await testDriver.execute();
+    await driver.sleep(2000);
+    console.log("Assert: " + await checkAmountOfElementsWithLocator(Locators.GenericLaunch, 40));
+    //check that it displays the right email
+    testDriver.checkText(Locators.UserName,"ValidEmail@ValidWebsite" );
+}
+
 async function testDriver(){
     var testDriver = new DriverWrapper(driver);
     //Test Bad Login
@@ -148,26 +219,26 @@ async function testDriver(){
     await login(testDriver, "ValidEmail@ValidWebsite" );
     await driver.navigate().refresh();
     //Click to navigate to each page and confirm Urls
-    testDriver.click(Locators.Cart);
-    testDriver.checkUrl("http://localhost:3000/cart")
-    testDriver.click("Locators.Profile");
-    testDriver.checkUrl("http://localhost:3000/profile")
-    testDriver.click(Locators.Home);
-    testDriver.checkUrl("http://localhost:3000/")
-    // await logout(testDriver, false );
+    await urlChecks(testDriver);
 
-    // testDriver.navigate("http://localhost:3000");
-    // testDriver.noteUrl();
-    // testDriver.checkElementExists(By.name('email'));
-    // testDriver.sendKeys(By.name('email'),"Email@site.com");
-    // testDriver.click(By.xpath('/html/body/div/div/form/button'));
-    // testDriver.didUrlChange();
-    // testDriver.click(By.xpath("//*[contains(@data-testid, 'logout')]"));
+    await loadChecks(testDriver);
+
+    
+    testDriver.click(Locators.Sacagawea);
+    testDriver.click(Locators.AddToCart);
+    testDriver.click(Locators.Home);
+    testDriver.click(Locators.StarLink14);
+    testDriver.click(Locators.AddToCart);
+    testDriver.click(Locators.Cart);
+    testDriver.click(Locators.BookAll);
+    testDriver.click(Locators.Profile);
+    testDriver.click(Locators.Sacagawea);
+    testDriver.click(Locators.CancelTrip);
+    testDriver.click(Locators.Profile);
+    testDriver.click(Locators.StarLink14);
+    testDriver.click(Locators.CancelTrip);
     // await testDriver.execute();
-    // testDriver.sendKeys(By.name('email'),"Email@site.com");
-    // testDriver.click(By.xpath('/html/body/div/div/form/button'));
-    // testDriver.click(By.xpath("//*[contains(@data-testid, 'logout')]"));
-    // await testDriver.execute();
+    await logout(testDriver, false );
 }
 
 testDriver();
