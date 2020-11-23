@@ -44,16 +44,12 @@ describe('Launch Page', () => {
       mocks,
       resolvers: {}
     });
-<<<<<<< HEAD
     
     expect(wrapper.find('launchId')).toBeTruthy()
-=======
+
     await all_wait().then( () => {
       wrapper.update();
-      //console.log( wrapper.debug() );
       expect(wrapper.text()).toMatch(/test mission/i);
-      //expect(wrapper.text()).toMatch(/tost mission/i); //intentioally fail to test tests
     });
->>>>>>> 51e15d5f5191fbc7853dcc2170e5fac290a42b2f
   });
 });

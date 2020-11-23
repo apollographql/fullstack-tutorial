@@ -43,22 +43,16 @@ describe('Cart Page', () => {
       },
     ];
 
-<<<<<<< HEAD
-    const wrapper = renderApollo(<Cart />, { cache, mocks });
-    
-    cartItemsVar(['1']);
-    expect(wrapper.find('book-button')).toBeTruthy();
-=======
     const wrapper = renderApollo(<Cart />, { 
       mocks, 
       //addTypename: false, 
       cache 
     });
-    console.log( wrapper.debug() )
+    
+    
     cartItemsVar(['1']);
     wrapper.update();
     console.log( cache );;
     return waitForElement(() => wrapper.find('book-button'));
->>>>>>> 51e15d5f5191fbc7853dcc2170e5fac290a42b2f
   });
 });
