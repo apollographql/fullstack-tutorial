@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { render, cleanup } from '../../test-utils';
+import { shallow } from 'enzyme';
 import LaunchTile from '../launch-tile';
 
 describe('Launch Tile', () => {
@@ -8,8 +9,9 @@ describe('Launch Tile', () => {
   afterEach(cleanup);
 
   it('renders without error', () => {
-    render(
+    shallow(
       <LaunchTile
+//      <RaunchTile //A test to see the test fail to be sure our test can fail
         launch={{
           __typename: 'Launch',
           isBooked: false,
