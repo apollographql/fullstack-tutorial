@@ -7,6 +7,8 @@ import {
 } from '../../test-utils';
 import Launch, { GET_LAUNCH_DETAILS } from '../launch';
 
+const all_wait = () => new Promise( resolve => setTimeout( resolve, 30 ));
+
 const mockLaunch = {
   __typename: 'Launch',
   id: 1,
@@ -38,10 +40,16 @@ describe('Launch Page', () => {
         result: { data: { launch: mockLaunch } },
       },
     ];
-    const { getByText } = await renderApollo(<Launch launchId={1} />, {
+    const wrapper = renderApollo(<Launch launchId={1} />, {
       mocks,
       resolvers: {}
     });
-    await waitForElement(() => getByText(/test mission/i));
+    
+    expect(wrapper.find('launchId')).toBeTruthy()
+
+    await all_wait().then( () => {
+      wrapper.update();
+      expect(wrapper.text()).toMatch(/test mission/i);
+    });
   });
 });

@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { render, cleanup } from '../../test-utils';
+import { shallow } from 'enzyme';
 import LaunchDetail from '../launch-detail';
 
 import renderer from 'react-test-renderer';
@@ -10,14 +11,16 @@ describe('Launch Detail View', () => {
   afterEach(cleanup);
 
   it('renders without error', () => {
-    render(
+    const wrapper = shallow(
       <LaunchDetail
         id={'1'}
         site={'earth'}
         rocket={{ name: 'that one', type: 'big', __typename: 'Rocket', id: '1' }}
       />,
     );
+    //console.log( wrapper.debug());
   });
+<<<<<<< HEAD
 
   it('launch detail matches the snapshot', () => {
     const tree = renderer.create(
@@ -29,4 +32,7 @@ describe('Launch Detail View', () => {
     ).toJSON();
     expect(tree).toMatchSnapshot();
   });
+=======
+  
+>>>>>>> master
 });
