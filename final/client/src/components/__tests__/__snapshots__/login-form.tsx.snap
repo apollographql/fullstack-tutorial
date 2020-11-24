@@ -1,0 +1,52 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Login Form login form matches the snapshot 1`] = `
+<div
+  className="css-12broor"
+>
+  <header
+    className="css-1ujrq0t"
+  >
+    <svg
+      className="css-cvyda1"
+    >
+      curve.svg
+    </svg>
+    <svg
+      className="css-1qk13o0"
+    >
+      logo.svg
+    </svg>
+  </header>
+  <svg
+    className="css-h0j5i9"
+  >
+    rocket.svg
+  </svg>
+  <h1
+    className="css-1r0stgl"
+  >
+    Space Explorer
+  </h1>
+  <form
+    className="css-ccdq42"
+    onSubmit={[Function]}
+  >
+    <input
+      className="css-wotvke"
+      data-testid="login-input"
+      name="email"
+      onChange={[Function]}
+      placeholder="Email"
+      required={true}
+      type="email"
+    />
+    <button
+      className="css-wwcn44"
+      type="submit"
+    >
+      Log in
+    </button>
+  </form>
+</div>
+`;

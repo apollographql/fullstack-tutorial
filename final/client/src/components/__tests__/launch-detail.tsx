@@ -20,7 +20,6 @@ describe('Launch Detail View', () => {
     );
     //console.log( wrapper.debug());
   });
-<<<<<<< HEAD
 
   it('launch detail matches the snapshot', () => {
     const tree = renderer.create(
@@ -32,7 +31,4 @@ describe('Launch Detail View', () => {
     ).toJSON();
     expect(tree).toMatchSnapshot();
   });
-=======
-  
->>>>>>> master
 });
