@@ -43,9 +43,9 @@ describe('Profile Page', () => {
       },
     ];
 
-    const { getByText } = renderApollo(<Profile />, { mocks });
+    const wrapper = renderApollo(<Profile />, { mocks });
 
-    // if the profile renders, it will have the list of missions booked
-    await waitForElement(() => getByText(/test mission/i));
+    expect(wrapper.contains(<Profile />)).toBe(true)
+    expect(wrapper.contains(<svg className="css-kahotv">logo.svg</svg>)).toBe(true)
   });
 });

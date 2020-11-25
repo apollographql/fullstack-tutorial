@@ -1,4 +1,6 @@
 import React from 'react';
+import { render } from 'enzyme';
+import { MockedProvider, MockedResponse } from '@apollo/client/testing';
 
 import {
   renderApollo,
@@ -28,8 +30,9 @@ describe('Cart Page', () => {
   afterEach(cleanup);
 
   it('renders with message for empty carts', () => {
-    const { getByTestId } = renderApollo(<Cart />, { cache });
-    return waitForElement(() => getByTestId('empty-message'));
+    const wrapper = renderApollo(<Cart />, { cache });
+
+    expect(wrapper.find('[data-testid="empty-message"]')).toBeTruthy();
   });
 
   it('renders cart', () => {
@@ -40,8 +43,16 @@ describe('Cart Page', () => {
       },
     ];
 
-    const { getByTestId } = renderApollo(<Cart />, { cache, mocks });
+    const wrapper = renderApollo(<Cart />, { 
+      mocks, 
+      //addTypename: false, 
+      cache 
+    });
+    
+    
     cartItemsVar(['1']);
-    return waitForElement(() => getByTestId('book-button'));
+    wrapper.update();
+    console.log( cache );;
+    return waitForElement(() => wrapper.find('book-button'));
   });
 });

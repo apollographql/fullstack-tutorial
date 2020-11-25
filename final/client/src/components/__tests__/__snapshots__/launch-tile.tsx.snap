@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Launch Tile launch tile matches the snapshot 1`] = `
+<a
+  className="css-10q0vj5"
+  href="/launch/1"
+  onClick={[Function]}
+  style={
+    Object {
+      "backgroundImage": "url(iss.jpg)",
+    }
+  }
+>
+  <h3>
+    the first one
+  </h3>
+  <h5>
+    harambe
+  </h5>
+</a>
+`;

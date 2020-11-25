@@ -1,5 +1,8 @@
 import React from 'react';
 
+import { mount, shallow, render } from 'enzyme';
+import { MockedProvider, MockedResponse } from '@apollo/client/testing';
+
 import {
   renderApollo,
   cleanup,
@@ -26,10 +29,11 @@ const mockLaunch = {
 describe('book trips', () => {
   // automatically unmount and cleanup DOM after the test is finished.
   afterEach(cleanup);
+  let wrapper;
 
   it('renders without error', () => {
-    const { getByTestId } = renderApollo(<BookTrips cartItems={[]} />);
-    expect(getByTestId('book-button')).toBeTruthy();
+    const ecomp = renderApollo(<BookTrips cartItems={[]} />);
+    expect( ecomp.find('button') ).toBeTruthy();
   });
 
   it('completes mutation and shows message', async () => {
@@ -48,18 +52,23 @@ describe('book trips', () => {
         result: { data: { launch: mockLaunch } },
       },
     ];
-    const { getByTestId } = renderApollo(
+    
+     
+    const wrapper  = renderApollo(
       <BookTrips cartItems={['1']} />,
       { mocks, addTypename: false },
     );
-
-    fireEvent.click(getByTestId('book-button'));
-
+    //console.log( wrapper.debug());
+    //console.log( wrapper.instance() );//.simulate('click');
+    
+    //find the button and click
+    wrapper.find('button').simulate('click');
+    
     // Let's wait until our mocked mutation resolves and
     // the component re-renders.
     // getByTestId throws an error if it cannot find an element with the given ID
     // and waitForElement will wait until the callback doesn't throw an error
-    await waitForElement(() => getByTestId('message'));
+    await waitForElement(() => wrapper.find( 'message' ));
   });
 
   // >>>> TODO

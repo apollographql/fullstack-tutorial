@@ -1,0 +1,22 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Launch Detail View launch detail matches the snapshot 1`] = `
+<div
+  className="css-gfwuup"
+  style={
+    Object {
+      "backgroundImage": "url(iss.jpg)",
+    }
+  }
+>
+  <h3>
+    that one
+     (
+    big
+    )
+  </h3>
+  <h5>
+    earth
+  </h5>
+</div>
+`;
