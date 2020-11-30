@@ -97,7 +97,7 @@ describe('[Mutation.login]', () => {
 
   it('returns base64 encoded email as user token if successful', async () => {
     const args = { email: 'a@a.a' };
-    const base64Email = new Buffer(mockContext.user.email).toString('base64');
+    const base64Email = Buffer.from(mockContext.user.email).toString('base64');
     findOrCreateUser.mockReturnValueOnce({ token: base64Email });
 
     // check the resolver response
