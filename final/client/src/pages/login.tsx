@@ -16,15 +16,17 @@ export const LOGIN_USER = gql`
 
 export default function Login() {
   const [login, { loading, error }] = useMutation<
-    LoginTypes.login,
-    LoginTypes.loginVariables
+    LoginTypes.Login,
+    LoginTypes.LoginVariables
   >(
     LOGIN_USER,
     {
       onCompleted({ login }) {
-        localStorage.setItem('token', login.token as string);
-        localStorage.setItem('userId', login.id as string);
-        isLoggedInVar(true);
+        if (login) {
+          localStorage.setItem('token', login.token as string);
+          localStorage.setItem('userId', login.id as string);
+          isLoggedInVar(true);
+        }
       }
     }
   );
