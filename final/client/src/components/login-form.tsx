@@ -11,7 +11,7 @@ import { colors, unit } from '../styles';
 import * as LoginTypes from '../pages/__generated__/login';
 
 interface LoginFormProps {
-  login: (a: { variables: LoginTypes.loginVariables }) => void;
+  login: (a: { variables: LoginTypes.LoginVariables }) => void;
 }
 
 interface LoginFormState {
