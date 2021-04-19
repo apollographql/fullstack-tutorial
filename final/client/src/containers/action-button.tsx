@@ -3,7 +3,7 @@ import {
   gql,
   useMutation,
   useReactiveVar,
-  Reference
+  Reference,
 } from '@apollo/client';
 
 import { GET_LAUNCH_DETAILS } from '../pages/launch';
@@ -43,17 +43,9 @@ const CancelTripButton: React.FC<ActionButtonProps> = ({ id }) => {
             id: localStorage.getItem('userId'),
           }),
           fields: {
-            trips(existingTrips) {
-              const launchRef = cache.writeFragment({
-                data: launch,
-                fragment: gql`
-                  fragment RemoveLaunch on Launch {
-                    id
-                  }
-                `
-              });
+            trips(existingTrips: Reference[], { readField }) {
               return existingTrips.filter(
-                (tripRef: Reference) => tripRef === launchRef
+                tripRef => readField("id", tripRef) !== launch.id
               );
             }
           }
