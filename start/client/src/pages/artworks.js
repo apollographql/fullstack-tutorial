@@ -46,6 +46,11 @@ const Artworks = () => {
             ) : (
               <p>Circa: {artwork.date_display}</p>
             )}
+            {artwork.place_of_origin === "" ? (
+              <p>Place of Origin: Unknown</p>
+            ) : (
+              <p>Place of Origin: {artwork.place_of_origin}</p>
+            )}
           </div>
         );
       })}
