@@ -1,4 +1,9 @@
-import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
+import {
+  ApolloClient,
+  gql,
+  ApolloProvider,
+  InMemoryCache,
+} from "@apollo/client";
 // import { cache } from "./cache";
 import React from "react";
 import ReactDOM from "react-dom";
@@ -13,14 +18,20 @@ const client = new ApolloClient({
 
 // injectStyles();
 
-// const ARTWORKS = gql`
-//   query getArtworks {
-//     artworks {
-//       id
-//       title
-//     }
-//   }
-// `;
+client
+  .query({
+    query: gql`
+      query TestQuery {
+        artworks {
+          id
+          title
+          artist_display
+          imageUrl
+        }
+      }
+    `,
+  })
+  .then((result) => console.log(result));
 
 // client
 //   .query({

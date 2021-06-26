@@ -26,7 +26,8 @@ const Artwork = ({ id }) => {
   return (
     <div>
       {/* <QueryResult error={error} loading={loading} data={data}> */}
-      <ArtworkDetail artwork={data} />
+      Test
+      {/* <ArtworkDetail artwork={data} /> */}
       {/* </QueryResult> */}
     </div>
   );

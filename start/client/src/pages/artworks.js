@@ -9,6 +9,10 @@ export const GET_ARTWORKS = gql`
     artworks {
       id
       title
+      date_display
+      artist_display
+      imageUrl
+      place_of_origin
     }
   }
 `;
@@ -23,7 +27,30 @@ const Artworks = () => {
   if (!data) return <p>Not found</p>;
   console.log(data);
 
-  return <Fragment>{data.artworks}</Fragment>;
+  return (
+    <div>
+      <h3>WELCOME TO FLASHCART</h3>
+      <p>Explore our gallery, play games, and learn fun art history facts.</p>
+      {data.artworks.map((artwork) => {
+        return (
+          <div key={artwork.id}>
+            <img src={artwork.imageUrl} />
+            <h3>{artwork.title}</h3>
+            {artwork.artist_display === "" ? (
+              <p>Artist: Unknown</p>
+            ) : (
+              <p>Artist: {artwork.artist_display}</p>
+            )}
+            {artwork.date_display === "" ? (
+              <p>Date: Unknown</p>
+            ) : (
+              <p>Circa: {artwork.date_display}</p>
+            )}
+          </div>
+        );
+      })}
+    </div>
+  );
 };
 
 export default Artworks;
