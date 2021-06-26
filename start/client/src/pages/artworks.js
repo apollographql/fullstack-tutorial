@@ -1,7 +1,7 @@
 import React, { Fragment, useState } from "react";
-import { RouteComponentProps } from "@reach/router";
+// import { RouteComponentProps } from "@reach/router";
 import { gql, useQuery } from "@apollo/client";
-import { ArtworkTile, Button } from "../components";
+// import { ArtworkTile, Button } from "../components";
 // import * as GetLaunchListTypes from "./__generated__/GetArtworkList";
 
 export const GET_ARTWORKS = gql`
@@ -11,8 +11,10 @@ export const GET_ARTWORKS = gql`
       title
       date_display
       artist_display
-      imageUrl
       place_of_origin
+      image {
+        imageUrl
+      }
     }
   }
 `;
@@ -30,11 +32,12 @@ const Artworks = () => {
   return (
     <div>
       <h3>WELCOME TO FLASHCART</h3>
-      <p>Explore our gallery, play games, and learn fun art history facts.</p>
+      <button>START TRAINING</button>
+      <hr />
       {data.artworks.map((artwork) => {
         return (
           <div key={artwork.id}>
-            <img src={artwork.imageUrl} />
+            <img src={artwork.image.imageUrl} />
             <h3>{artwork.title}</h3>
             {artwork.artist_display === "" ? (
               <p>Artist: Unknown</p>

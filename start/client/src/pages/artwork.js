@@ -1,13 +1,18 @@
 import React from "react";
 import { gql, useQuery } from "@apollo/client";
-import ArtworkDetail from "../components/artwork-detail";
+import SingleArtwork from "../components/SingleArtwork";
 
 export const GET_ARTWORK = gql`
   query getSingleArtwork($artworkId: ID!) {
     artwork(id: $artworkId) {
       id
       title
-      imageUrl
+      date_display
+      artist_display
+      place_of_origin
+      image {
+        imageUrl
+      }
     }
   }
 `;
@@ -16,19 +21,17 @@ export const GET_ARTWORK = gql`
  * Tracks Page is the Catstronauts home page.
  * We display a grid of tracks fetched with useQuery with the TRACKS query
  */
-const Artwork = ({ id }) => {
+const Artwork = ({ artworkId }) => {
   const { loading, error, data } = useQuery(GET_ARTWORK, {
-    variables: { id },
+    variables: { artworkId },
   });
-  console.log("this ran", data);
-  // console.log("err message", error.message);
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>ERROR</p>;
+  if (!data) return <p>Not found</p>;
 
   return (
     <div>
-      {/* <QueryResult error={error} loading={loading} data={data}> */}
-      Test
-      {/* <ArtworkDetail artwork={data} /> */}
-      {/* </QueryResult> */}
+      <SingleArtwork data={data} />
     </div>
   );
 };

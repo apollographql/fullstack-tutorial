@@ -18,34 +18,36 @@ const client = new ApolloClient({
 
 // injectStyles();
 
-client
-  .query({
-    query: gql`
-      query TestQuery {
-        artworks {
-          id
-          title
-          artist_display
-          imageUrl
-        }
-      }
-    `,
-  })
-  .then((result) => console.log(result));
-
 // client
 //   .query({
 //     query: gql`
 //       query TestQuery {
-//         artwork(id: 12267) {
+//         artworks {
 //           id
 //           title
 //           artist_display
+//           image {
+//             imageUrl
+//           }
 //         }
 //       }
 //     `,
 //   })
 //   .then((result) => console.log(result));
+
+client
+  .query({
+    query: gql`
+      query TestQuery {
+        artwork(id: 12267) {
+          id
+          title
+          artist_display
+        }
+      }
+    `,
+  })
+  .then((result) => console.log(result));
 
 // Pass the ApolloClient instance to the ApolloProvider component
 ReactDOM.render(
