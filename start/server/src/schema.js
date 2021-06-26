@@ -7,12 +7,16 @@ const typeDefs = gql`
     date_display: String
     artist_display: String
     image_id: String!
-    imageUrl: String
+    image: Image
     place_of_origin: String
+  }
+  type Image {
+    imageUrl: String
   }
   type Query {
     artworks: [Artwork]
     artwork(id: ID!): Artwork
+    image: Image
   }
 `;
 

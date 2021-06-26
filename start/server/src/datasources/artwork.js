@@ -17,17 +17,23 @@ class ArtworkAPI extends RESTDataSource {
     return data;
   }
   async getSingleArtwork(id) {
-    // const { data, config } = await this.get(
-    //   `artworks/${id}?fields=id,title,date_display,artist_display,image_id,place_of_origin`
-    // );
+    const { data } = await this.get(
+      `artworks/${id}?fields=id,title,date_display,artist_display,image_id,place_of_origin`
+    );
+    // this.imageId = data.image_id;
+    // this.iiifUrl = config.iiif_url;
+    // this.imageUrl = `${this.iiifUrl}/${this.imageId}/full/843,/0/default.jpg`;
+    // data.imageUrl = this.imageUrl;
+    // console.log(data);
+    // console.log(config);
+    return data;
+  }
+
+  async getImage(id) {
     const { data, config } = await this.get(`artworks/${id}`);
-    this.imageId = data.image_id;
-    this.iiifUrl = config.iiif_url;
-    this.imageUrl = `${this.iiifUrl}/${this.imageId}/full/843,/0/default.jpg`;
-    data.imageUrl = this.imageUrl;
-    console.log(data);
-    console.log(config);
-    return data, config;
+    const imageId = data.image_id;
+    const iiifUrl = config.iiif_url;
+    return { imageUrl: `${iiifUrl}/${imageId}/full/843,/0/default.jpg` };
   }
 }
 
