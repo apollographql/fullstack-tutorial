@@ -41,7 +41,7 @@ const typeDefs = gql`
   after these.
   """
   type LaunchConnection {
-    cursor: String!
+    cursor: String
     hasMore: Boolean!
     launches: [Launch]!
   }
