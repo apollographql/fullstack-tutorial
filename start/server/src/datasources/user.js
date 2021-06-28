@@ -57,7 +57,8 @@ class UserAPI extends DataSource {
 
   async cancelTrip({ launchId }) {
     const userId = this.context.user.id;
-    return !!this.store.trips.destroy({ where: { userId, launchId } });
+    const numberOfDeletedTrips = await this.store.trips.destroy({ where: { userId, launchId } });
+    return numberOfDeletedTrips !== 0;
   }
 
   async getLaunchIdsByUser() {
