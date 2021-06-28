@@ -37,7 +37,7 @@ module.exports.createStore = () => {
   const db = new SQL('database', 'username', 'password', {
     dialect: 'sqlite',
     storage: './store.sqlite',
-    operatorsAliases,
+    operatorsAliases: 0,
     logging: false,
   });
 
