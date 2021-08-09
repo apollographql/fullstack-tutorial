@@ -36,13 +36,13 @@ const GET_LAUNCH = gql`
 describe('Server - e2e', () => {
   let stop, graphql;
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     const testServer = await startTestServer(server);
     stop = testServer.stop;
     graphql = testServer.graphql;
   });
 
-  afterEach(() => stop());
+  afterAll(() => stop());
 
   it('gets list of launches', async () => {
     const res = await toPromise(

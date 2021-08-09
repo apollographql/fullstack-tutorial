@@ -3,7 +3,7 @@ version: 2
 jobs:
   Apollo Client:
     docker:
-      - image: circleci/node:8
+      - image: cimg/node:14.17.4
 
     steps:
       - checkout
@@ -18,7 +18,7 @@ jobs:
 
   Apollo Server:
     docker:
-      - image: circleci/node:8
+      - image: cimg/node:14.17.4
 
     steps:
       - checkout
@@ -31,11 +31,11 @@ jobs:
           background: true
 
       - run: sleep 5
-      - run: cd final/server && npx apollo service:check
+      - run: cd final/server && npx rover graph introspect http://localhost:4000 | npx rover graph check space-explorer  --schema -
 
       - run: |
           if [ "${CIRCLE_BRANCH}" == "master" ]; then
-            cd final/server && npx apollo service:push
+            cd final/server && npx rover graph introspect http://localhost:4000 | npx rover graph publish space-explorer --schema -
           fi
 
 workflows:
