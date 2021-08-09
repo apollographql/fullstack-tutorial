@@ -44,8 +44,8 @@ const server = new ApolloServer({
   context,
   introspection: true,
   playground: true,
-  engine: {
-    apiKey: process.env.ENGINE_API_KEY,
+  apollo: {
+    key: process.env.APOLLO_KEY,
     ...internalEngineDemo,
   },
 });
