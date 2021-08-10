@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @generated
 // This file was automatically generated and should not be edited.
 
 // ====================================================
@@ -21,7 +22,6 @@ export interface LaunchDetails_launch_mission {
 
 export interface LaunchDetails_launch {
   __typename: "Launch";
-  isInCart: boolean;
   site: string | null;
   rocket: LaunchDetails_launch_rocket | null;
   id: string;
