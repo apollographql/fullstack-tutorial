@@ -70,8 +70,6 @@ module.exports = {
         return user;
       }
     },
-    uploadProfileImage: async(_, { file }, { dataSources }) =>
-      dataSources.userAPI.uploadProfileImage({ file }),
   },
   Launch: {
     isBooked: async (launch, _, { dataSources }) =>

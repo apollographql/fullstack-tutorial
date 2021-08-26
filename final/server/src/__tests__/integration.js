@@ -1,4 +1,3 @@
-const {createTestClient} = require('apollo-server-testing');
 const gql = require('graphql-tag');
 const nock = require('nock');
 
@@ -83,11 +82,9 @@ describe('Queries', () => {
       {dataValues: {launchId: 1}},
     ]);
 
-    // use our test server as input to the createTestClient fn
-    // This will give us an interface, similar to apolloClient.query
-    // to run queries against our instance of ApolloServer
-    const {query} = createTestClient(server);
-    const res = await query({query: GET_LAUNCHES});
+    // We use server.executeOperation to run test queries
+    // against our instance of ApolloServer
+    const res = await server.executeOperation({query: GET_LAUNCHES});
     expect(res).toMatchSnapshot();
   });
 
@@ -102,8 +99,7 @@ describe('Queries', () => {
       {dataValues: {launchId: 1}},
     ]);
 
-    const {query} = createTestClient(server);
-    const res = await query({query: GET_LAUNCH, variables: {id: 1}});
+    const res = await server.executeOperation({query: GET_LAUNCH, variables: {id: 1}});
     expect(res).toMatchSnapshot();
   });
 });
@@ -119,9 +115,8 @@ describe('Mutations', () => {
       {id: 1, email: 'a@a.a'},
     ]);
 
-    const {mutate} = createTestClient(server);
-    const res = await mutate({
-      mutation: LOGIN,
+    const res = await server.executeOperation({
+      query: LOGIN,
       variables: {email: 'a@a.a'},
     });
     expect(res.data.login.token).toEqual('YUBhLmE=');
@@ -149,9 +144,8 @@ describe('Mutations', () => {
     // check if user is booked
     userAPI.store.trips.findAll.mockReturnValue([{}]);
 
-    const {mutate} = createTestClient(server);
-    const res = await mutate({
-      mutation: BOOK_TRIPS,
+    const res = await server.executeOperation({
+      query: BOOK_TRIPS,
       variables: {launchIds: ['1', '2']},
     });
     expect(res).toMatchSnapshot();
