@@ -23,3 +23,9 @@ and
 ```bash
 cd final/client && npm i && npm start
 ```
+## Unit Testing
+
+To run the unit tests, run the command(after npm install)
+```bash
+    cd final/client && npm run test
+```
