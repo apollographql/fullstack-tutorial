@@ -10,11 +10,11 @@ describe('Button', () => {
 
   it('renders without error', () => {
     // render(<Button>Hello World</Button>);
-    const wrapper = shallow((
+    const buttonWrapper = shallow((
         <Button>
           Hello World
         </Button>
     ));
-    expect(wrapper.contains('Hello World')).toBe(true);
+    expect(buttonWrapper.contains('Hello World')).toBe(true);
   });
 });
