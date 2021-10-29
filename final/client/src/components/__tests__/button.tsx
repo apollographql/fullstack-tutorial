@@ -1,6 +1,7 @@
 import React from 'react';
+import { shallow, mount, render } from '../../enzyme';
 
-import { render, cleanup } from '../../test-utils';
+import { cleanup } from '../../test-utils';
 import Button from '../button';
 
 describe('Button', () => {
