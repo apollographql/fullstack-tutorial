@@ -1,7 +1,13 @@
 require('dotenv').config();
 
-const { ApolloServer } = require('apollo-server');
+const { ApolloServer } = require('apollo-server-express');
+const { SubscriptionServer } = require('subscriptions-transport-ws');
+const { createServer } = require('http');
+const { execute, subscribe } = require('graphql');
+const { makeExecutableSchema } = require('@graphql-tools/schema');
+const { graphqlUploadExpress } = require('graphql-upload');
 const isEmail = require('isemail');
+const express = require('express');
 
 const typeDefs = require('./schema');
 const resolvers = require('./resolvers');
@@ -14,6 +20,16 @@ const internalEngineDemo = require('./engine-demo');
 
 // creates a sequelize connection once. NOT for every request
 const store = createStore();
+
+const app = express();
+app.use(graphqlUploadExpress());
+
+const httpServer = createServer(app);
+
+const schema = makeExecutableSchema({
+  typeDefs,
+  resolvers,
+});
 
 // set up any dataSources our resolvers need
 const dataSources = () => ({
@@ -42,10 +58,18 @@ const context = async ({ req, connection }) => {
 
 // Set up Apollo Server
 const server = new ApolloServer({
-  typeDefs,
-  resolvers,
+  schema,
   dataSources,
   context,
+  plugins: [{
+    async serverWillStart() {
+      return {
+        async drainServer() {
+          subscriptionServer.close();
+        }
+      };
+    }
+  }],
   introspection: true,
   playground: true,
   engine: {
@@ -54,15 +78,31 @@ const server = new ApolloServer({
   },
 });
 
+const subscriptionServer = SubscriptionServer.create({
+  schema,
+  execute,
+  subscribe,
+  onConnect() {
+    // lookup userId by token, etc.
+    return { userId };
+  },
+}, {
+  server: httpServer,
+  path: server.graphqlPath,
+});
+
 // Start our server if we're not in a test env.
 // if we're in a test env, we'll manually start it in a test
 if (process.env.NODE_ENV !== 'test') {
-  server
-    .listen({ port: process.env.PORT || 4000 })
-    .then(({ url, subscriptionsUrl }) => {
-      console.log(`🚀 Server ready at ${url}`)
-      console.log(`🚀 Subscriptions ready at ${subscriptionsUrl}`)
+  (async () => {
+    await server.start();
+    server.applyMiddleware({ app });
+
+    const port = process.env.PORT || 4000;
+    httpServer.listen(port, () => {
+      console.log(`🚀 Server ready at http://localhost:${port}${server.graphqlPath}`);
     });
+  })();
 }
 
 // export all the important pieces for integration/e2e tests to use
