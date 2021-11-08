@@ -1,10 +1,12 @@
 const { paginateResults } = require('./utils');
-const { PubSub } = require('apollo-server');
+const { PubSub } = require('graphql-subscriptions');
+const { GraphQLUpload } = require('graphql-upload');
 
 const TRIPS_BOOKED = 'TRIPS_BOOKED';
 const pubsub = new PubSub();
 
 module.exports = {
+  Upload: GraphQLUpload,
   Subscription: {
     tripsBooked: {
       subscribe: () => pubsub.asyncIterator(TRIPS_BOOKED)
