@@ -3,28 +3,39 @@ import React from 'react';
 import { renderApollo, cleanup } from '../../test-utils';
 import ActionButton from '../action-button';
 import { cartItemsVar } from '../../cache';
+import {render, shallow} from "../../enzyme";
+import Button from "../../components/button";
+import {ApolloProvider, useApolloClient} from "@apollo/client";
 
 describe('action button', () => {
   // automatically unmount and cleanup DOM after the test is finished.
   afterEach(cleanup);
 
   it('renders without error', () => {
-    const { getByTestId } = renderApollo(<ActionButton />);
-    expect(getByTestId('action-button')).toBeTruthy();
+    render(<ActionButton/>);
   });
 
-  it('shows correct label', () => {
-    const { getByText, container } = renderApollo(<ActionButton />);
-    getByText(/add to cart/i);
+  it('empty cart correct label', () => {
+    const wrapper = render(<ActionButton/>);
+    const button = wrapper.find('div button');
 
-    // rerender with different props to same container
+    expect(wrapper.find('div button').text()).toBe('Add to Cart');
+  });
+
+  it('populated cart correct label', () => {
+
     cartItemsVar(['1']);
-    renderApollo(<ActionButton id="1" />, { container });
-    getByText(/remove from cart/i);
-    cartItemsVar([]);
+    const wrapper = render(<ActionButton id="1"/>);
+    const button = wrapper.find('div button');
 
-    // rerender with different props to same container
-    renderApollo(<ActionButton isBooked={true} />, { container });
+    expect(button.text()).toBe('Remove from Cart');
+  });
+
+  it('booked trip correct label', () => {
+    const { getByText, container } = renderApollo(<ActionButton />);
+
+    renderApollo(<ActionButton isBooked={true}/>, { container });
     getByText(/cancel this trip/i);
   });
+
 });

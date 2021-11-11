@@ -9,6 +9,6 @@ describe('Button', () => {
   afterEach(cleanup);
 
   it('renders without error', () => {
-    render(<Button>Hello World</Button>);
+    const wrapper = render(<Button>Hello World</Button>);
   });
 });
