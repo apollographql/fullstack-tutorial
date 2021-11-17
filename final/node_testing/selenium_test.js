@@ -1,20 +1,27 @@
-const webdriver = require('selenium-webdriver'),
-    By = webdriver.By,
-    until = webdriver.until;
+const {Builder, By, Key, until, WebDriver} = require('selenium-webdriver');
+const assert = require('assert');
+const testEmail = 'SeleniumTest@Gmail.Test'
+let driver = new Builder().forBrowser('chrome').build();
 
-const driver = new webdriver.Builder()
-    .forBrowser('chrome')
-    .build();
-driver.get('http://www.google.com').then(function(){
-    driver.findElement(webdriver.By.name('q')).sendKeys('webdriver\n').then(function(){
-        driver.getTitle().then(function(title) {
-            console.log(title)
-            if(title === 'webdriver - Google Search') {
-                console.log('Test passed');
-            } else {
-                console.log('Test failed');
-            }
-            driver.quit();
-        });
-    });
-});
+openApp();
+login();
+loginTest();
+
+function openApp() {
+    //Make sure both client and server are running prior to exectuing this script.
+    driver.get('http://localhost:3000/');
+    driver.manage().setTimeouts({ implicit: 5000});
+
+}
+
+async function login() {
+    await driver.findElement(By.name('email')).sendKeys(testEmail, Key.ENTER);
+}
+
+async function loginTest() {
+    //Verify that the SeleniumTest user is logged in.
+    //driver.findElement(By.tagName('h2')).isDisplayed();
+    var cat = await driver.wait(until.elementLocated(By.id('username')), 10000);
+    //the css puts this in upper case.
+    assert.equal(await cat.getText(), testEmail.toUpperCase());
+}
