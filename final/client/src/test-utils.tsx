@@ -4,6 +4,12 @@ import { render } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import { MockedProvider, MockedResponse } from '@apollo/client/testing';
 
+//setup file
+import { configure } from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
+
+configure({ adapter: new Adapter()});
+
 type RenderApolloOptions = {
   mocks?: MockedResponse[],
   addTypename?: any,
