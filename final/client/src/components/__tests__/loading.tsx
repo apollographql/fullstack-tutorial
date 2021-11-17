@@ -12,6 +12,6 @@ describe('Loading', () => {
 
   it('renders without error', () => {
     const shallowObj = shallow(<Loading />);
-    expect(shallowObj.prop('className')).toEqual('css-kahotv');
+    expect(shallowObj.prop('className')).toBe('css-kahotv');
   });
 });

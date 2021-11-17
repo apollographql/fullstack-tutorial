@@ -15,7 +15,10 @@ describe('Button', () => {
     const buttonObj2 = mount(<Button>Full Button</Button>);
     //console.log(buttonObj1.debug());
     // console.log(shallowObj.get(0));
+    expect(buttonObj1.contains('Shallow Button')).toBe(true);
     expect(buttonObj1.find('button').text()).toEqual("Shallow Button");
+
+    expect(buttonObj2.contains('Full Button')).toBe(true);
     expect(buttonObj2.find('button').text()).toEqual("Full Button");
 
   });

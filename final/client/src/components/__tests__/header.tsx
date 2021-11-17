@@ -12,8 +12,8 @@ describe('Header', () => {
   it('renders without error', () => {
     const shallowObj = shallow(<Header />);
     const fullDomObj = mount(<Header />);
-
-    expect(shallowObj.find('h2').text()).toEqual("Space Explorer");
-    expect(fullDomObj.find('h2').text()).toEqual("Space Explorer");
+    
+    expect(shallowObj.find('h2').text()).toBe("Space Explorer");
+    expect(fullDomObj.find('h2').text()).toBe("Space Explorer");
   });
 });

@@ -22,12 +22,10 @@ describe('Launch Detail View', () => {
         rocket={{ name: 'Team GeckOS', type: 'small', __typename: 'Rocket', id: '2' }}
       />,);
 
-    expect(shallowObj.find('h3').text()).toEqual("that one (big)");
-    expect(shallowObj.find('h5').text()).toEqual("earth");
-    expect(shallowObj.find('Styled(div)').length).toEqual(1);
+    expect(shallowObj.find('h3').text()).toBe("that one (big)");
+    expect(shallowObj.find('h5').text()).toBe("earth");
 
     expect(fullObj.find('h3').text()).toEqual("Team GeckOS (small)");
     expect(fullObj.find('h5').text()).toEqual("mars");
-    expect(fullObj.find('Styled(div)').length).toEqual(1);
   });
 });

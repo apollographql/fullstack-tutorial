@@ -30,9 +30,9 @@ describe('Launch Tile', () => {
         rocket: { name: 'Team GeckOS', __typename: 'Rocket', id: '2' },
       }}/>);
 
-    expect(launchTileObj.find('h3').text()).toEqual("the first one");
-    expect(launchTileObj.find('h5').text()).toEqual("harambe");
-    expect(launchTileObj2.find('h3').text()).toEqual("");
-    expect(launchTileObj2.find('h5').text()).toEqual("Team GeckOS");
+    expect(launchTileObj.find('h3').text()).toBe("the first one");
+    expect(launchTileObj.find('h5').text()).toBe("harambe");
+    expect(launchTileObj2.find('h3').text()).toBe("");
+    expect(launchTileObj2.find('h5').text()).toBe("Team GeckOS");
   });
 });

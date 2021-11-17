@@ -39,7 +39,7 @@ describe('Login Form', () => {
     expect(fullDOMObj.find('[data-testid="login-input"]').exists()).toBe(true);
     expect(fullDOMObj.find('[type="submit"]').exists()).toBe(true);
 
-    expect(staticMarkupObj.find('button').text()).toEqual("Log in");
-    expect(staticMarkupObj.find('h1').text()).toEqual("Space Explorer");
+    expect(staticMarkupObj.find('button').text()).toBe("Log in");
+    expect(staticMarkupObj.find('h1').text()).toBe("Space Explorer");
   });
 });
