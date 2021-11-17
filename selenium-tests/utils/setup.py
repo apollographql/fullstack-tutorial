@@ -1,6 +1,8 @@
+import sys
+sys.path += ['../../']
 from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException
-import helper
+import utils.helper as helper
 from views import login_view, home_page_view
 from selenium.webdriver.remote.remote_connection import LOGGER as logger
 
@@ -33,7 +35,12 @@ class User(webdriver.Chrome):
         try:
             logger.info(msg="Signing out")
             self.find_element_by_xpath(helper.NAVIGATION_BAR_SIGN_OUT).click()
+            logger.info(msg="Verifying sign out was successful")
             self.find_element_by_xpath(login_view.LOGIN_PAGE_XPATH)
             logger.info(msg="Successfully signed out")
         except NoSuchElementException:
             raise Exception("Sign out failed")
+
+    def teardown(self):
+        logger.info(msg="Closing browser session")
+        self.close()

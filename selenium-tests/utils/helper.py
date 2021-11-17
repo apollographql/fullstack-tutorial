@@ -1,15 +1,6 @@
 import string
 import random
 
-from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.remote.remote_connection import LOGGER
-import logging
-import enum
-from io import StringIO
-import sys
-import unittest
-
 BASE_URL = 'http://localhost:3000/'
 NAVIGATION_BAR_HOME = "//a[text()='Home']"
 NAVIGATION_BAR_PROFILE = "//a[text()='Profile']"

@@ -1,13 +1,22 @@
-from selenium import webdriver
-import helper
-from setup import User
+import utils.helper as helper
+import utils.setup as setup
 
 
-class TestLogin:
+class TestLogInLogOut:
 
     def __init__(self):
-        self.email = helper.random_string()
+        self.username = helper.random_string()
+        self.user = setup.User(email=self.username)
 
-    def test_wrong_format(self):
-        User.login(email=self.email)
+    def test_log_in_log_out(self):
+        try:
+            self.user.login()
+            self.user.logout()
+        except:
+            raise Exception("Failed to login")
 
+
+if __name__ == "__main__":
+    test = TestLogInLogOut()
+    test.test_log_in_log_out()
+    test.user.teardown()
