@@ -12,8 +12,8 @@
     "emotion": "^9.2.12",
     "graphql": "^14.7.0",
     "polished": "^3.4.1",
-    "react": "^16.12.0",
-    "react-dom": "^16.12.0",
+    "react": "^16.14.0",
+    "react-dom": "^16.14.0",
     "react-emotion": "^9.2.12",
     "react-scripts": "^3.4.1",
     "typescript": "^3.7.3"
@@ -38,9 +38,12 @@
   "devDependencies": {
     "@testing-library/jest-dom": "^4.0.0",
     "@testing-library/react": "^8.0.7",
+    "@types/enzyme-adapter-react-16": "^1.0.6",
     "@types/jest": "^24.0.23",
     "apollo": "^2.32.5",
     "artillery": "^1.6.0-26",
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.6",
     "npm-watch": "^0.6.0"
   }
 }
