@@ -1,13 +1,19 @@
 import React from 'react';
-
-import { render, cleanup } from '../../test-utils';
+import { configure, shallow, mount, render } from 'enzyme';
+import { cleanup } from '../../test-utils';
 import Header from '../header';
+import Adapter from 'enzyme-adapter-react-16';
 
+configure({ adapter: new Adapter() });
 describe('Header', () => {
   // automatically unmount and cleanup DOM after the test is finished.
   afterEach(cleanup);
 
   it('renders without error', () => {
-    render(<Header />);
+    const shallowObj = shallow(<Header />);
+    const fullDomObj = mount(<Header />);
+
+    expect(shallowObj.find('h2').text()).toEqual("Space Explorer");
+    expect(fullDomObj.find('h2').text()).toEqual("Space Explorer");
   });
 });
