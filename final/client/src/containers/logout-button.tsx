@@ -10,6 +10,7 @@ const LogoutButton = () => {
   const client = useApolloClient();
   return (
     <StyledButton
+        id="logout-button"
       data-testid="logout-button"
       onClick={() => {
         // Since we're logging out, remove all traces of the current user

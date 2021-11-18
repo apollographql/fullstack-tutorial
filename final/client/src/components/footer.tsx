@@ -16,11 +16,11 @@ export default function Footer() {
           <HomeIcon />
           Home
         </MenuItem>
-        <MenuItem to="/cart">
+        <MenuItem id='cart' to="/cart">
           <CartIcon />
           Cart
         </MenuItem>
-        <MenuItem to="/profile">
+        <MenuItem id='profile' to="/profile">
           <ProfileIcon />
           Profile
         </MenuItem>
