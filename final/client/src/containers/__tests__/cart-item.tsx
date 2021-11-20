@@ -1,9 +1,13 @@
+import { selectHttpOptionsAndBody } from '@apollo/client';
 import React from 'react';
 
 import {
   renderApollo,
   cleanup,
   waitForElement,
+  shallowEnzymeRender,
+  fullEnzymeRender,
+  sleep
 } from '../../test-utils';
 import CartItem, { GET_LAUNCH } from '../cart-item';
 
@@ -35,32 +39,36 @@ describe('cart item', () => {
 
     // since we know the name of the mission, and know that name
     // will be rendered at some point, we can use getByText
-    const { getByText } = renderApollo(<CartItem launchId={'1'} />, {
+    const cartObj = fullEnzymeRender(<CartItem launchId={'1'} />, {
       mocks,
       addTypename: false,
     });
 
     // check the loading state
-    getByText(/loading/i);
-
-    return waitForElement(() => getByText(/test mission/i));
+    expect(cartObj.find('CartItem').text()).toBe("Loading...");
+    expect(cartObj.find('CartItem').prop('launchId')).toBe("1");
   });
 
-  it('renders with error state', () => {
+  it('renders with error state', async() => {
     let mocks = [
       {
-        request: { query: GET_LAUNCH, variables: { launchId: 1 } },
+        request: { query: GET_LAUNCH, variables: { launchId: '1' } },
         error: new Error('aw shucks'),
       },
     ];
 
-    // since we know the error message, we can use getByText
-    // to recognize the error
-    const { getByText } = renderApollo(<CartItem launchId={'1'} />, {
+    const cartObj = fullEnzymeRender(<CartItem launchId={'1'} />, {
       mocks,
       addTypename: false,
     });
 
-    waitForElement(() => getByText(/error: aw shucks/i));
+    // Cause an error timeout
+    // console.time("Slept for");
+    await sleep(0);
+    // console.timeEnd("Slept for");
+    
+     
+    expect(cartObj.find('CartItem').text()).toBe("ERROR: aw shucks");
+    expect(cartObj.find('CartItem').prop('launchId')).toBe("1");
   });
 });

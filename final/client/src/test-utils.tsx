@@ -56,6 +56,8 @@ const fullEnzymeRender = (
   );
 };
 
+const sleep = m => new Promise(r => setTimeout(r, m))
+
 const renderApollo = (
   node: any,
   { mocks, addTypename, defaultOptions, cache, resolvers, ...options }: RenderApolloOptions = {},
@@ -75,4 +77,4 @@ const renderApollo = (
 };
 
 export * from '@testing-library/react';
-export { renderApollo, shallowEnzymeRender, fullEnzymeRender };
+export { renderApollo, shallowEnzymeRender, fullEnzymeRender, sleep };
