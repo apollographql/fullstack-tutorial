@@ -56,7 +56,7 @@ class ProductView:
             start_page = helper.NAVIGATION_BAR_CART
         while num_items > 0:
             if times_click_load_more > 0:
-                home_page_view.HomePageView.click_load_more(driver=driver)
+                home_page_view.HomePageView.click_load_more(driver)
                 times_click_load_more -= 1
             products = driver.find_elements_by_xpath(helper.PRODUCTS)
             product_name = products[num_items - 1].text
