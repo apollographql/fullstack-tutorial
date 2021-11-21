@@ -5,6 +5,9 @@ import {
   renderApollo,
   cleanup,
   waitForElement,
+  shallowEnzymeRender,
+  fullEnzymeRender,
+  sleep
 } from '../../test-utils';
 import Launches, { GET_LAUNCHES } from '../launches';
 
@@ -48,10 +51,26 @@ describe('Launches Page', () => {
         },
       },
     ];
-    const { getByText } = await renderApollo(<Launches />, {
+    const launchesObj = await fullEnzymeRender(<Launches />, {
       mocks,
       cache,
     });
-    await waitForElement(() => getByText(/test mission/i));
+    expect(mocks[0].result.data.launches.cursor === '123');
+    expect(mocks[0].result.data.launches.hasMore === true);
+    expect(mocks[0].result.data.launches.launches[0].__typename === 'Launch');
+    expect(mocks[0].result.data.launches.launches[0].id === 1);
+    expect(mocks[0].result.data.launches.launches[0].isBooked === true);
+    expect(mocks[0].result.data.launches.launches[0].isInCart === false);
+    expect(mocks[0].result.data.launches.launches[0].mission.__typename);
+    expect(mocks[0].result.data.launches.launches[0].mission.id === 1);
+    expect(mocks[0].result.data.launches.launches[0].mission.missionPatch === '/');
+    expect(mocks[0].result.data.launches.launches[0].mission.name === 'test mission');
+    expect(mocks[0].result.data.launches.launches[0].site === 'earth');
+    expect(mocks[0].result.data.launches.launches[0].rocket.__typename === 'Mission');
+    expect(mocks[0].result.data.launches.launches[0].rocket.id === 1);
+    expect(mocks[0].result.data.launches.launches[0].rocket.name === 'tester');
+    expect(mocks[0].result.data.launches.launches[0].rocket.type === 'test');
+
+
   });
 });
