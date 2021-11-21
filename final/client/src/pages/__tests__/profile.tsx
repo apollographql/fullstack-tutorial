@@ -54,5 +54,9 @@ describe('Profile Page', () => {
 
     expect(profileObj.find('MockedProvider').text()).toBe('logo.svg');
     expect(mockLaunch.mission.name === mockMe.trips[0].mission.name);
+    expect(mocks[0].result.data.me.__typename === 'User');
+    expect(mocks[0].result.data.me.email === 'a@a.a');
+    expect(mocks[0].result.data.me.id === 1);
+
   });
 });

@@ -49,8 +49,9 @@ describe('Login Page', () => {
     expect(loginObject.find('h1').text()).toBe('Space Explorer');
     expect(loginObject.find('button').text()).toBe('Log in');
 
+    // Change value and press the submit button. Since there are multiple elements that can be changed/submitted,
+    // we need to explicitly state which one we want to work with (hence the find <target> call).
     loginObject.find('.css-wotvke').simulate('change', { target: { value: 'a@a.a' } });
-
     loginObject.find('.css-wwcn44').simulate('submit');
     await sleep(0);
 

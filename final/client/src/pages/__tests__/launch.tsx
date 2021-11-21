@@ -4,6 +4,9 @@ import {
   renderApollo,
   cleanup,
   waitForElement,
+  shallowEnzymeRender,
+  fullEnzymeRender,
+  sleep
 } from '../../test-utils';
 import Launch, { GET_LAUNCH_DETAILS } from '../launch';
 
@@ -38,10 +41,18 @@ describe('Launch Page', () => {
         result: { data: { launch: mockLaunch } },
       },
     ];
-    const { getByText } = await renderApollo(<Launch launchId={1} />, {
+    const launchObj = await fullEnzymeRender(<Launch launchId={1} />, {
       mocks,
       resolvers: {}
     });
-    await waitForElement(() => getByText(/test mission/i));
+    await sleep(0);
+    expect(launchObj.find('MockedProvider').text()).toBe('logo.svg');
+    expect(launchObj.get(0).key).toBe(null);
+    expect(launchObj.get(0).type).not.toBe(null); 
+    expect(mocks[0].result.data.launch.__typename === 'howsway');
+    expect(mocks[0].result.data.launch.id === 1);
+    expect(mocks[0].result.data.launch.isBooked === false);
+    expect(mocks[0].result.data.launch.isInCart === false);
+    expect(mocks[0].result.data.launch.site === 'earth');
   });
 });
