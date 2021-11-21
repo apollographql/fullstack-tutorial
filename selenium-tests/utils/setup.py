@@ -1,46 +1,44 @@
+import os
 import sys
 sys.path += ['../../']
 from selenium import webdriver
-from selenium.common.exceptions import NoSuchElementException
-import utils.helper as helper
-from views import login_view, home_page_view
-from selenium.webdriver.remote.remote_connection import LOGGER as logger
+from webdriver_manager.chrome import ChromeDriverManager
+from views import login_view, home_page_view, cart_view, product_view, profile_view
+import logging
+
+logger = logging.getLogger()
+logging.basicConfig(level=os.environ.get('LOGLEVEL', 'INFO'))
 
 
-class User(webdriver.Chrome):
-    def __init__(self, email):
+class User:
+
+    def __init__(self):
 
         super(User, self).__init__()
 
-        self.email = email
-        self.current_page = None
+        self.chrome_driver = None
+        self.setup_browser()
+        self.login_view = login_view.LoginView()
+        self.home_page_view = home_page_view.HomePageView()
+        self.cart_view = cart_view.CartView()
+        self.product_view = product_view.ProductView()
+        self.profile_view = profile_view.ProfileView()
 
-    def login(self):
-        """ Navigates to the base URL and enters """
-        try:
-            logger.info(msg="Navigating to Base URL")
-            self.get(helper.BASE_URL)
-            self.current_page = login_view.LOGIN_PAGE_TITLE
-            logger.info(msg=f"Signing in as {self.email}")
-            self.find_element_by_xpath(login_view.EMAIL_INPUT_XPATH).send_keys(self.email)
-            self.find_element_by_xpath(login_view.LOGIN_BUTTON).click()
-            logger.info(msg="Verifying sign in was successful")
-            self.find_element_by_xpath(home_page_view.HOME_PAGE_TITLE)
-            self.find_element_by_xpath(home_page_view.HOME_PAGE_USERNAME.format(self.email))
-            logger.info(msg=f"Successfully signed in as {self.email}")
-        except NoSuchElementException:
-            raise Exception("Login failed")
+    @staticmethod
+    def _get_chrome_driver():
+        """ Returns Chrome driver """
+        return webdriver.Chrome(ChromeDriverManager().install())
 
-    def logout(self):
-        try:
-            logger.info(msg="Signing out")
-            self.find_element_by_xpath(helper.NAVIGATION_BAR_SIGN_OUT).click()
-            logger.info(msg="Verifying sign out was successful")
-            self.find_element_by_xpath(login_view.LOGIN_PAGE_XPATH)
-            logger.info(msg="Successfully signed out")
-        except NoSuchElementException:
-            raise Exception("Sign out failed")
+    def setup_browser(self):
+        """ Gets a browser instance and maximizes the window """
+        logger.info("Acquiring Chrome browser instance")
+        self.chrome_driver = self._get_chrome_driver()
+        self.chrome_driver.maximize_window()
+        logger.info("Chrome browser started")
+        return self.chrome_driver
 
     def teardown(self):
-        logger.info(msg="Closing browser session")
-        self.close()
+        """ Closes browser session """
+        logger.info("Closing browser session")
+        self.chrome_driver.close()
+        logger.info("Browser session was successfully closed")
