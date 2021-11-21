@@ -5,6 +5,9 @@ import {
   cleanup,
   fireEvent,
   waitForElement,
+  shallowEnzymeRender,
+  fullEnzymeRender,
+  sleep
 } from '../../test-utils';
 import Login, {LOGIN_USER} from '../login';
 import { cache, isLoggedInVar } from '../../cache';
@@ -14,7 +17,10 @@ describe('Login Page', () => {
   afterEach(cleanup);
 
   it('renders login page', async () => {
-    renderApollo(<Login />);
+    const loginPage = fullEnzymeRender((<Login />));
+
+    expect(loginPage.find('h1').text()).toBe('Space Explorer');
+    expect(loginPage.find('button').text()).toBe('Log in');
   });
 
   it('fires login mutation and updates cache after done', async () => {
@@ -34,20 +40,21 @@ describe('Login Page', () => {
       },
     ];
 
-    const {getByText, getByTestId} = await renderApollo(<Login />, {
+    const loginObject = fullEnzymeRender(<Login />, {
       mocks,
       cache,
     });
 
-    fireEvent.change(getByTestId('login-input'), {
-      target: {value: 'a@a.a'},
-    });
+    // Initial data
+    expect(loginObject.find('h1').text()).toBe('Space Explorer');
+    expect(loginObject.find('button').text()).toBe('Log in');
 
-    fireEvent.click(getByText(/log in/i));
+    loginObject.find('.css-wotvke').simulate('change', { target: { value: 'a@a.a' } });
 
-    // login is done if loader is gone
-    await waitForElement(() => getByText(/log in/i));
+    loginObject.find('.css-wwcn44').simulate('submit');
+    await sleep(0);
 
     expect(isLoggedInVar()).toBeTruthy();
+    //console.log(loginObject.debug());
   });
 });

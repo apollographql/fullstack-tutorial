@@ -1,11 +1,18 @@
 import React from 'react';
-
+import { configure, shallow, mount, render } from 'enzyme';
 import {
   renderApollo,
   cleanup,
   waitForElement,
+  shallowEnzymeRender,
+  fullEnzymeRender,
+  sleep
 } from '../../test-utils';
 import Profile, { GET_MY_TRIPS } from '../profile';
+import Adapter from 'enzyme-adapter-react-16';
+import { getParsedCommandLineOfConfigFile, isPrivateIdentifier } from 'typescript';
+
+configure({ adapter: new Adapter() });
 
 const mockLaunch = {
   __typename: 'Launch',
@@ -43,9 +50,9 @@ describe('Profile Page', () => {
       },
     ];
 
-    const { getByText } = renderApollo(<Profile />, { mocks });
+    const profileObj = fullEnzymeRender(<Profile />, { mocks });
 
-    // if the profile renders, it will have the list of missions booked
-    await waitForElement(() => getByText(/test mission/i));
+    expect(profileObj.find('MockedProvider').text()).toBe('logo.svg');
+    expect(mockLaunch.mission.name === mockMe.trips[0].mission.name);
   });
 });
