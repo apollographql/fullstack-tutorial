@@ -17,6 +17,7 @@ export default styled('button')({
   lineHeight: `${height}px`,
   fontWeight: 700,
   color: 'white',
+
   textTransform: 'uppercase',
   backgroundColor: colors.accent,
   cursor: 'pointer',
