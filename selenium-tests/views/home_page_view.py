@@ -21,8 +21,9 @@ class HomePageView:
 
         self.current_page = None
 
-    def click_load_more(self, driver):
+    @staticmethod
+    def click_load_more(driver):
         """ Clicks on Load More button """
-        load_more_button = driver.find_element_by_xpath(self.LOAD_MORE_BUTTON)
+        load_more_button = driver.find_element_by_xpath(HomePageView.LOAD_MORE_BUTTON)
         driver.execute_script("arguments[0].scrollIntoView();", load_more_button)
         load_more_button.click()
