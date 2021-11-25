@@ -1,9 +1,10 @@
-## This ia a fork of the original project maintained by Team Avengers of California State University Fullerton as a requirement for the Masters in Software Engineering program through the course Software Verification and Validation
+# Notice
+This ia a fork of the original project maintained by Team Avengers of California State University Fullerton as a requirement for the Masters in Software Engineering program through the course Software Verification and Validation
 
 The goal of this project was to use Enzyme as a unit testing tool to improve the client side unit tests of this fullstack application
 Here is the status of all the unit tests:
 
-[![NodeJS with Webpack](https://github.com/CSUF-Avengers/fullstack-tutorial/actions/workflows/webpack.yml/badge.svg)](https://github.com/CSUF-Avengers/fullstack-tutorial/actions/workflows/webpack.yml)
+[![Unit Tests with Enzyme](https://github.com/CSUF-Avengers/fullstack-tutorial/actions/workflows/webpack.yml/badge.svg)](https://github.com/CSUF-Avengers/fullstack-tutorial/actions/workflows/webpack.yml)
 
 # Apollo tutorial
 
