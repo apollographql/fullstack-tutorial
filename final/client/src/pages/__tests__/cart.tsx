@@ -8,6 +8,7 @@ import {
 import Cart from '../cart';
 import { GET_LAUNCH } from '../../containers/cart-item';
 import { cache, cartItemsVar } from '../../cache';
+import {shallow} from "enzyme";
 
 const mockLaunch = {
   __typename: 'Launch',

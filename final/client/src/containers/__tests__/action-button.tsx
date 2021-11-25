@@ -3,6 +3,7 @@ import React from 'react';
 import { renderApollo, cleanup } from '../../test-utils';
 import ActionButton from '../action-button';
 import { cartItemsVar } from '../../cache';
+import {shallow} from "enzyme";
 
 describe('action button', () => {
   // automatically unmount and cleanup DOM after the test is finished.
@@ -20,11 +21,11 @@ describe('action button', () => {
     // rerender with different props to same container
     cartItemsVar(['1']);
     renderApollo(<ActionButton id="1" />, { container });
-    getByText(/remove from cart/i);
+    expect(getByText(/remove from cart/i).innerHTML).toContain('Remove from Cart');
     cartItemsVar([]);
 
     // rerender with different props to same container
     renderApollo(<ActionButton isBooked={true} />, { container });
-    getByText(/cancel this trip/i);
+    expect(getByText(/cancel this trip/i).innerHTML).toContain('Cancel This Trip');
   });
 });

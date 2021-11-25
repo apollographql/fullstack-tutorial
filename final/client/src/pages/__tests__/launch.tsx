@@ -6,6 +6,7 @@ import {
   waitForElement,
 } from '../../test-utils';
 import Launch, { GET_LAUNCH_DETAILS } from '../launch';
+import {shallow} from "enzyme";
 
 const mockLaunch = {
   __typename: 'Launch',
@@ -43,5 +44,7 @@ describe('Launch Page', () => {
       resolvers: {}
     });
     await waitForElement(() => getByText(/test mission/i));
+    console.log(getByText);
   });
+
 });

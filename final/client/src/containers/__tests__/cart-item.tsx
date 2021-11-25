@@ -41,8 +41,8 @@ describe('cart item', () => {
     });
 
     // check the loading state
-    getByText(/loading/i);
-
+    const text  = getByText(/loading/i);
+    expect(text.innerHTML).toBe('Loading...');
     return waitForElement(() => getByText(/test mission/i));
   });
 
@@ -60,7 +60,7 @@ describe('cart item', () => {
       mocks,
       addTypename: false,
     });
-
-    waitForElement(() => getByText(/error: aw shucks/i));
+    const error = waitForElement(() => getByText(/error: aw shucks/i));
+     expect(getByText.length).toBe(0);
   });
 });
