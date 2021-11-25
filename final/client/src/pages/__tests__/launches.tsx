@@ -7,6 +7,7 @@ import {
   waitForElement,
 } from '../../test-utils';
 import Launches, { GET_LAUNCHES } from '../launches';
+import {shallow} from "enzyme";
 
 const mockLaunch = {
   __typename: 'Launch',
@@ -31,6 +32,7 @@ const mockLaunch = {
 describe('Launches Page', () => {
   // automatically unmount and cleanup DOM after the test is finished.
   afterEach(cleanup);
+
 
   it('renders launches', async () => {
     const cache = new InMemoryCache({ addTypename: false });

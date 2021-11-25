@@ -43,8 +43,8 @@ describe('Profile Page', () => {
       },
     ];
 
-    const { getByText } = renderApollo(<Profile />, { mocks });
-
+    const { getByText, container } = renderApollo(<Profile />, { mocks });
+    expect(container.querySelector('p')).toBeFalsy();
     // if the profile renders, it will have the list of missions booked
     await waitForElement(() => getByText(/test mission/i));
   });
