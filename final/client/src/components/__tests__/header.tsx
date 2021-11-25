@@ -9,7 +9,6 @@ describe('Header', () => {
   afterEach(cleanup);
 
   it('renders without error', () => {
-    render(<Header />);
     const wrapper = shallow(<Header />);
     expect(wrapper.find('h2').text()).toBe('Space Explorer');
   });
