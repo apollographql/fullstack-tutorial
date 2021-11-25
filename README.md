@@ -4,7 +4,7 @@ This ia a fork of the original project maintained by Team Avengers of California
 The goal of this project was to use Enzyme as a unit testing tool to improve the client side unit tests of this fullstack application
 Here is the status of all the unit tests:
 
-[![Unit Tests with Enzyme](https://github.com/CSUF-Avengers/fullstack-tutorial/actions/workflows/webpack.yml/badge.svg)](https://github.com/CSUF-Avengers/fullstack-tutorial/actions/workflows/webpack.yml)
+[![Enzyme Unit Tests](https://github.com/CSUF-Avengers/fullstack-tutorial/actions/workflows/webpack.yml/badge.svg)](https://github.com/CSUF-Avengers/fullstack-tutorial/actions/workflows/webpack.yml)
 
 # Apollo tutorial
 
