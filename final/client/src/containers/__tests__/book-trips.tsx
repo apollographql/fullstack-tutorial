@@ -52,6 +52,7 @@ describe('book trips', () => {
       <BookTrips cartItems={['1']} />,
       { mocks, addTypename: false },
     );
+    expect(getByTestId('book-button').innerHTML).toBe('Book All');
 
     fireEvent.click(getByTestId('book-button'));
 

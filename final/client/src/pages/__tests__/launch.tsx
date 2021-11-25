@@ -44,7 +44,6 @@ describe('Launch Page', () => {
       resolvers: {}
     });
     await waitForElement(() => getByText(/test mission/i));
-    console.log(getByText);
   });
 
 });

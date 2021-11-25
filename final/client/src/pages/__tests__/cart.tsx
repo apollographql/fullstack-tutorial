@@ -41,8 +41,9 @@ describe('Cart Page', () => {
       },
     ];
 
-    const { getByTestId } = renderApollo(<Cart />, { cache, mocks });
+    const { getByTestId, getByText } = renderApollo(<Cart />, { cache, mocks });
     cartItemsVar(['1']);
+    expect(getByText('My Cart')).toBeTruthy();
     return waitForElement(() => getByTestId('book-button'));
   });
 });

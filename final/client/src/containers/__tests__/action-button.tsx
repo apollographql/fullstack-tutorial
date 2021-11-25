@@ -25,7 +25,7 @@ describe('action button', () => {
     cartItemsVar([]);
 
     // rerender with different props to same container
-    renderApollo(<ActionButton isBooked={true} />, { container });
-    expect(getByText(/cancel this trip/i).innerHTML).toContain('Cancel This Trip');
+    const btn = renderApollo(<ActionButton isBooked={true} />, { container });
+    expect(btn.getByText(/cancel this trip/i).innerHTML).toContain('Cancel This Trip');
   });
 });

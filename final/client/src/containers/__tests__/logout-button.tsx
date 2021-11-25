@@ -9,7 +9,7 @@ describe('logout button', () => {
   afterEach(cleanup);
 
   it('renders logout button', async () => {
-    renderApollo(<LogoutButton />);
+    expect(renderApollo(<LogoutButton />).getByTestId('logout-button').innerHTML).toContain('Logout');
   });
 
   it('complete logout', async () => {
