@@ -1,5 +1,5 @@
 # Notice
-This ia a fork of the original project maintained by Team Avengers of California State University Fullerton as a requirement for the Masters in Software Engineering program through the course Software Verification and Validation
+This repository is a fork of the original project(https://github.com/apollographql/fullstack-tutorial) maintained by Team Avengers of California State University Fullerton as a requirement for the Masters in Software Engineering program through the course Software Verification and Validation
 
 The goal of this project was to use Enzyme as a unit testing tool to improve the client side unit tests of this fullstack application
 Here is the status of all the unit tests:
