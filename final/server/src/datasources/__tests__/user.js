@@ -110,3 +110,31 @@ describe('[UserAPI.getLaunchIdsByUser]', () => {
     expect(res).toEqual([]);
   });
 });
+
+describe('[UserAPI.isBookedOnLaunch]', () => {
+  it('Successfully booked at launch.', async () => {
+    const args = { launchId: 1 };
+    const argsExected = { launchId: 1, userId: 1 };
+    const launches = [
+      { dataValues: { launchId: 1, userId: 1 } },
+    ];
+    mockStore.trips.findAll.mockReturnValueOnce(launches);
+
+    // check the result of the fn
+    const res = await ds.isBookedOnLaunch(args);
+    expect(res).toBeTruthy();
+
+    // make sure store is called properly
+    expect(mockStore.trips.findAll).toBeCalledWith({ where: argsExected });
+  });
+
+  it('Not successfully booked at launch.', async () => {
+    const args = { launchId: 1 };
+    // store lookup is not mocked to return anything, so this
+    // simulates a failed lookup
+
+    // check the result of the fn
+    const res = await ds.isBookedOnLaunch(args);
+    expect(res).toBeFalsy();
+  });
+});
