@@ -1,11 +1,10 @@
 import React from 'react';
 
-import { renderApollo, cleanup } from '../../test-utils';
+import { cleanup } from '../../test-utils';
 import ActionButton from '../action-button';
-import { cartItemsVar } from '../../cache';
-import {render, shallow} from "../../enzyme";
-import Button from "../../components/button";
-import {ApolloProvider, useApolloClient} from "@apollo/client";
+import {cache, cartItemsVar} from '../../cache';
+import {mount, render} from "../../enzyme";
+import {MockedProvider} from "@apollo/client/testing";
 
 describe('action button', () => {
   // automatically unmount and cleanup DOM after the test is finished.
@@ -19,7 +18,7 @@ describe('action button', () => {
     const wrapper = render(<ActionButton/>);
     const button = wrapper.find('div button');
 
-    expect(wrapper.find('div button').text()).toBe('Add to Cart');
+    expect(button.text()).toBe('Add to Cart');
   });
 
   it('populated cart correct label', () => {
@@ -32,10 +31,15 @@ describe('action button', () => {
   });
 
   it('booked trip correct label', () => {
-    const { getByText, container } = renderApollo(<ActionButton />);
 
-    renderApollo(<ActionButton isBooked={true}/>, { container });
-    getByText(/cancel this trip/i);
+    var wrapper = mount(
+        <MockedProvider
+            cache={cache}>
+          <ActionButton isBooked={true} />
+        </MockedProvider>);
+
+    let button = wrapper.find('button');
+
+    expect(button.text()).toBe('Cancel This Trip');
   });
-
 });
