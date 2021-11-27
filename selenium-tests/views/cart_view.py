@@ -43,5 +43,6 @@ class CartView:
         time.sleep(1)
         logger.info("Clicking on Book All")
         driver.find_element_by_xpath(self.BOOK_ALL_BUTTON).click()
+        time.sleep(1)
         logger.info("Verifying all trips were booked and cart is empty")
         driver.find_element_by_xpath(self.EMPTY_CART_MESSAGE)
