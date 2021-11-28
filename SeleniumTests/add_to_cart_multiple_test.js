@@ -17,9 +17,9 @@ async function addToCartMultiple() {
         await driver.findElement(By.xpath("/html/body/div/div[2]/a[1]")).click();
         // Wait until page is loaded then add to cart
         await driver.wait(until.elementLocated(By.xpath("/html/body/div/div[2]/div[3]/button")), 300000);
-        await driver.findElement(By.xpath("/html/body/div/div[2]/div[3]/button")).click();
         let addToCart = await driver.findElement(By.xpath("/html/body/div/div[2]/div[3]/button"));
-        assert.equal(await addToCart.getText(), "REMOVE FROM CART");
+        assert.equal(await addToCart.getText(), "ADD TO CART");
+        await driver.findElement(By.xpath("/html/body/div/div[2]/div[3]/button")).click();
         // Go back home
         await driver.findElement(By.xpath("/html/body/div/footer/div/a[1]")).click();
         await driver.wait(until.elementLocated(By.xpath("/html/body/div/div[2]/a[2]")), 300000);
