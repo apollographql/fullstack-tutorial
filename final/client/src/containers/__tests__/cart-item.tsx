@@ -78,7 +78,7 @@ describe('cart item', () => {
     // expect(p.children.join('')).toContain('test mission');
   });
 
-  it('renders with error state', async() => {
+  it('should renders with error state', async() => {
     let mocks = [
       {
         request: { query: GET_LAUNCH, variables: { launchId: 1 } },
