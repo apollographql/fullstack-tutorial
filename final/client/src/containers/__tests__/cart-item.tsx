@@ -1,4 +1,9 @@
 import React from 'react';
+import { MockedProvider } from '@apollo/client/testing';
+import TestRenderer from 'react-test-renderer';
+import { shallow, mount } from '../../enzyme';
+const {act} = TestRenderer;
+import { render, wait, screen } from "@testing-library/react";
 
 import {
   renderApollo,
@@ -6,6 +11,13 @@ import {
   waitForElement,
 } from '../../test-utils';
 import CartItem, { GET_LAUNCH } from '../cart-item';
+
+const updateWrapper = async (wrapper, time = 0) => {
+  await act(async () => {
+    await new Promise((res) => setTimeout(res, time));
+    await wrapper.update();
+  });
+};
 
 const mockLaunch = {
   __typename: 'Launch',
@@ -25,7 +37,25 @@ describe('cart item', () => {
   // automatically unmount and cleanup DOM after the test is finished.
   afterEach(cleanup);
 
-  it('queries item and renders without error', () => {
+  it('should render loading state initially', () => {
+    let mocks = [
+      {
+        request: { query: GET_LAUNCH, variables: { launchId: '1' } },
+        result: { data: { launch: mockLaunch } },
+      },
+    ];
+
+    const component = TestRenderer.create(
+      <MockedProvider mocks={mocks} addTypename={false}>
+       <CartItem launchId={'1'} />
+      </MockedProvider>,
+    );
+
+    const tree = component.toJSON();
+    expect(tree.children).toContain('Loading...');
+  });
+
+  it('should queries item and renders without error', async() => {
     let mocks = [
       {
         request: { query: GET_LAUNCH, variables: { launchId: '1' } },
@@ -35,32 +65,36 @@ describe('cart item', () => {
 
     // since we know the name of the mission, and know that name
     // will be rendered at some point, we can use getByText
-    const { getByText } = renderApollo(<CartItem launchId={'1'} />, {
-      mocks,
-      addTypename: false,
-    });
+    const wrapper = mount(
+      <MockedProvider mocks={mocks} addTypename={false}>
+       <CartItem launchId={'1'} />
+      </MockedProvider>,
+    );
 
-    // check the loading state
-    getByText(/loading/i);
+    await updateWrapper(wrapper);
+    expect(wrapper.html()).toContain('test mission');
 
-    return waitForElement(() => getByText(/test mission/i));
+    // const p = wrapper.root.findByType('p');
+    // expect(p.children.join('')).toContain('test mission');
   });
 
-  it('renders with error state', () => {
+  it('should renders with error state', async() => {
     let mocks = [
       {
         request: { query: GET_LAUNCH, variables: { launchId: 1 } },
-        error: new Error('aw shucks'),
+        error: new Error(),
       },
     ];
 
     // since we know the error message, we can use getByText
     // to recognize the error
-    const { getByText } = renderApollo(<CartItem launchId={'1'} />, {
-      mocks,
-      addTypename: false,
-    });
+    const wrapper = mount(
+      <MockedProvider mocks={mocks} addTypename={false}>
+       <CartItem launchId={'1'} />
+      </MockedProvider>,
+    );
 
-    waitForElement(() => getByText(/error: aw shucks/i));
+    await updateWrapper(wrapper);
+    expect(wrapper.html()).toContain('ERROR: No more mocked responses for the query');
   });
 });
