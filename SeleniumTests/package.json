@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node login_email_test.js && node add_to_cart_single_test.js && node add_to_cart_multiple_test.js && node remove_from_cart_test.js"
   },
   "keywords": [],
   "author": "",
