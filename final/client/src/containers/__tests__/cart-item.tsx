@@ -1,15 +1,9 @@
 import React from 'react';
 import { MockedProvider } from '@apollo/client/testing';
 import TestRenderer from 'react-test-renderer';
-import { shallow, mount } from '../../enzyme';
-const {act} = TestRenderer;
-import { render, wait, screen } from "@testing-library/react";
-
-import {
-  renderApollo,
-  cleanup,
-  waitForElement,
-} from '../../test-utils';
+import { mount } from '../../enzyme';
+import {act} from 'react-dom/test-utils';
+import { cleanup } from '../../test-utils';
 import CartItem, { GET_LAUNCH } from '../cart-item';
 
 const updateWrapper = async (wrapper, time = 0) => {
@@ -73,16 +67,13 @@ describe('cart item', () => {
 
     await updateWrapper(wrapper);
     expect(wrapper.html()).toContain('test mission');
-
-    // const p = wrapper.root.findByType('p');
-    // expect(p.children.join('')).toContain('test mission');
   });
 
-  it('should renders with error state', async() => {
+  it('should renders with error state and message', async() => {
     let mocks = [
       {
         request: { query: GET_LAUNCH, variables: { launchId: 1 } },
-        error: new Error(),
+        error: new Error("aww shucks"),
       },
     ];
 
