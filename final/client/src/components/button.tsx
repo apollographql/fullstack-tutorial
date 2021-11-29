@@ -14,9 +14,11 @@ export default styled('button')({
   borderRadius: height / 2,
   fontFamily: 'inherit',
   fontSize: 18,
+
   lineHeight: `${height}px`,
   fontWeight: 700,
   color: 'white',
+
   textTransform: 'uppercase',
   backgroundColor: colors.accent,
   cursor: 'pointer',

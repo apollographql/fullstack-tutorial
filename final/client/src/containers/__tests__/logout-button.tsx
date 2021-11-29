@@ -1,7 +1,10 @@
 import React from 'react';
 import LogoutButton from '../logout-button';
 
-import { renderApollo, cleanup, fireEvent } from '../../test-utils';
+import { mount } from '../../enzyme'
+
+import { cleanup } from '../../test-utils';
+import { MockedProvider } from '@apollo/client/testing';
 import { cache, isLoggedInVar } from '../../cache';
 
 describe('logout button', () => {
@@ -9,15 +12,25 @@ describe('logout button', () => {
   afterEach(cleanup);
 
   it('renders logout button', async () => {
-    renderApollo(<LogoutButton />);
+    await mount(
+        <MockedProvider
+            cache={cache}>
+          <LogoutButton />
+        </MockedProvider>);
   });
 
   it('complete logout', async () => {
     isLoggedInVar(true);
     localStorage.setItem('token', 'testTokenValue');
     localStorage.setItem('userId', 'abc123');
-    const { getByTestId } = renderApollo(<LogoutButton />, { cache });
-    fireEvent.click(getByTestId('logout-button'));
+    var wrapper = await mount(
+        <MockedProvider
+            cache={cache}>
+          <LogoutButton />
+        </MockedProvider>);
+
+    var button = wrapper.find('button').simulate('click');
+
     expect(isLoggedInVar()).toBeFalsy();
     expect(localStorage.getItem('token')).toBeNull();
     expect(localStorage.getItem('userId')).toBeNull();

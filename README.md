@@ -1,4 +1,6 @@
-# Apollo tutorial
+# CPSC 542 Software Testing group Project
+
+# Apollo tutorial 
 
 This is the fullstack app for the [Apollo tutorial](http://apollographql.com/docs/tutorial/introduction.html). 🚀
 
@@ -23,3 +25,8 @@ and
 ```bash
 cd final/client && npm i && npm start
 ```
+## Selenium testing
+Used this https://medium.com/dailyjs/how-to-setup-selenium-on-node-environment-ee33023da72d as a guide. 
+
+Everyone will need to add the chrome driver to their computer and add it as a path variable. Details on doing this are 
+found in the above medium link. 
