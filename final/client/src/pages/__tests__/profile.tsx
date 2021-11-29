@@ -6,6 +6,7 @@ import {
   waitForElement,
 } from '../../test-utils';
 import Profile, { GET_MY_TRIPS } from '../profile';
+import { mount, render } from '../../enzyme';
 
 const mockLaunch = {
   __typename: 'Launch',
@@ -43,7 +44,7 @@ describe('Profile Page', () => {
       },
     ];
 
-    const { getByText } = renderApollo(<Profile />, { mocks });
+    const { getByText } = render(<Profile />, { mocks });
 
     // if the profile renders, it will have the list of missions booked
     await waitForElement(() => getByText(/test mission/i));
