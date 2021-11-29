@@ -3,7 +3,6 @@ let assert = require("assert");
 const {Builder, By, Key, util, Browser, until} = require("selenium-webdriver");
 const { WebDriver } = require("selenium-webdriver/lib/webdriver");
 let driver = new Builder().forBrowser("chrome").build();
-let wait = new WebDriver(driver,60);
 
 async function profilePagetest(){
     try{
@@ -30,7 +29,7 @@ async function profilePagetest(){
            
 
             // Wait until page is loaded then add to cart
-            await driver.wait(until.elementLocated(By.xpath("//*[contains(@class,'css-wwcn44')]")), 60000);
+            await driver.wait(until.elementLocated(By.xpath("//*[contains(@class,'css-wwcn44')]")), 30000);
             await driver.findElement(By.xpath("//*[contains(@class,'css-wwcn44')]")).click();
 
             // Go to the cart page
