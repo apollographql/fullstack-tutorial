@@ -1,12 +1,10 @@
 require("chromedriver");
 let assert = require("assert");
 const {Builder, By, Key, util, Browser, until} = require("selenium-webdriver");
-const { threadId } = require("worker_threads");
 let driver = new Builder().forBrowser("chrome").build();
 
 async function homePagetest(){
     try{
-
             await driver.get("http://localhost:3000");
             // Logging in wiht email
             await driver.findElement(By.name("email")).sendKeys('test@email.com');
