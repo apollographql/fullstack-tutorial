@@ -22,7 +22,7 @@ async function homePagetest(){
 
             })
             assert.equal(logoutPage,"HOME")
-            console.log("Test Passed");
+            console.log("Test Passed!!Home button is working");
 
             // Testing "LoadMore" Button
             await driver.wait(until.elementsLocated(By.xpath("/html/body/div/div[2]/button"), 500000));
@@ -30,13 +30,13 @@ async function homePagetest(){
 
            //  Wait unitl page is loaded, then click "LOAD MORE"
             assert.equal(await element.getText(),"LOAD MORE");
-            console.log(await element.getText());
+            console.log("Click on ",await element.getText()," Button");
             
             // Loading more lists of upcoming lunches
             await driver.wait(until.elementLocated(By.xpath("/html/body/div/div[2]/a[28]")), 300000);
             let loadPass= await driver.findElement(By.xpath("/html/body/div/div[2]/a[28]"));
             console.log(await loadPass.getText());
-            console.log("Test Passed");
+            console.log("Loaded correctly,Test Passed!!");
                 
         }finally{ 
 
