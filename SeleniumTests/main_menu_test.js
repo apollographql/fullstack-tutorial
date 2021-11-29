@@ -12,17 +12,15 @@ async function homePagetest(){
 
             // Testing Home Button
             await driver.wait(until.elementLocated(By.xpath("/html/body/div/footer/div/a[1]")), 300000);
-            let logoutPage = await driver.findElement(By.xpath("/html/body/div/footer/div/a[1]"))
-                .getText()
-                .then(async function(value){
-                return value;
-
-            })
-            assert.equal(logoutPage,"HOME")
-            console.log("Test Passed!!Home button is working");
+            let homePage = await driver.findElement(By.xpath("/html/body/div/footer/div/a[1]")).getText();
+    
+            assert.equal(homePage,"HOME")
+            console.log("Test Passed!!Home button works correctly.");
 
             // Testing "LoadMore" Button
-            await driver.wait(until.elementsLocated(By.xpath("/html/body/div/div[2]/button"), 500000));
+            await driver.wait(until.elementsLocated(By.xpath("/html/body/div/div[2]/button"), 300000));
+            
+           // await driver.findElement(By.xpath("/html/body/div/div[2]/button")).click();
             let element = await driver.findElement(By.xpath("/html/body/div/div[2]/button"));
 
            //  Wait unitl page is loaded, then click "LOAD MORE"
@@ -33,7 +31,7 @@ async function homePagetest(){
             await driver.wait(until.elementLocated(By.xpath("/html/body/div/div[2]/a[28]")), 300000);
             let loadPass= await driver.findElement(By.xpath("/html/body/div/div[2]/a[28]"));
             console.log(await loadPass.getText());
-            console.log("Loaded correctly,Test Passed!!");
+            console.log("Home page loaded correctly,Test Passed!!");
                 
         }finally{ 
 
