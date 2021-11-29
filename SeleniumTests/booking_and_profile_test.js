@@ -1,6 +1,6 @@
 require("chromedriver");
 let assert = require("assert");
-const {Builder, By, Key, util, Browser, until} = require("selenium-webdriver");
+const {Builder, By, Key, util, Browser, until, Actions} = require("selenium-webdriver");
 const { WebDriver } = require("selenium-webdriver/lib/webdriver");
 let driver = new Builder().forBrowser("chrome").build();
 
@@ -29,27 +29,31 @@ async function profilePagetest(){
            
 
             // Wait until page is loaded then add to cart
-            await driver.wait(until.elementLocated(By.xpath("//*[contains(@class,'css-wwcn44')]")), 30000);
-            await driver.findElement(By.xpath("//*[contains(@class,'css-wwcn44')]")).click();
+            await driver.wait(until.elementLocated(By.xpath("//button[@class='css-wwcn44']")), 30000);
+            await driver.executeScript("window.scrollBy(0,1000)");
+            await driver.findElement(By.xpath("//button[@class='css-wwcn44']")).click();
 
             // Go to the cart page
-            await driver.wait(until.elementsLocated(By.xpath("/html/body/div/footer/div/a[2]")), 30000);
+            await driver.wait(until.elementsLocated(By.xpath("/html/body/div/footer/div/a[2]")), 60000);
             await driver.findElement(By.xpath("/html/body/div/footer/div/a[2]")).click();
             // Book the trip
-            await driver.wait(until.elementLocated(By.xpath("/html/body/div/div[2]/button")), 30000);
-            let starlink = await driver.findElement(By.xpath("/html/body/div/div[2]/a[4]"));
+            await driver.wait(until.elementLocated(By.xpath("/html/body/div/div[2]/button")), 60000);
+            let starlink = await driver.findElement(By.xpath("/html/body/div/div[2]/a"));
             assert(starlink != null)
             let bookAllButton = await driver.findElement(By.xpath("/html/body/div/div[2]/button"));
             assert.equal(await bookAllButton.getText(), "BOOK ALL");
-            await driver.findElement(xpath("/html/body/div/div[2]/button")).click();
+            await driver.findElement(By.xpath("/html/body/div/div[2]/button")).click();
 
-            // Go back to Profile Page
-            await driver.wait(until.elementLocated(By.xpath("/html/body/div/footer/div/a[3]")), 30000);
-            let profile= await driver.findElement(By.xpath("/html/body/div/footer/div/a[3]"));
-            await profile.click();
+            // Go back to Profile Page and check your trip
+            await driver.navigate().refresh();
+            await driver.wait(until.elementLocated(By.xpath("/html/body/div/footer/div/a[3]")), 1000000);
+            await driver.findElement(By.xpath("/html/body/div/footer/div/a[3]")).click();
+           
+            await driver.wait(until.elementsLocated(By.xpath("/html/body/div/div[2]/a")),60000);
             let bookedTrip= await driver.findElement(By.xpath("/html/body/div/div[2]/a"));
             console.log(await bookedTrip.getText());
             console.log("Your trip is booked successfully,Test Passed!!");
+            await driver.navigate().refresh();
             
                 
         }finally{ 

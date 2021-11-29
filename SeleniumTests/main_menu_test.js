@@ -18,12 +18,12 @@ async function homePagetest(){
             console.log("Test Passed!!Home button works correctly.");
 
             // Testing "LoadMore" Button
+            await driver.wait(until.elementsLocated(By.xpath("//button[@class='css-wwcn44']"), 300000));
+            await driver.executeScript("window.scrollTo(0,document.body.scrollHeight)");
+            //  Wait unitl page is loaded, then click "LOAD MORE"
+            await driver.findElement(By.xpath("//button[@class='css-wwcn44']")).click();
             await driver.wait(until.elementsLocated(By.xpath("/html/body/div/div[2]/button"), 300000));
-            
-           // await driver.findElement(By.xpath("/html/body/div/div[2]/button")).click();
             let element = await driver.findElement(By.xpath("/html/body/div/div[2]/button"));
-
-           //  Wait unitl page is loaded, then click "LOAD MORE"
             assert.equal(await element.getText(),"LOAD MORE");
             console.log("Click on ",await element.getText()," Button");
             
