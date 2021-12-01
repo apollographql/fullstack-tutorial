@@ -3,7 +3,6 @@ const assert = require('assert');
 const testEmail = 'SeleniumTest@Gmail.Test'
 let driver = new Builder().forBrowser('chrome').build();
 
-
 runTests();
 
 async function runTests(){
