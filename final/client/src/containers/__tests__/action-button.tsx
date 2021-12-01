@@ -10,18 +10,18 @@ describe('action button', () => {
   // automatically unmount and cleanup DOM after the test is finished.
   afterEach(cleanup);
 
-  it('renders without error', () => {
+  it('should render without error', () => {
     render(<ActionButton/>);
   });
 
-  it('empty cart correct label', () => {
+  it('an empty cart should have a button with display message to add to cart', () => {
     const wrapper = render(<ActionButton/>);
     const button = wrapper.find('div button');
 
     expect(button.text()).toBe('Add to Cart');
   });
 
-  it('populated cart correct label', () => {
+  it('a non-empty cart should have a button displaying remove from cart', () => {
 
     cartItemsVar(['1']);
     const wrapper = render(<ActionButton id="1"/>);
@@ -30,7 +30,7 @@ describe('action button', () => {
     expect(button.text()).toBe('Remove from Cart');
   });
 
-  it('booked trip correct label', () => {
+  it('a booked trip should have a button displaying cancel the trip', () => {
 
     var wrapper = mount(
         <MockedProvider

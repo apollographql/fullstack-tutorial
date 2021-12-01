@@ -11,7 +11,7 @@ describe('logout button', () => {
   // automatically unmount and cleanup DOM after the test is finished.
   afterEach(cleanup);
 
-  it('renders logout button', async () => {
+  it('should renders logout button', async () => {
     await mount(
         <MockedProvider
             cache={cache}>
@@ -19,7 +19,7 @@ describe('logout button', () => {
         </MockedProvider>);
   });
 
-  it('complete logout', async () => {
+  it('on click of logout button, the user should be completely logout', async () => {
     isLoggedInVar(true);
     localStorage.setItem('token', 'testTokenValue');
     localStorage.setItem('userId', 'abc123');
