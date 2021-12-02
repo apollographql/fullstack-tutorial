@@ -85,6 +85,7 @@ const ToggleTripButton: React.FC<ActionButtonProps> = ({ id }) => {
           }
         }}
         data-testid={'action-button'}
+        id="add-to-cart"
       >
         {isInCart ? 'Remove from Cart' : 'Add to Cart'}
       </Button>
