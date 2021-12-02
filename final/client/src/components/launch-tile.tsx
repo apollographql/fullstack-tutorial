@@ -25,6 +25,7 @@ const LaunchTile: React.FC<LaunchTileProps> = ({ launch }) => {
       style={{
         backgroundImage: getBackgroundImage(id),
       }}
+      id={`${id}`}
     >
       <h3>{mission ? mission.name : ''}</h3>
       <h5>{rocket && rocket.name}</h5>

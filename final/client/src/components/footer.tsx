@@ -12,7 +12,7 @@ export default function Footer() {
   return (
     <Container>
       <InnerContainer>
-        <MenuItem to="/">
+        <MenuItem id='home' to="/">
           <HomeIcon />
           Home
         </MenuItem>

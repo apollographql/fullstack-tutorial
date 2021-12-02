@@ -1,3 +1,4 @@
+require('chromedriver');
 const {Builder, By, Key, until, WebDriver} = require('selenium-webdriver');
 const assert = require('assert');
 const testEmail = 'SeleniumTest@Gmail.Test'
@@ -14,10 +15,20 @@ async function runTests(){
     await navigateToCart();
     await userVerificationTest();
     await naviageToProfile();
+    await naviageToHome();
+    await userVerificationTest();
+    await cartTests();
     await userVerificationTest();
     await naviageToLogout();
     await verifyNoPermissionRedirectTest();
     await closeApp();
+}
+
+async function cartTests() {
+    await accessLaunchTile();
+    await addStarlinkToCart();
+    await navigateToCart();
+    await verifystartLinkAddedInTheCart();
 }
 
 async function openApp() {
@@ -45,12 +56,14 @@ async function loginTest() {
 }
 
 async function userVerificationTest() {
-    //Verify that the SeleniumTest user is logged in.
-    var actualUsername = await driver.wait(until.elementLocated(By.tagName('h5')), 5000).getText();
+    await driver.wait(until.elementLocated(By.tagName('h5')), 5000).then(async() => {
+        //Verify that the SeleniumTest user is logged in.
+        var actualUsername = await driver.findElement(By.tagName('h5')).getText();
 
-    //the css puts this in upper case.
-    assert.equal(actualUsername, testEmail.toUpperCase());
-    console.log('Pass: User authenticated on page.')
+        //the css puts this in upper case.
+        assert.equal(actualUsername, testEmail.toUpperCase());
+        console.log('Pass: User authenticated on page.')
+    });
 }
 
 async function navigateToCart() {
@@ -59,6 +72,27 @@ async function navigateToCart() {
 
 async function naviageToProfile() {
     await driver.findElement(By.id('profile')).click();
+}
+
+async function naviageToHome() {
+    await driver.findElement(By.id('home')).click();
+}
+
+async function accessLaunchTile() {
+    await driver.wait(until.elementLocated(By.id('109')), 5000).click();
+}
+
+async function addStarlinkToCart() {
+    await driver.wait(until.elementLocated(By.id('add-to-cart')), 5000).click();
+    console.log('Pass: 1 item added to the cart');
+}
+
+async function verifystartLinkAddedInTheCart() {
+   await driver.wait(until.elementLocated(By.id('109')), 5000).then(async() => {
+        var url = await driver.findElement(By.id('109')).getAttribute('href');
+        assert.equal(url, 'http://localhost:3000/launch/109');
+        console.log('Pass: 1 item available in cart');
+    });
 }
 
 async function naviageToLogout() {
