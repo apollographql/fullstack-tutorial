@@ -13,6 +13,7 @@ async function runTests(){
     await loginTest();
     await userVerificationTest();
     await navigateToCart();
+    await verifiesCartIEempty();
     await userVerificationTest();
     await naviageToProfile();
     await naviageToHome();
@@ -85,6 +86,12 @@ async function accessLaunchTile() {
 async function addStarlinkToCart() {
     await driver.wait(until.elementLocated(By.id('add-to-cart')), 5000).click();
     console.log('Pass: 1 item added to the cart');
+}
+
+async function verifiesCartIEempty() {
+    var message = await driver.findElement(By.id('empty-cart')).getText();
+    assert.equal(message, 'No items in your cart');
+    console.log('Pass: No item added in the cart');
 }
 
 async function verifystartLinkAddedInTheCart() {
