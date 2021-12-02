@@ -1,3 +1,4 @@
+import React from 'react';
 import { render } from '../../enzyme';
 
 import { cleanup } from '../../test-utils';
@@ -8,6 +9,7 @@ describe('Button', () => {
   afterEach(cleanup);
 
   it('should render without error', () => {
-    render(<Button>Hello World</Button>);
+    var wrapper = render(<Button>Hello World</Button>);
+    expect(wrapper.html()).toContain('Hello World');
   });
 });
