@@ -1,6 +1,7 @@
-import React from 'react';
+import { shallow, mount, render } from '../../enzyme';
+import { MockedProvider } from '@apollo/client/testing';
 
-import { render, cleanup } from '../../test-utils';
+import { cleanup } from '../../test-utils';
 import Header from '../header';
 
 describe('Header', () => {
@@ -8,6 +9,23 @@ describe('Header', () => {
   afterEach(cleanup);
 
   it('renders without error', () => {
-    render(<Header />);
+    const wrapper = mount(
+      <MockedProvider addTypename={false}>
+       <Header />
+      </MockedProvider>,
+    );
+    it('should have header element', () => {
+      expect(wrapper.find('header')).not.toBeNull();
+      expect(wrapper.html()).toContain('header');
+    });
+    it('should have container element', () => {
+      expect(wrapper.find('container')).not.toBeNull();
+      expect(wrapper.html()).toContain('container');
+    });
+    it('should have image element', () => {
+      expect(wrapper.find('#image')).not.toBeNull();
+      expect(wrapper.html()).toContain('image');
+    });
+    
   });
 });

@@ -1,6 +1,11 @@
 import React from 'react';
 import { InMemoryCache } from '@apollo/client';
-
+import Cart from '../cart';
+import {act} from 'react-dom/test-utils';
+import { MockedProvider } from '@apollo/client/testing';
+import { GET_LAUNCH } from '../../containers/cart-item';
+import { cache, cartItemsVar } from '../../cache';
+import { shallow, mount, render } from '../../enzyme';
 import {
   renderApollo,
   cleanup,
@@ -32,26 +37,20 @@ describe('Launches Page', () => {
   // automatically unmount and cleanup DOM after the test is finished.
   afterEach(cleanup);
 
-  it('renders launches', async () => {
-    const cache = new InMemoryCache({ addTypename: false });
-    const mocks = [
+  
+  it('should render launch page', async() => {
+    let mocks = [
       {
-        request: { query: GET_LAUNCHES },
-        result: {
-          data: {
-            launches: {
-              cursor: '123',
-              hasMore: true,
-              launches: [mockLaunch],
-            },
-          },
-        },
+        request: { query: GET_LAUNCH, variables: { launchId: '1' } },
+        result: { data: { launch: mockLaunch } },
       },
     ];
-    const { getByText } = await renderApollo(<Launches />, {
-      mocks,
-      cache,
-    });
-    await waitForElement(() => getByText(/test mission/i));
-  });
+
+    mount(
+      <MockedProvider cache={cache} mocks={mocks} addTypename={false}>
+       <Cart  />
+      </MockedProvider>,
+    );
+  })
 });
+

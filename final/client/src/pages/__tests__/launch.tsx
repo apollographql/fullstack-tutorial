@@ -1,10 +1,15 @@
 import React from 'react';
-
 import {
   renderApollo,
   cleanup,
   waitForElement,
 } from '../../test-utils';
+import Cart from '../cart';
+import {act} from 'react-dom/test-utils';
+import { MockedProvider } from '@apollo/client/testing';
+import { GET_LAUNCH } from '../../containers/cart-item';
+import { cache, cartItemsVar } from '../../cache';
+import { shallow, mount, render } from '../../enzyme';
 import Launch, { GET_LAUNCH_DETAILS } from '../launch';
 
 const mockLaunch = {
@@ -31,17 +36,18 @@ describe('Launch Page', () => {
   // automatically unmount and cleanup DOM after the test is finished.
   afterEach(cleanup);
 
-  it('renders launch', async () => {
-    const mocks = [
+    let mocks = [
       {
-        request: { query: GET_LAUNCH_DETAILS, variables: { launchId: 1 } },
+        request: { query: GET_LAUNCH, variables: { launchId: '1' } },
         result: { data: { launch: mockLaunch } },
       },
     ];
-    const { getByText } = await renderApollo(<Launch launchId={1} />, {
-      mocks,
-      resolvers: {}
-    });
-    await waitForElement(() => getByText(/test mission/i));
+
+    mount(
+      <MockedProvider cache={cache} mocks={mocks} addTypename={false}>
+       <Launch  />
+      </MockedProvider>,
+    );
   });
-});
+
+
