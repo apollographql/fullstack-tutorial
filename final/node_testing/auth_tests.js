@@ -14,7 +14,7 @@ async function runTests(){
     await loginTest();
     await userVerificationTest();
     await navigateToCart();
-    await verifiesCartIEempty();
+    await verifiesCartIsempty();
     await userVerificationTest();
     await naviageToProfile();
     await naviageToHome();
@@ -89,7 +89,7 @@ async function addStarlinkToCart() {
     console.log('Pass: 1 item added to the cart');
 }
 
-async function verifiesCartIEempty() {
+async function verifiesCartIsempty() {
     var message = await driver.findElement(By.id('empty-cart')).getText();
     assert.equal(message, 'No items in your cart');
     console.log('Pass: No item added in the cart');
