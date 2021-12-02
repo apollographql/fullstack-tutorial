@@ -11,7 +11,8 @@ describe('action button', () => {
   afterEach(cleanup);
 
   it('should render without error', () => {
-    render(<ActionButton/>);
+    var wrapper = render(<ActionButton/>);
+    expect(wrapper.find('ActionButton')).not.toBeNull();
   });
 
   it('an empty cart should have a button with display message to add to cart', () => {

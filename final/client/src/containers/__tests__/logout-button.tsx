@@ -12,11 +12,13 @@ describe('logout button', () => {
   afterEach(cleanup);
 
   it('should renders logout button', async () => {
-    await mount(
+    var wrapper = await mount(
         <MockedProvider
             cache={cache}>
           <LogoutButton />
         </MockedProvider>);
+
+      expect(wrapper.find('LogoutButton')).not.toBeNull();
   });
 
   it('on click of logout button, the user should be completely logout', async () => {
