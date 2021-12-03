@@ -60,7 +60,7 @@ async function userVerificationTest() {
 }
 
 async function selectFirstTile() {
-    await driver.wait(until.elementLocated(By.id('tile109')), 5000).click();
+    await driver.wait(until.elementLocated(By.id('109')), 5000).click();
 }
 
 async function clickActionButton() {
