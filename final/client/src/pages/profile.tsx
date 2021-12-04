@@ -42,7 +42,7 @@ const Profile: React.FC<ProfileProps> = () => {
           <LaunchTile key={launch.id} launch={launch} />
         ))
       ) : (
-        <p>You haven't booked any trips</p>
+        <p id="empty-profile">You haven't booked any trips</p>
       )}
     </Fragment>
   );

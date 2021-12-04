@@ -62,6 +62,7 @@ const CancelTripButton: React.FC<ActionButtonProps> = ({ id }) => {
       <Button
         onClick={() => mutate()}
         data-testid={'action-button'}
+        id="cancel-this-trip"
       >
         Cancel This Trip
       </Button>

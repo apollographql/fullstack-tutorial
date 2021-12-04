@@ -1,8 +1,11 @@
-require('chromedriver');
+//require('chromedriver');
 const {Builder, By, Key, until, WebDriver} = require('selenium-webdriver');
+const chrome = require('selenium-webdriver/chrome'); 
 const assert = require('assert');
 const testEmail = 'SeleniumTest@Gmail.Test'
-let driver = new Builder().forBrowser('chrome').build();
+const chromeOptions = new chrome.Options();
+chromeOptions.excludeSwitches("enable-logging");
+let driver = new Builder().forBrowser('chrome').setChromeOptions(chromeOptions).build();
 
 runTests();
 
@@ -13,14 +16,14 @@ async function runTests(){
     await loginTest();
     await userVerificationTest();
     await navigateToCart();
-    await verifiesCartIsempty();
+    await verifyCartIsEmpty();
     await userVerificationTest();
-    await naviageToProfile();
-    await naviageToHome();
+    await navigateToProfile();
+    await navigateToHome();
     await userVerificationTest();
     await cartTests();
     await userVerificationTest();
-    await naviageToLogout();
+    await navigateToLogout();
     await verifyNoPermissionRedirectTest();
     await closeApp();
 }
@@ -29,11 +32,12 @@ async function cartTests() {
     await accessLaunchTile();
     await addStarlinkToCart();
     await navigateToCart();
-    await verifystartLinkAddedInTheCart();
+    await verifyStarLinkAddedInTheCart();
 }
 
+
 async function openApp() {
-    //Make sure both client and server are running prior to exectuing this script.
+    //Make sure both client and server are running prior to executing this script.
     await driver.get('http://localhost:3000/');
     //driver.manage().setTimeouts({ implicit: 1000});
 }
@@ -41,7 +45,7 @@ async function openApp() {
 async function verifyNoPermissionRedirectTest() {
     var userFormField = await driver.findElement(By.name('email'));
     assert.ok(userFormField)
-    console.log('Pass: user is not logged in.')
+    console.log('Pass: User is not logged in.')
 }
 
 async function login() {
@@ -71,11 +75,11 @@ async function navigateToCart() {
     await driver.findElement(By.id('cart')).click();
 }
 
-async function naviageToProfile() {
+async function navigateToProfile() {
     await driver.findElement(By.id('profile')).click();
 }
 
-async function naviageToHome() {
+async function navigateToHome() {
     await driver.findElement(By.id('home')).click();
 }
 
@@ -85,24 +89,24 @@ async function accessLaunchTile() {
 
 async function addStarlinkToCart() {
     await driver.wait(until.elementLocated(By.id('add-to-cart')), 5000).click();
-    console.log('Pass: 1 item added to the cart');
+    console.log('Pass: 1 item added to the cart.');
 }
 
-async function verifiesCartIsempty() {
+async function verifyCartIsEmpty() {
     var message = await driver.findElement(By.id('empty-cart')).getText();
     assert.equal(message, 'No items in your cart');
-    console.log('Pass: No item added in the cart');
+    console.log('Pass: No item added in the cart.');
 }
 
-async function verifystartLinkAddedInTheCart() {
+async function verifyStarLinkAddedInTheCart() {
    await driver.wait(until.elementLocated(By.id('109')), 5000).then(async() => {
         var url = await driver.findElement(By.id('109')).getAttribute('href');
         assert.equal(url, 'http://localhost:3000/launch/109');
-        console.log('Pass: 1 item available in cart');
+        console.log('Pass: 1 item available in cart.');
     });
 }
 
-async function naviageToLogout() {
+async function navigateToLogout() {
     await driver.findElement(By.id('logout-button')).click();
 }
 

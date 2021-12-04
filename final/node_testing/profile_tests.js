@@ -1,30 +1,44 @@
 const {Builder, By, Key, until, WebDriver} = require('selenium-webdriver');
+const chrome = require('selenium-webdriver/chrome'); 
 const assert = require('assert');
-const testEmail = 'SeleniumTest@Gmail.Test'
-let driver = new Builder().forBrowser('chrome').build();
+const testEmail = 'ProfileTest@Gmail.Test'
+const chromeOptions = new chrome.Options();
+chromeOptions.excludeSwitches("enable-logging");
+let driver = new Builder().forBrowser('chrome').setChromeOptions(chromeOptions).build();
 
+runProfileTests();
 
-runTests();
-//checks to see if the profile successfully displays a booked trip
-//then checks to see if the profile successfully shows no booked trips
-
-async function runTests(){
+async function runProfileTests(){
+    // Open app and login
     await openApp();
     await verifyNoPermissionRedirectTest();
     await login();
     await refreshPage();
     await userVerificationTest();
-    await selectFirstTile();
+    
+    // Check profile with no booked trips
+    await navigateToProfile();
+    await verifyProfileIsEmpty();
+
+    // Book a trip
+    await navigateToHome();    
+    await selectFirstTrip();
     await clickActionButton();
     await navigateToCart();
-    await userVerificationTest();
     await clickBookButton();
+    await verifyTripIsBooked();
+
+    // Check profile with booked trip    
     await navigateToProfile();
-    await userVerificationTest();
-    await selectFirstTile();
-    await clickActionButton();
+    await verifyTripAddedToProfile();
+    
+    // Verify removal of trip on profile
+    await selectFirstTrip();
+    await cancelTrip();
     await navigateToProfile();
-    await userVerificationTest();
+    await verifyProfileIsEmpty();
+
+    // Logout and exit app
     await navigateToLogout();
     await verifyNoPermissionRedirectTest();
     await closeApp();
@@ -39,7 +53,7 @@ async function openApp() {
 async function verifyNoPermissionRedirectTest() {
     var userFormField = await driver.findElement(By.name('email'));
     assert.ok(userFormField)
-    console.log('Pass: user is not logged in.')
+    console.log('Pass: User is not logged in.')
 }
 
 async function login() {
@@ -51,20 +65,31 @@ async function refreshPage() {
 }
 
 async function userVerificationTest() {
-    //Verify that the SeleniumTest user is logged in.
-    let actualUsername = await driver.wait(until.elementLocated(By.id('username')), 5000).getText();
+    await driver.wait(until.elementLocated(By.id('username')), 5000).then(async() => {
+        //Verify that the SeleniumTest user is logged in.
+        var actualUsername = await driver.wait(until.elementLocated(By.id('username'), 5000)).getText();
 
-    //the css puts this in upper case.
-    assert.equal(actualUsername, testEmail.toUpperCase());
-    console.log('Pass: User authenticated on page.')
+        //the css puts this in upper case.
+        assert.equal(actualUsername, testEmail.toUpperCase());
+        console.log('Pass: User authenticated on page.')
+    });
 }
 
-async function selectFirstTile() {
+async function navigateToHome() {
+    await driver.findElement(By.id('home')).click();
+}
+
+async function selectFirstTrip() {
     await driver.wait(until.elementLocated(By.id('109')), 5000).click();
 }
 
 async function clickActionButton() {
     await driver.wait(until.elementLocated(By.xpath("//button[@data-testid='action-button']")), 5000).click();
+}
+
+async function cancelTrip() {
+    await driver.wait(until.elementLocated(By.id('cancel-this-trip')), 5000).click();
+    console.log('Pass: User cancels trip.');
 }
 
 async function navigateToCart() {
@@ -77,6 +102,26 @@ async function clickBookButton() {
 
 async function navigateToProfile() {
     await driver.wait(until.elementLocated(By.id('profile'), 5000)).click();
+}
+
+async function verifyProfileIsEmpty() {
+    var message = await driver.wait(until.elementLocated(By.id('empty-profile'), 5000)).getText();
+    assert.equal(message, 'You haven\'t booked any trips');
+    console.log('Pass: Profile shows no trips booked.');
+}
+
+async function verifyTripIsBooked() {
+    var message = await driver.wait(until.elementLocated(By.id('empty-cart'), 5000)).getText();
+    assert.equal(message, 'No items in your cart');
+    console.log('Pass: User books a trip.');
+}
+
+async function verifyTripAddedToProfile() {
+   await driver.wait(until.elementLocated(By.id('109')), 5000).then(async() => {
+        var url = await driver.findElement(By.id('109')).getAttribute('href');
+        assert.equal(url, 'http://localhost:3000/launch/109');
+        console.log('Pass: Profile shows 1 booked trip.');
+    });
 }
 
 async function navigateToLogout() {
