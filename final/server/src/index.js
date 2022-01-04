@@ -1,6 +1,7 @@
 require('dotenv').config();
 
 const { ApolloServer } = require('apollo-server-express');
+const { ApolloServerPluginLandingPageLocalDefault } = require('apollo-server-core');
 const { SubscriptionServer } = require('subscriptions-transport-ws');
 const { createServer } = require('http');
 const { execute, subscribe } = require('graphql');
@@ -59,15 +60,20 @@ const server = new ApolloServer({
   schema,
   dataSources,
   context,
-  plugins: [{
-    async serverWillStart() {
-      return {
-        async drainServer() {
-          subscriptionServer.close();
-        }
-      };
+  plugins: [
+    ApolloServerPluginLandingPageLocalDefault({
+      footer: false
+    }),
+    {
+      async serverWillStart() {
+        return {
+          async drainServer() {
+            subscriptionServer.close();
+          }
+        };
+      }
     }
-  }],
+  ],
   introspection: true,
   apollo: {
     key: process.env.APOLLO_KEY,
