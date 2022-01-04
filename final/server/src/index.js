@@ -92,7 +92,10 @@ const subscriptionServer = SubscriptionServer.create({
 if (process.env.NODE_ENV !== 'test') {
   (async () => {
     await server.start();
-    server.applyMiddleware({ app });
+    server.applyMiddleware({
+      app,
+      path: '/'
+    });
 
     const port = process.env.PORT || 4000;
     httpServer.listen(port, () => {
