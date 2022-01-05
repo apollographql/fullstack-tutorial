@@ -1,7 +1,5 @@
 import React, { useEffect } from 'react';
-
-import { useQuery } from '@apollo/react-hooks';
-import gql from 'graphql-tag';
+import { useQuery, gql } from '@apollo/client';
 
 const TRIPS_QUERY = gql`
   query TripsQuery {
