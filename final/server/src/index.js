@@ -102,6 +102,10 @@ const subscriptionServer = SubscriptionServer.create({
   path: server.graphqlPath,
 });
 
+app.all('/', function (req, res) {
+  res.send('This server provides its GraphQL endpoint at <a href="/graphql">/graphql</a>.')
+})
+
 // Start our server if we're not in a test env.
 // if we're in a test env, we'll manually start it in a test
 if (process.env.NODE_ENV !== 'test') {
@@ -109,7 +113,7 @@ if (process.env.NODE_ENV !== 'test') {
     await server.start();
     server.applyMiddleware({
       app,
-      path: '/'
+      path: '/graphql'
     });
 
     const port = process.env.PORT || 4000;
