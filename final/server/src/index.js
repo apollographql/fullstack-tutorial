@@ -78,6 +78,7 @@ const server = new ApolloServer({
   apollo: {
     key: process.env.APOLLO_KEY,
   },
+  plugins: [ApolloServerPluginLandingPageLocalDefault({ embed: true })]
 });
 
 const subscriptionServer = SubscriptionServer.create({
@@ -109,6 +110,7 @@ app.all('/', function (req, res) {
 // Start our server if we're not in a test env.
 // if we're in a test env, we'll manually start it in a test
 if (process.env.NODE_ENV !== 'test') {
+<<<<<<< HEAD
   (async () => {
     await server.start();
     server.applyMiddleware({
@@ -121,6 +123,11 @@ if (process.env.NODE_ENV !== 'test') {
       console.log(`🚀 Server ready at http://localhost:${port}${server.graphqlPath}`);
     });
   })();
+=======
+  server.listen().then(() => {
+    console.log(`Server is running at http://localhost:4000`);
+  });
+>>>>>>> 653a697 (Upgrade to latest Apollo Server with embeded Explorer)
 }
 
 // export all the important pieces for integration/e2e tests to use
