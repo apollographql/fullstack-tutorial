@@ -1,4 +1,5 @@
 const { RESTDataSource } = require('apollo-datasource-rest');
+const launches = require('../data/launches.json')
 
 class LaunchAPI extends RESTDataSource {
   constructor() {
@@ -26,22 +27,26 @@ class LaunchAPI extends RESTDataSource {
   }
 
   async getAllLaunches() {
-    const response = await this.get('launches');
+    return launches.map(launch => this.launchReducer(launch));
+    // const response = await this.get('launches');
 
-    // transform the raw launches to a more friendly
-    return Array.isArray(response)
-      ? response.map(launch => this.launchReducer(launch)) : [];
+    // // transform the raw launches to a more friendly
+    // return Array.isArray(response)
+    //   ? response.map(launch => this.launchReducer(launch)) : [];
   }
 
   async getLaunchById({ launchId }) {
-    const res = await this.get('launches', { flight_number: launchId });
-    return this.launchReducer(res[0]);
+    const launch = launches.find(launch => launch.flight_number === launchId);
+    return launch && this.launchReducer(launch);
+    // const res = await this.get('launches', { flight_number: launchId });
+    // return this.launchReducer(res[0]);
   }
 
   async getLaunchesByIds({ launchIds }) {
-    return Promise.all(
-      launchIds.map(launchId => this.getLaunchById({ launchId })),
-    );
+    return launches.filter(launch => launchIds.includes(launch.flight_number));
+    // return Promise.all(
+    //   launchIds.map(launchId => this.getLaunchById({ launchId })),
+    // );
   }
 }
 
