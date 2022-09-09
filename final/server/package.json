@@ -45,5 +45,8 @@
       "/node_modules/",
       "/__utils"
     ]
+  },
+  "volta": {
+    "node": "14.20.0"
   }
 }

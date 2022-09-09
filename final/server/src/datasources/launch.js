@@ -3,7 +3,7 @@ const { RESTDataSource } = require('apollo-datasource-rest');
 class LaunchAPI extends RESTDataSource {
   constructor() {
     super();
-    this.baseURL = 'https://api.spacexdata.com/v2/';
+    this.baseURL = 'https://api.spacexdata.com/v3/';
   }
 
   // leaving this inside the class to make the class easier to test
