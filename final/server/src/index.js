@@ -78,6 +78,7 @@ const server = new ApolloServer({
   apollo: {
     key: process.env.APOLLO_KEY,
   },
+  plugins: [ApolloServerPluginLandingPageLocalDefault({ embed: true })]
 });
 
 const subscriptionServer = SubscriptionServer.create({
