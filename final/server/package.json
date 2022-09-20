@@ -26,14 +26,9 @@
     "isemail": "^3.1.3",
     "mime": "^2.4.4",
     "nodemon": "^1.19.4",
-<<<<<<< HEAD
-    "sequelize": "^5.21.2",
-    "sqlite3": "^5.0.2",
-    "subscriptions-transport-ws": "^0.11.0",
-=======
     "sequelize": "^6.20.1",
     "sqlite3": "^5.0.8",
->>>>>>> 653a697 (Upgrade to latest Apollo Server with embeded Explorer)
+    "subscriptions-transport-ws": "^0.11.0",
     "uuid": "^3.3.3"
   },
   "devDependencies": {
