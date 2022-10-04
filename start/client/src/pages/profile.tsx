@@ -1,7 +1,7 @@
 import React from 'react';
-import { RouteComponentProps } from '@reach/router';
+import  {BrowserRouterProps}  from 'react-router-dom';
 
-interface ProfileProps extends RouteComponentProps {}
+interface ProfileProps extends BrowserRouterProps {}
 
 const Profile: React.FC<ProfileProps> = () => {
   return <div />;

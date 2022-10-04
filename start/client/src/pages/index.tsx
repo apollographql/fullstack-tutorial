@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import { Router } from '@reach/router';
+import {BrowserRouter, Routes, Route } from 'react-router-dom'
 
 import Launch from './launch';
 import Launches from './launches';
@@ -11,12 +11,14 @@ export default function Pages() {
   return (
     <Fragment>
       <PageContainer>
-        <Router primary={false} component={Fragment}>
-          <Launches path="/" />
-          <Launch path="launch/:launchId" />
-          <Cart path="cart" />
-          <Profile path="profile" />
-        </Router>
+        <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Launches/>}/>
+          <Route path="launch/:launchId" element={<Launch/>} />
+          <Route path="cart" element={<Cart/>} />
+          <Route path="profile" element={<Profile/>} />
+        </Routes>
+        </BrowserRouter>
       </PageContainer>
       <Footer />
     </Fragment>

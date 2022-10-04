@@ -1,6 +1,7 @@
 import React from 'react';
-import styled, { css } from 'react-emotion';
-import { Link } from '@reach/router';
+import styled from '@emotion/styled';
+import {css} from '@emotion/css'
+import { Link } from 'react-router-dom';
 
 import galaxy from '../assets/images/galaxy.jpg';
 import iss from '../assets/images/iss.jpg';

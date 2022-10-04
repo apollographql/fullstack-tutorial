@@ -1,7 +1,7 @@
 import React from 'react';
-import { RouteComponentProps } from '@reach/router';
+import { BrowserRouterProps} from 'react-router-dom';
 
-interface CartProps extends RouteComponentProps {
+interface CartProps extends BrowserRouterProps {
 
 }
 

@@ -1,5 +1,5 @@
 import React, { Fragment, useState }  from 'react';
-import { RouteComponentProps } from '@reach/router';
+import { BrowserRouterProps} from 'react-router-dom';
 import { gql } from '@apollo/client'
 
 export const LAUNCH_TILE_DATA = gql`
@@ -18,7 +18,7 @@ export const LAUNCH_TILE_DATA = gql`
   }
 `;
 
-interface LaunchesProps extends RouteComponentProps {}
+interface LaunchesProps extends BrowserRouterProps {}
 
 const Launches: React.FC<LaunchesProps> = () => {
   return <div />;
