@@ -1,4 +1,3 @@
-import React from 'react';
 import styled from '@emotion/styled';
 import {css} from '@emotion/css'
 import { Link } from 'react-router-dom';
@@ -13,7 +12,7 @@ export function getBackgroundImage(id: string) {
   return `url(${backgrounds[Number(id) % backgrounds.length]})`;
 }
 
-export default ({ launch }: any) => {
+const tile = ({ launch }: any) => {
   const { id, mission, rocket } = launch;
   return (
     <StyledLink
@@ -27,6 +26,8 @@ export default ({ launch }: any) => {
     </StyledLink>
   );
 };
+
+export default tile
 
 /**
  * STYLED COMPONENTS USED IN THIS FILE ARE BELOW HERE
