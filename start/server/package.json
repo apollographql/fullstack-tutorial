@@ -11,23 +11,25 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "apollo-datasource": "^3.1.0",
-    "apollo-datasource-rest": "^3.2.0",
+    "@apollo/datasource-rest": "^4.3.2",
+    "@apollo/server": "^4.0.0",
+    "aws-sdk": "^2.585.0",
     "dotenv": "^6.2.0",
-    "apollo-server": "^3.8.1",
-    "graphql": "^15.5.1",
+    "graphql": "^16.5.0",
     "isemail": "^3.1.3",
-    "nodemon": "^1.18.4",
+    "mime": "^2.4.4",
+    "nodemon": "^1.19.4",
     "sequelize": "^6.20.1",
-    "sqlite3": "^5.0.8"
+    "sqlite3": "^5.0.8",
+    "uuid": "^3.3.3"
   },
   "devDependencies": {
-    "apollo": "^2.32.5",
-    "apollo-link": "^1.2.3",
-    "apollo-link-http": "^1.5.5",
-    "jest": "^23.6.0",
+    "@apollo/client": "^3.7.0",
+    "@apollo/rover": "^0.2.0",
+    "jest": "^25.0.0",
     "nock": "^10.0.2",
-    "node-fetch": "^2.2.1"
+    "node-fetch": "^2.2.1",
+    "now": "^12.1.3"
   },
   "jest": {
     "testPathIgnorePatterns": [
