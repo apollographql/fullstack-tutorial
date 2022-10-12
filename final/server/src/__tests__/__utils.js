@@ -13,6 +13,7 @@ const {
   UserAPI,
   store,
 } = require('../');
+const { startStandaloneServer } = require('@apollo/server/dist/esm/standalone');
 
 /**
  * Integration testing utils
@@ -37,15 +38,24 @@ module.exports.constructTestServer = constructTestServer;
  */
 
 const startTestServer = async server => {
-  // if using apollo-server-express...
+  // if using `expressMiddleware`...
   // const app = express();
-  // server.applyMiddleware({ app });
-  // const httpServer = await app.listen(0);
-
-  const httpServer = await server.listen({ port: 0 });
+  // const httpServer = http.createServer(app);
+  // await server.start();
+  // app.use(
+  //   cors(),
+  //   json(),
+  //   expressMiddleware(server, {
+  //     context: testOptions?.context,
+  //   }),
+  // );
+  // await new Promise((resolve) => {
+  //   httpServer.listen({ port: 0 }, resolve);
+  // });
+  const { url } = await startStandaloneServer(server, { listen: { port: 0 } });
 
   const link = new HttpLink({
-    uri: `http://localhost:${httpServer.port}`,
+    uri: url,
     fetch,
   });
 
@@ -54,6 +64,7 @@ const startTestServer = async server => {
 
   return {
     link,
+    // TODO: server.stop() ?
     stop: () => httpServer.server.close(),
     graphql: executeOperation,
   };

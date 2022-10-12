@@ -1,7 +1,8 @@
 require('dotenv').config();
 
-const { ApolloServer } = require('apollo-server');
-const { ApolloServerPluginLandingPageLocalDefault } = require('apollo-server-core');
+const { ApolloServer } = require('@apollo/server');
+const { startStandaloneServer } = require('@apollo/server/standalone');
+
 const isEmail = require('isemail');
 
 const typeDefs = require('./schema');
@@ -43,15 +44,15 @@ const server = new ApolloServer({
   apollo: {
     key: process.env.APOLLO_KEY,
   },
-  plugins: [ApolloServerPluginLandingPageLocalDefault({ embed: true })]
 });
 
 // Start our server if we're not in a test env.
 // if we're in a test env, we'll manually start it in a test
 if (process.env.NODE_ENV !== 'test') {
-  server.listen().then(() => {
-    console.log(`Server is running at http://localhost:4000`);
+  const { url } = await startStandaloneServer(server, {
+    listen: { port: 4000 },
   });
+  console.log(`Server is running at ${url}`);
 }
 
 // export all the important pieces for integration/e2e tests to use

@@ -24,6 +24,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "run:ios-demo": "npx artillery run apollo-internal-demos/ios-workload.yml",
+    "// TODO": "use graphql-codegen",
     "codegen": "apollo client:codegen --target typescript --watch"
   },
   "eslintConfig": {

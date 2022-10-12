@@ -1,6 +1,4 @@
-const { gql } = require('apollo-server');
-
-const typeDefs = gql`
+const typeDefs = `#graphql
   type Query {
     launches(
       """
