@@ -1,5 +1,4 @@
 const gql = require('graphql-tag');
-const nock = require('nock');
 
 const {constructTestServer} = require('./__utils');
 

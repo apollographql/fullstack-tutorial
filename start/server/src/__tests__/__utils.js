@@ -1,6 +1,8 @@
-const { HttpLink } = require('apollo-link-http');
+const { HttpLink } = require('@apollo/client/link/http');
 const fetch = require('node-fetch');
-const { execute, toPromise } = require('apollo-link');
+const { execute } = require("@apollo/client/link/core");
+const { toPromise } = require('@apollo/client/link/utils');
+const { startStandaloneServer } = require('@apollo/server/standalone');
 
 module.exports.toPromise = toPromise;
 

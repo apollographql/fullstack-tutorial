@@ -5,7 +5,6 @@ const uuidv4 = require('uuid/v4');
 
 class UserAPI {
   constructor({ store, user }) {
-    super();
     this.store = store;
     this.user = user;
   }

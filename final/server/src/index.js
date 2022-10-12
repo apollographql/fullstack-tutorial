@@ -49,10 +49,11 @@ const server = new ApolloServer({
 // Start our server if we're not in a test env.
 // if we're in a test env, we'll manually start it in a test
 if (process.env.NODE_ENV !== 'test') {
-  const { url } = await startStandaloneServer(server, {
+  startStandaloneServer(server, {
     listen: { port: 4000 },
+  }).then(({ url }) => {
+    console.log(`Server is running at ${url}`);
   });
-  console.log(`Server is running at ${url}`);
 }
 
 // export all the important pieces for integration/e2e tests to use

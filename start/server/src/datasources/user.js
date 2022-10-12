@@ -2,7 +2,6 @@ const isEmail = require('isemail');
 
 class UserAPI {
   constructor({ store, user }) {
-    super();
     this.store = store;
     this.user = user;
   }

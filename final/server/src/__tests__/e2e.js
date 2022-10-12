@@ -37,7 +37,9 @@ describe('Server - e2e', () => {
   let stop, graphql;
 
   beforeAll(async () => {
+    debugger;
     const testServer = await startTestServer(server);
+    debugger;
     stop = testServer.stop;
     graphql = testServer.graphql;
   });
