@@ -13,8 +13,8 @@ const mockStore = {
 };
 module.exports.mockStore = mockStore;
 
-const ds = new UserAPI({ store: mockStore });
-ds.initialize({ context: { user: { id: 1, email: 'a@a.a' } } });
+const user = { id: 1, email: 'a@a.a' };
+const ds = new UserAPI({ store: mockStore, user });
 
 describe('[UserAPI.findOrCreateUser]', () => {
   it('returns null for invalid emails', async () => {

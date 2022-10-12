@@ -14,12 +14,6 @@ const UserAPI = require('./datasources/user');
 // creates a sequelize connection once. NOT for every request
 const store = createStore();
 
-// set up any dataSources our resolvers need
-const dataSources = () => ({
-  launchAPI: new LaunchAPI(),
-  userAPI: new UserAPI({ store }),
-});
-
 // the function that sets up the global context for each resolver, using the req
 const context = async ({ req }) => {
   // simple auth check on every request
@@ -32,14 +26,18 @@ const context = async ({ req }) => {
   const users = await store.users.findOrCreate({ where: { email } });
   const user = users && users[0] ? users[0] : null;
 
-  return { user };
+  const dataSources = {
+    launchAPI: new LaunchAPI(),
+    userAPI: new UserAPI({ store, user }),
+  };
+
+  return { user, dataSources };
 };
 
 // Set up Apollo Server
 const server = new ApolloServer({
   typeDefs,
   resolvers,
-  dataSources,
   context,
   introspection: true,
   apollo: {
@@ -58,7 +56,6 @@ if (process.env.NODE_ENV !== 'test') {
 
 // export all the important pieces for integration/e2e tests to use
 module.exports = {
-  dataSources,
   context,
   typeDefs,
   resolvers,

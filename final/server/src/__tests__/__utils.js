@@ -5,7 +5,6 @@ const { execute, toPromise } = require('apollo-link');
 module.exports.toPromise = toPromise;
 
 const {
-  dataSources,
   context: defaultContext,
   typeDefs,
   resolvers,
@@ -25,7 +24,6 @@ const constructTestServer = ({ context = defaultContext } = {}) => {
   const server = new ApolloServer({
     typeDefs,
     resolvers,
-    dataSources: () => ({ userAPI, launchAPI }),
     context,
   });
 
