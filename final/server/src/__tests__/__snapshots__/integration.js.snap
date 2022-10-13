@@ -2,65 +2,98 @@
 
 exports[`Mutations books trips 1`] = `
 Object {
-  "data": Object {
-    "bookTrips": Object {
-      "launches": Array [
-        Object {
-          "id": "1",
-          "isBooked": true,
+  "body": Object {
+    "kind": "single",
+    "singleResult": Object {
+      "data": Object {
+        "bookTrips": Object {
+          "launches": Array [
+            Object {
+              "id": "1",
+              "isBooked": true,
+            },
+            Object {
+              "id": "2",
+              "isBooked": true,
+            },
+          ],
+          "message": "trips booked successfully",
+          "success": true,
         },
-        Object {
-          "id": "2",
-          "isBooked": true,
-        },
-      ],
-      "message": "trips booked successfully",
-      "success": true,
+      },
+      "errors": undefined,
     },
   },
-  "errors": undefined,
+  "http": Object {
+    "headers": Map {
+      "cache-control" => "no-store",
+    },
+    "status": undefined,
+  },
 }
 `;
 
 exports[`Queries fetches list of launches 1`] = `
 Object {
-  "data": Object {
-    "launches": Object {
-      "cursor": "1143239400",
-      "hasMore": false,
-      "launches": Array [
-        Object {
-          "id": "1",
-          "isBooked": true,
-          "mission": Object {
-            "missionPatch": "https://images2.imgbox.com/40/e3/GypSkayF_o.png",
-            "name": "FalconSat",
-          },
-          "rocket": Object {
-            "name": "Falcon 1",
-          },
+  "body": Object {
+    "kind": "single",
+    "singleResult": Object {
+      "data": Object {
+        "launches": Object {
+          "cursor": "1143239400",
+          "hasMore": false,
+          "launches": Array [
+            Object {
+              "id": "1",
+              "isBooked": true,
+              "mission": Object {
+                "missionPatch": "https://images2.imgbox.com/40/e3/GypSkayF_o.png",
+                "name": "FalconSat",
+              },
+              "rocket": Object {
+                "name": "Falcon 1",
+              },
+            },
+          ],
         },
-      ],
+      },
+      "errors": undefined,
     },
   },
-  "errors": undefined,
+  "http": Object {
+    "headers": Map {
+      "cache-control" => "no-store",
+    },
+    "status": undefined,
+  },
 }
 `;
 
 exports[`Queries fetches single launch 1`] = `
 Object {
-  "data": Object {
-    "launch": Object {
-      "id": "1",
-      "isBooked": true,
-      "mission": Object {
-        "name": "FalconSat",
+  "body": Object {
+    "kind": "single",
+    "singleResult": Object {
+      "data": Object {
+        "launch": Object {
+          "id": "1",
+          "isBooked": true,
+          "mission": Object {
+            "name": "FalconSat",
+          },
+          "rocket": Object {
+            "type": "Merlin A",
+          },
+        },
       },
-      "rocket": Object {
-        "type": "Merlin A",
-      },
+      "errors": undefined,
     },
   },
-  "errors": undefined,
+  "http": Object {
+    "headers": Map {
+      "cache-control" => "no-store",
+    },
+    "status": undefined,
+  },
 }
 `;

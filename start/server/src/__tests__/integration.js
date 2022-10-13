@@ -66,14 +66,6 @@ const BOOK_TRIPS = gql`
   }
 `;
 
-// TODO remove after validation
-function reshapeResult(result) {
-  return {
-    data: result.body.singleResult.data,
-    errors: result.body.singleResult.errors,
-  };
-}
-
 describe('Queries', () => {
   it('fetches list of launches', async () => {
     const user = { id: 1, email: "a@a.a" };
@@ -102,12 +94,11 @@ describe('Queries', () => {
       { query: GET_LAUNCHES },
       {
         contextValue: {
-          user,
           dataSources: { launchAPI, userAPI },
         },
       }
     );
-    expect(reshapeResult(res)).toMatchSnapshot();
+    expect(res).toMatchSnapshot();
   });
 
   it('fetches single launch', async () => {
@@ -119,7 +110,6 @@ describe('Queries', () => {
     });
 
     const contextValue = {
-      user,
       dataSources: { launchAPI, userAPI },
     };
 
@@ -134,7 +124,7 @@ describe('Queries', () => {
       { query: GET_LAUNCH, variables: { id: 1 } },
       { contextValue }
     );
-    expect(reshapeResult(res)).toMatchSnapshot();
+    expect(res).toMatchSnapshot();
   });
 });
 
@@ -162,7 +152,8 @@ describe('Mutations', () => {
       },
       { contextValue }
     );
-    expect(reshapeResult(res).data.login.token).toEqual('YUBhLmE=');
+
+    expect(res.body.singleResult.data.login.token).toEqual("YUBhLmE=");
   });
 
   it('books trips', async () => {
@@ -203,6 +194,6 @@ describe('Mutations', () => {
       },
       { contextValue }
     );
-    expect(reshapeResult(res)).toMatchSnapshot();
+    expect(res).toMatchSnapshot();
   });
 });
