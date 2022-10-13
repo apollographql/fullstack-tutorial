@@ -27,7 +27,6 @@
     "@apollo/client": "^3.7.0",
     "@apollo/rover": "^0.2.0",
     "jest": "^25.0.0",
-    "nock": "^10.0.2",
     "node-fetch": "^2.2.1",
     "now": "^12.1.3"
   },
