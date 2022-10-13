@@ -2,8 +2,8 @@
 // import our production @apollo/server instance
 const { server } = require('../');
 const { gql } = require("graphql-tag");
-
-const { startTestServer, toPromise } = require('./__utils');
+const { toPromise } = require("@apollo/client/link/utils");
+const { startTestServer } = require('./__utils');
 
 const LAUNCH_LIST_QUERY = gql`
   query myLaunches($pageSize: Int, $after: String) {

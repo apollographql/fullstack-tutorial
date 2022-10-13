@@ -1,48 +1,14 @@
 // @ts-check
-const { HttpLink } = require('@apollo/client/link/http');
-const fetch = require('node-fetch');
-const { execute } = require('@apollo/client/link/core');
-const { toPromise } = require('@apollo/client/link/utils');
-const { ApolloServer } = require("@apollo/server");
-const { startStandaloneServer } = require('@apollo/server/standalone');
-const {
-  ApolloServerPluginInlineTraceDisabled,
-} = require("@apollo/server/plugin/disabled");
-
-module.exports.toPromise = toPromise;
-
-const {
-  context,
-  typeDefs,
-  resolvers,
-  LaunchAPI,
-  UserAPI,
-  store,
-} = require("../");
-
-/**
- * Integration testing utils
- */
-const constructTestServer = () => {
-  const userAPI = new UserAPI({ store });
-  const launchAPI = new LaunchAPI();
-
-  const server = new ApolloServer({
-    typeDefs,
-    resolvers,
-    plugins: [ApolloServerPluginInlineTraceDisabled()],
-  });
-
-  return { server, userAPI, launchAPI };
-};
-
-module.exports.constructTestServer = constructTestServer;
+const { HttpLink } = require("@apollo/client/link/http");
+const fetch = require("node-fetch");
+const { execute } = require("@apollo/client/link/core");
+const { startStandaloneServer } = require("@apollo/server/standalone");
+const { context } = require("../");
 
 /**
  * e2e Testing Utils
  */
-
-const startTestServer = async server => {
+const startTestServer = async (server) => {
   // if using `expressMiddleware`...
   // const app = express();
   // const httpServer = http.createServer(app);
