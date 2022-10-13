@@ -12,6 +12,7 @@ const {
 module.exports.toPromise = toPromise;
 
 const {
+  context,
   typeDefs,
   resolvers,
   LaunchAPI,
@@ -56,7 +57,10 @@ const startTestServer = async server => {
   // await new Promise((resolve) => {
   //   httpServer.listen({ port: 0 }, resolve);
   // });
-  const { url } = await startStandaloneServer(server, { listen: { port: 0 } });
+  const { url } = await startStandaloneServer(server, {
+    context,
+    listen: { port: 0 },
+  });
 
   const link = new HttpLink({
     uri: url,

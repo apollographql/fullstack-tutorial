@@ -4,6 +4,7 @@ const { paginateResults } = require('./utils');
 module.exports = {
   Query: {
     launches: async (_, { pageSize = 20, after }, { dataSources }) => {
+      debugger;
       const allLaunches = await dataSources.launchAPI.getAllLaunches();
       // we want these in reverse chronological order
       allLaunches.reverse();
@@ -25,8 +26,9 @@ module.exports = {
           : false,
       };
     },
-    launch: (_, { id }, { dataSources }) =>
-      dataSources.launchAPI.getLaunchById({ launchId: id }),
+    launch: (_, { id }, { dataSources }) => {
+      return dataSources.launchAPI.getLaunchById({ launchId: id });
+    },
     me: async (_, __, { dataSources }) =>
       dataSources.userAPI.findOrCreateUser(),
   },
@@ -41,9 +43,9 @@ module.exports = {
         success: results && results.length === launchIds.length,
         message:
           results.length === launchIds.length
-            ? 'trips booked successfully'
+            ? "trips booked successfully"
             : `the following launches couldn't be booked: ${launchIds.filter(
-                id => !results.includes(id),
+                (id) => !results.includes(id)
               )}`,
         launches,
       };
@@ -54,20 +56,20 @@ module.exports = {
       if (!result)
         return {
           success: false,
-          message: 'failed to cancel trip',
+          message: "failed to cancel trip",
         };
 
       const launch = await dataSources.launchAPI.getLaunchById({ launchId });
       return {
         success: true,
-        message: 'trip cancelled',
+        message: "trip cancelled",
         launches: [launch],
       };
     },
     login: async (_, { email }, { dataSources }) => {
       const user = await dataSources.userAPI.findOrCreateUser({ email });
       if (user) {
-        user.token = Buffer.from(email).toString('base64');
+        user.token = Buffer.from(email).toString("base64");
         return user;
       }
     },
@@ -78,8 +80,8 @@ module.exports = {
   },
   Mission: {
     // make sure the default size is 'large' in case user doesn't specify
-    missionPatch: (mission, { size } = { size: 'LARGE' }) => {
-      return size === 'SMALL'
+    missionPatch: (mission, { size } = { size: "LARGE" }) => {
+      return size === "SMALL"
         ? mission.missionPatchSmall
         : mission.missionPatchLarge;
     },
