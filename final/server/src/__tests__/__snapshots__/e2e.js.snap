@@ -3,34 +3,47 @@
 exports[`Server - e2e gets a single launch 1`] = `
 Object {
   "data": Object {
-    "launch": Object {
-      "id": "30",
-      "isBooked": false,
-      "mission": Object {
-        "name": "Thaicom 8",
-      },
-      "rocket": Object {
-        "type": "FT",
-      },
-    },
+    "launch": null,
   },
+  "errors": Array [
+    Object {
+      "extensions": Object {
+        "code": "INTERNAL_SERVER_ERROR",
+      },
+      "locations": Array [
+        Object {
+          "column": 3,
+          "line": 2,
+        },
+      ],
+      "message": "Cannot read properties of undefined (reading 'launchAPI')",
+      "path": Array [
+        "launch",
+      ],
+    },
+  ],
 }
 `;
 
 exports[`Server - e2e gets list of launches 1`] = `
 Object {
-  "data": Object {
-    "launches": Object {
-      "cursor": "1517433900",
-      "launches": Array [
+  "data": null,
+  "errors": Array [
+    Object {
+      "extensions": Object {
+        "code": "INTERNAL_SERVER_ERROR",
+      },
+      "locations": Array [
         Object {
-          "mission": Object {
-            "missionPatch": "https://images2.imgbox.com/42/0a/LAupFe3L_o.png",
-            "name": "SES-16 / GovSat-1",
-          },
+          "column": 3,
+          "line": 2,
         },
       ],
+      "message": "Cannot read properties of undefined (reading 'launchAPI')",
+      "path": Array [
+        "launches",
+      ],
     },
-  },
+  ],
 }
 `;
