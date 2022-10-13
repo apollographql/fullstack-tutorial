@@ -1,7 +1,11 @@
+// @ts-check
 require('dotenv').config();
 
 const { ApolloServer } = require('@apollo/server');
 const { startStandaloneServer } = require('@apollo/server/standalone');
+const {
+  ApolloServerPluginInlineTraceDisabled,
+} = require("@apollo/server/plugin/disabled");
 
 const isEmail = require('isemail');
 
@@ -11,9 +15,6 @@ const { createStore } = require('./utils');
 
 const LaunchAPI = require('./datasources/launch');
 const UserAPI = require('./datasources/user');
-const {
-  ApolloServerPluginInlineTraceDisabled,
-} = require("@apollo/server/plugin/disabled");
 
 // creates a sequelize connection once. NOT for every request
 const store = createStore();
@@ -35,14 +36,13 @@ const context = async ({ req }) => {
     userAPI: new UserAPI({ store, user }),
   };
 
-  return { user, dataSources };
+  return { dataSources };
 };
 
 // Set up Apollo Server
 const server = new ApolloServer({
   typeDefs,
   resolvers,
-  context,
   introspection: true,
   apollo: {
     key: process.env.APOLLO_KEY,
@@ -54,6 +54,7 @@ const server = new ApolloServer({
 // if we're in a test env, we'll manually start it in a test
 if (process.env.NODE_ENV !== 'test') {
   startStandaloneServer(server, {
+    context,
     listen: { port: 4000 },
   }).then(({ url }) => {
     console.log(`Server is running at ${url}`);
@@ -65,7 +66,6 @@ module.exports = {
   context,
   typeDefs,
   resolvers,
-  ApolloServer,
   LaunchAPI,
   UserAPI,
   store,

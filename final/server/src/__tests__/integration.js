@@ -1,4 +1,5 @@
-const gql = require('graphql-tag');
+// @ts-check
+const { gql } = require("graphql-tag");
 const UserAPI = require("../datasources/user");
 const LaunchAPI = require("../datasources/launch");
 
@@ -82,17 +83,11 @@ describe('Queries', () => {
       user,
     });
 
-    const contextValue = {
-      user,
-      dataSources: { launchAPI, userAPI },
-    };
     // create an instance of ApolloServer that mocks out context, while reusing
     // existing dataSources, resolvers, and typeDefs.
     // This function returns the server instance as well as our dataSource
     // instances, so we can overwrite the underlying fetchers
-    const { server } = constructTestServer({
-      context: () => contextValue,
-    });
+    const { server } = constructTestServer();
 
     // mock the datasources' underlying fetch methods, whether that's a REST
     // lookup in the RESTDataSource or the store query in the Sequelize datasource
@@ -105,7 +100,12 @@ describe('Queries', () => {
     // against our instance of ApolloServer
     const res = await server.executeOperation(
       { query: GET_LAUNCHES },
-      { contextValue }
+      {
+        contextValue: {
+          user,
+          dataSources: { launchAPI, userAPI },
+        },
+      }
     );
     expect(reshapeResult(res)).toMatchSnapshot();
   });
@@ -123,9 +123,7 @@ describe('Queries', () => {
       dataSources: { launchAPI, userAPI },
     };
 
-    const { server } = constructTestServer({
-      context: () => contextValue,
-    });
+    const { server } = constructTestServer();
 
     launchAPI.get = jest.fn(() => [mockLaunchResponse]);
     userAPI.store.trips.findAll.mockReturnValueOnce([
@@ -151,9 +149,7 @@ describe('Mutations', () => {
       dataSources: { launchAPI, userAPI },
     };
 
-    const { server } = constructTestServer({
-      context: () => contextValue,
-    });
+    const { server } = constructTestServer();
 
     userAPI.store.users.findOrCreate.mockReturnValueOnce([
       {id: 1, email: 'a@a.a'},
@@ -182,9 +178,7 @@ describe('Mutations', () => {
       dataSources: { launchAPI, userAPI },
     };
 
-    const { server, } = constructTestServer({
-      context: () => contextValue,
-    });
+    const { server } = constructTestServer();
 
     // mock the underlying fetches
     launchAPI.get = jest.fn();

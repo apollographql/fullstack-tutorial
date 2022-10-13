@@ -3,6 +3,7 @@ const { HttpLink } = require('@apollo/client/link/http');
 const fetch = require('node-fetch');
 const { execute } = require('@apollo/client/link/core');
 const { toPromise } = require('@apollo/client/link/utils');
+const { ApolloServer } = require("@apollo/server");
 const { startStandaloneServer } = require('@apollo/server/standalone');
 const {
   ApolloServerPluginInlineTraceDisabled,
@@ -11,26 +12,24 @@ const {
 module.exports.toPromise = toPromise;
 
 const {
-  context: defaultContext,
   typeDefs,
   resolvers,
-  ApolloServer,
   LaunchAPI,
   UserAPI,
   store,
-} = require('../');
+} = require("../");
 
 /**
  * Integration testing utils
  */
-const constructTestServer = ({ context = defaultContext } = {}) => {
+const constructTestServer = () => {
   const userAPI = new UserAPI({ store });
   const launchAPI = new LaunchAPI();
 
   const server = new ApolloServer({
     typeDefs,
     resolvers,
-    plugins: [ApolloServerPluginInlineTraceDisabled()]
+    plugins: [ApolloServerPluginInlineTraceDisabled()],
   });
 
   return { server, userAPI, launchAPI };

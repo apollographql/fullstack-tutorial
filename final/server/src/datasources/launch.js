@@ -1,3 +1,4 @@
+// @ts-check
 const { RESTDataSource } = require('@apollo/datasource-rest');
 
 class LaunchAPI extends RESTDataSource {
@@ -34,7 +35,9 @@ class LaunchAPI extends RESTDataSource {
   }
 
   async getLaunchById({ launchId }) {
-    const res = await this.get('launches', { flight_number: launchId });
+    const res = await this.get("launches", {
+      params: { flight_number: launchId },
+    });
     return this.launchReducer(res[0]);
   }
 

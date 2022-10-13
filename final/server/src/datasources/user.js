@@ -1,3 +1,4 @@
+// @ts-check
 const S3 = require('aws-sdk/clients/s3');
 const isEmail = require('isemail');
 const mime = require('mime');
@@ -85,7 +86,7 @@ class UserAPI {
      * a unique filename for the upload
      */
     const { createReadStream, mimetype } = await file;
-    const filename = uuidv4() + '.' + mime.getExtension(mimetype);
+    const filename = uuidv4() + '.' + mime.extension(mimetype);
 
     // Upload the file to an S3 bucket using the createReadStream
     const { AWS_S3_BUCKET } = process.env;

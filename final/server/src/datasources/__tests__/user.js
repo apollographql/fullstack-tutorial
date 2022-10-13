@@ -1,3 +1,4 @@
+// @ts-check
 const UserAPI = require('../user');
 
 const mockStore = {
@@ -92,7 +93,7 @@ describe('[UserAPI.getLaunchIdsByUser]', () => {
     mockStore.trips.findAll.mockReturnValueOnce(launches);
 
     // check the result of the fn
-    const res = await ds.getLaunchIdsByUser(args);
+    const res = await ds.getLaunchIdsByUser();
     expect(res).toEqual([1, 2]);
 
     // make sure store is called properly
@@ -100,12 +101,11 @@ describe('[UserAPI.getLaunchIdsByUser]', () => {
   });
 
   it('returns empty array if nothing found', async () => {
-    const args = { userId: 1 };
     // store lookup is not mocked to return anything, so this
     // simulates a failed lookup
 
     // check the result of the fn
-    const res = await ds.getLaunchIdsByUser(args);
+    const res = await ds.getLaunchIdsByUser();
     expect(res).toEqual([]);
   });
 });

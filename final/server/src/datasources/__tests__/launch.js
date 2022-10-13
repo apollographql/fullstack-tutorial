@@ -1,3 +1,4 @@
+// @ts-check
 const LaunchAPI = require('../launch');
 
 /**
@@ -40,7 +41,9 @@ describe('[LaunchAPI.getLaunchById]', () => {
     const res = await ds.getLaunchById({ launchId: 1 });
 
     expect(res).toEqual(mockLaunch);
-    expect(mocks.get).toBeCalledWith('launches', { flight_number: 1 });
+    expect(mocks.get).toBeCalledWith("launches", {
+      params: { flight_number: 1 },
+    });
   });
 });
 

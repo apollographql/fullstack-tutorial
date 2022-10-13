@@ -1,3 +1,4 @@
+// @ts-check
 const { paginateResults } = require('./utils');
 
 module.exports = {

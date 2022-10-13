@@ -1,11 +1,12 @@
-const {Sequelize} = require('sequelize');
+// @ts-check
+const { Sequelize } = require("sequelize");
 
 module.exports.paginateResults = ({
   after: cursor,
   pageSize = 20,
   results,
   // can pass in a function to calculate an item's cursor
-  getCursor = () => null,
+  getCursor = (_) => null,
 }) => {
   if (pageSize < 1) return [];
 

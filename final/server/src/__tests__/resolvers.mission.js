@@ -1,3 +1,4 @@
+// @ts-check
 const resolvers = require('../resolvers');
 
 const mockMission = {

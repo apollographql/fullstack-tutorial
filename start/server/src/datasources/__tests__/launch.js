@@ -1,9 +1,10 @@
+// @ts-check
 const LaunchAPI = require('../launch');
 
 /**
  * There are mock Launches at the bottom of this file.
- * 1 mock for the RAW API response, and another
- * for the shape of launch after it would have been
+ * 1 mock for the RAW API reponse, and another
+ * for the shape of the lauch after it would have been
  * transformed by the launch reducer.
  */
 
@@ -40,7 +41,9 @@ describe('[LaunchAPI.getLaunchById]', () => {
     const res = await ds.getLaunchById({ launchId: 1 });
 
     expect(res).toEqual(mockLaunch);
-    expect(mocks.get).toBeCalledWith('launches', { flight_number: 1 });
+    expect(mocks.get).toBeCalledWith("launches", {
+      params: { flight_number: 1 },
+    });
   });
 });
 
