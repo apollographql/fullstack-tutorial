@@ -11,6 +11,9 @@ const { createStore } = require('./utils');
 
 const LaunchAPI = require('./datasources/launch');
 const UserAPI = require('./datasources/user');
+const {
+  ApolloServerPluginInlineTraceDisabled,
+} = require("@apollo/server/plugin/disabled");
 
 // creates a sequelize connection once. NOT for every request
 const store = createStore();
@@ -44,6 +47,7 @@ const server = new ApolloServer({
   apollo: {
     key: process.env.APOLLO_KEY,
   },
+  plugins: [ApolloServerPluginInlineTraceDisabled()],
 });
 
 // Start our server if we're not in a test env.

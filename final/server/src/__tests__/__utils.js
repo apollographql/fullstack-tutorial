@@ -1,8 +1,12 @@
+// @ts-check
 const { HttpLink } = require('@apollo/client/link/http');
 const fetch = require('node-fetch');
 const { execute } = require('@apollo/client/link/core');
 const { toPromise } = require('@apollo/client/link/utils');
 const { startStandaloneServer } = require('@apollo/server/standalone');
+const {
+  ApolloServerPluginInlineTraceDisabled,
+} = require("@apollo/server/plugin/disabled");
 
 module.exports.toPromise = toPromise;
 
@@ -26,7 +30,7 @@ const constructTestServer = ({ context = defaultContext } = {}) => {
   const server = new ApolloServer({
     typeDefs,
     resolvers,
-    context,
+    plugins: [ApolloServerPluginInlineTraceDisabled()]
   });
 
   return { server, userAPI, launchAPI };
@@ -65,8 +69,7 @@ const startTestServer = async server => {
 
   return {
     link,
-    // TODO: server.stop() ?
-    stop: () => httpServer.server.close(),
+    stop: () => server.stop(),
     graphql: executeOperation,
   };
 };
