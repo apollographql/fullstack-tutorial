@@ -1,3 +1,3 @@
-import { InMemoryCache } from '@apollo/client';
+import { InMemoryCache, Reference } from '@apollo/client';
 
 export const cache: InMemoryCache = new InMemoryCache({});
