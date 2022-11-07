@@ -4,7 +4,7 @@ import { gql, useQuery } from '@apollo/client';
 import { LAUNCH_TILE_DATA } from './launches';
 import { Loading, Header, LaunchDetail } from '../components';
 import { ActionButton } from '../containers';
-import { RouteComponentProps } from '@reach/router';
+import { BrowserRouterProps } from 'react-router-dom';
 import * as LaunchDetailsTypes from './__generated__/LaunchDetails';
 
 export const GET_LAUNCH_DETAILS = gql`
@@ -20,21 +20,12 @@ export const GET_LAUNCH_DETAILS = gql`
   ${LAUNCH_TILE_DATA}
 `;
 
-interface LaunchProps extends RouteComponentProps {
+interface LaunchProps extends BrowserRouterProps {
   launchId?: any;
 }
 
 const Launch: React.FC<LaunchProps> = ({ launchId }) => {
-  const {
-    data,
-    loading,
-    error,
-  } = useQuery<
-    LaunchDetailsTypes.LaunchDetails,
-    LaunchDetailsTypes.LaunchDetailsVariables
-  >(GET_LAUNCH_DETAILS,
-    { variables: { launchId } }
-  );
+  const { data, loading, error } = useQuery<LaunchDetailsTypes.LaunchDetails, LaunchDetailsTypes.LaunchDetailsVariables>(GET_LAUNCH_DETAILS, { variables: { launchId } });
 
   if (loading) return <Loading />;
   if (error) return <p>ERROR: {error.message}</p>;
@@ -42,13 +33,11 @@ const Launch: React.FC<LaunchProps> = ({ launchId }) => {
 
   return (
     <Fragment>
-      <Header image={data.launch && data.launch.mission && data.launch.mission.missionPatch}>
-        {data && data.launch && data.launch.mission && data.launch.mission.name}
-      </Header>
+      <Header image={data.launch && data.launch.mission && data.launch.mission.missionPatch}>{data && data.launch && data.launch.mission && data.launch.mission.name}</Header>
       <LaunchDetail {...data.launch} />
       <ActionButton {...data.launch} />
     </Fragment>
   );
-}
+};
 
 export default Launch;

@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'react-emotion';
+import styled from '@emotion/styled';
 import { size } from 'polished';
 
 import { unit, colors } from '../styles';
@@ -36,7 +36,7 @@ const Header: React.FC<HeaderProps> = ({ image, children = 'Space Explorer' }) =
       </div>
     </Container>
   );
-}
+};
 
 export default Header;
 

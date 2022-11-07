@@ -1,12 +1,6 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import {
-  ApolloClient,
-  NormalizedCacheObject,
-  ApolloProvider,
-  gql,
-  useQuery
-} from '@apollo/client';
+import ReactDOM from 'react-dom/client';
+import { ApolloClient, NormalizedCacheObject, ApolloProvider, gql, useQuery } from '@apollo/client';
 
 import Pages from './pages';
 import Login from './pages/login';
@@ -55,10 +49,12 @@ function IsLoggedIn() {
   return data.isLoggedIn ? <Pages /> : <Login />;
 }
 
+const root = ReactDOM.createRoot(document.getElementById('root')!);
+
 injectStyles();
-ReactDOM.render(
+
+root.render(
   <ApolloProvider client={client}>
     <IsLoggedIn />
   </ApolloProvider>,
-  document.getElementById('root'),
 );
