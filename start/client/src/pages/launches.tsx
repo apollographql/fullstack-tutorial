@@ -17,7 +17,7 @@ export const LAUNCH_TILE_DATA = gql`
   }
 `;
 
-interface LaunchesProps extends BrowserRouterProps {}
+interface LaunchesProps {}
 
 const Launches: React.FC<LaunchesProps> = () => {
   return <div />;
