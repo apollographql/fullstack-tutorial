@@ -1,5 +1,4 @@
 import React, { }  from 'react';
-import { BrowserRouterProps} from 'react-router-dom';
 import { gql } from '@apollo/client'
 
 export const LAUNCH_TILE_DATA = gql`
