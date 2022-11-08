@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import styled from '@emotion/styled';
-import { css } from '@emotion/css';
+import { css } from '@emotion/react';
 import { size } from 'polished';
 
 import Button from './button';
@@ -72,33 +72,45 @@ const svgClassName = css({
   fill: 'currentColor',
 });
 
-const Header = styled('header')(svgClassName, {
-  width: '100%',
-  marginBottom: unit * 5,
-  padding: unit * 2.5,
-  position: 'relative',
-});
+const Header = styled('header')([
+  svgClassName,
+  {
+    width: '100%',
+    marginBottom: unit * 5,
+    padding: unit * 2.5,
+    position: 'relative',
+  },
+]);
 
-const StyledLogo = styled(Logo)(size(56), {
-  display: 'block',
-  margin: '0 auto',
-  position: 'relative',
-});
+const StyledLogo = styled(Logo)([
+  size(56),
+  {
+    display: 'block',
+    margin: '0 auto',
+    position: 'relative',
+  },
+]);
 
-const StyledCurve = styled(Curve)(size('100%'), {
-  fill: colors.primary,
-  position: 'absolute',
-  top: 0,
-  left: 0,
-});
+const StyledCurve = styled(Curve)([
+  size('100%'),
+  {
+    fill: colors.primary,
+    position: 'absolute',
+    top: 0,
+    left: 0,
+  },
+]);
 
 const Heading = styled('h1')({
   margin: `${unit * 3}px 0 ${unit * 6}px`,
 });
 
-const StyledRocket = styled(Rocket)(svgClassName, {
-  width: 250,
-});
+const StyledRocket = styled(Rocket)([
+  svgClassName,
+  {
+    width: 250,
+  },
+]);
 
 const StyledForm = styled('form')({
   width: '100%',

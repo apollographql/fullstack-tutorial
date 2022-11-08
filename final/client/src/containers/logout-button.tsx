@@ -42,8 +42,11 @@ export default LogoutButton;
  * STYLED COMPONENTS USED IN THIS FILE ARE BELOW HERE
  */
 
-const StyledButton = styled('button')(menuItemClassName, {
-  background: 'none',
-  border: 'none',
-  padding: 0,
-});
+const StyledButton = styled('button')([
+  menuItemClassName,
+  {
+    background: 'none',
+    border: 'none',
+    padding: 0,
+  },
+]);

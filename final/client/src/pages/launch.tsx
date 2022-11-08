@@ -4,7 +4,7 @@ import { gql, useQuery } from '@apollo/client';
 import { LAUNCH_TILE_DATA } from './launches';
 import { Loading, Header, LaunchDetail } from '../components';
 import { ActionButton } from '../containers';
-import { BrowserRouterProps } from 'react-router-dom';
+import { BrowserRouterProps, useParams } from 'react-router-dom';
 import * as LaunchDetailsTypes from './__generated__/LaunchDetails';
 
 export const GET_LAUNCH_DETAILS = gql`
@@ -21,10 +21,12 @@ export const GET_LAUNCH_DETAILS = gql`
 `;
 
 interface LaunchProps extends BrowserRouterProps {
-  launchId?: any;
+  launchId?: string;
 }
 
-const Launch: React.FC<LaunchProps> = ({ launchId }) => {
+const Launch: React.FC<LaunchProps> = () => {
+  let { launchId } = useParams();
+  launchId ??= '';
   const { data, loading, error } = useQuery<LaunchDetailsTypes.LaunchDetails, LaunchDetailsTypes.LaunchDetailsVariables>(GET_LAUNCH_DETAILS, { variables: { launchId } });
 
   if (loading) return <Loading />;
