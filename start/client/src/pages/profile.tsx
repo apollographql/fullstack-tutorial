@@ -1,7 +1,7 @@
 import React from 'react';
 import  {BrowserRouterProps}  from 'react-router-dom';
 
-interface ProfileProps extends BrowserRouterProps {}
+interface ProfileProps {}
 
 const Profile: React.FC<ProfileProps> = () => {
   return <div />;
