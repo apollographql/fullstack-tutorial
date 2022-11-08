@@ -12,7 +12,7 @@ export function getBackgroundImage(id: string) {
   return `url(${backgrounds[Number(id) % backgrounds.length]})`;
 }
 
-const tile = ({ launch }: any) => {
+const LaunchTile = ({ launch }: any) => {
   const { id, mission, rocket } = launch;
   return (
     <StyledLink
@@ -27,7 +27,7 @@ const tile = ({ launch }: any) => {
   );
 };
 
-export default tile
+export default LaunchTile
 
 /**
  * STYLED COMPONENTS USED IN THIS FILE ARE BELOW HERE

@@ -17,15 +17,7 @@ injectStyles();
 
 const root = ReactDOM.createRoot(document.getElementById("root")!);
 root.render(
-     <ApolloProvider client={client}>
+  <ApolloProvider client={client}>
     <Pages />
   </ApolloProvider>,
 );
-
-
-// ReactDOM.render(
-//   <ApolloProvider client={client}>
-//     <Pages />
-//   </ApolloProvider>,
-//   document.getElementById('root'),
-// );
