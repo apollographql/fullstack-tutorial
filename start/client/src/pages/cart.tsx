@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouterProps} from 'react-router-dom';
 
-interface CartProps extends BrowserRouterProps {
+interface CartProps {
 
 }
 
