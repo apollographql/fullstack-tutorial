@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import styled from '@emotion/styled';
-import {css} from '@emotion/css';
+import { css } from '@emotion/react';
 import { size } from 'polished';
 
 import Button from './button';
