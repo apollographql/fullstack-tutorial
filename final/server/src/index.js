@@ -17,6 +17,18 @@ const { createStore } = require('./utils');
 const LaunchAPI = require('./datasources/launch');
 const UserAPI = require('./datasources/user');
 
+const Sentry = require("@sentry/node");
+const Tracing = require("@sentry/tracing");
+
+Sentry.init({
+  dsn: "https://68f0dd35fe064328a8f26a307a0880ba@o53943.ingest.sentry.io/4504120019320832",
+
+  // Set tracesSampleRate to 1.0 to capture 100%
+  // of transactions for performance monitoring.
+  // This captures 30% of transactions for performance monitoring.
+  tracesSampleRate: 0.3,
+});
+
 // creates a sequelize connection once. NOT for every request
 const store = createStore();
 
