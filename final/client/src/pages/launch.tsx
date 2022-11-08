@@ -4,7 +4,7 @@ import { gql, useQuery } from '@apollo/client';
 import { LAUNCH_TILE_DATA } from './launches';
 import { Loading, Header, LaunchDetail } from '../components';
 import { ActionButton } from '../containers';
-import { BrowserRouterProps, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import * as LaunchDetailsTypes from './__generated__/LaunchDetails';
 
 export const GET_LAUNCH_DETAILS = gql`
@@ -20,12 +20,11 @@ export const GET_LAUNCH_DETAILS = gql`
   ${LAUNCH_TILE_DATA}
 `;
 
-interface LaunchProps extends BrowserRouterProps {
-  launchId?: string;
-}
+interface LaunchProps {}
 
 const Launch: React.FC<LaunchProps> = () => {
   let { launchId } = useParams();
+  // This ensures we pass a string, even if useParams returns `undefined`
   launchId ??= '';
   const { data, loading, error } = useQuery<LaunchDetailsTypes.LaunchDetails, LaunchDetailsTypes.LaunchDetailsVariables>(GET_LAUNCH_DETAILS, { variables: { launchId } });
 

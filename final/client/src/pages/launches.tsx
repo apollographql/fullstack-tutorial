@@ -2,7 +2,6 @@ import React, { Fragment, useState } from 'react';
 import { gql, useQuery } from '@apollo/client';
 
 import { LaunchTile, Header, Button, Loading } from '../components';
-import { BrowserRouterProps } from 'react-router-dom';
 import * as GetLaunchListTypes from './__generated__/GetLaunchList';
 
 export const LAUNCH_TILE_DATA = gql`
@@ -34,7 +33,7 @@ export const GET_LAUNCHES = gql`
   ${LAUNCH_TILE_DATA}
 `;
 
-interface LaunchesProps extends BrowserRouterProps {}
+interface LaunchesProps {}
 
 const Launches: React.FC<LaunchesProps> = () => {
   const { data, loading, error, fetchMore } = useQuery<GetLaunchListTypes.GetLaunchList, GetLaunchListTypes.GetLaunchListVariables>(GET_LAUNCHES);

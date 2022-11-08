@@ -24,12 +24,9 @@ const LaunchDetail: React.FC<LaunchDetailProps> = ({ id, site, rocket }) => (
  * STYLED COMPONENTS USED IN THIS FILE ARE BELOW HERE
  */
 
-const Card = styled('div')([
-  cardClassName,
-  {
-    height: 365,
-    marginBottom: unit * 4,
-  },
-]);
+const Card = styled('div')(cardClassName, {
+  height: 365,
+  marginBottom: unit * 4,
+});
 
 export default LaunchDetail;

@@ -3,7 +3,6 @@ import { gql, useQuery } from '@apollo/client';
 
 import { Loading, Header, LaunchTile } from '../components';
 import { LAUNCH_TILE_DATA } from './launches';
-import { BrowserRouterProps } from 'react-router-dom';
 import * as GetMyTripsTypes from './__generated__/GetMyTrips';
 
 export const GET_MY_TRIPS = gql`
@@ -19,7 +18,7 @@ export const GET_MY_TRIPS = gql`
   ${LAUNCH_TILE_DATA}
 `;
 
-interface ProfileProps extends BrowserRouterProps {}
+interface ProfileProps {}
 
 const Profile: React.FC<ProfileProps> = () => {
   const { data, loading, error } = useQuery<GetMyTripsTypes.GetMyTrips>(GET_MY_TRIPS, { fetchPolicy: 'network-only' });

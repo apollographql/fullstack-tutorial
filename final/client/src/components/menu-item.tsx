@@ -20,11 +20,8 @@ export const menuItemClassName = css({
   },
 });
 
-export const MenuItem = styled(Link)([
-  menuItemClassName,
-  {
-    textDecoration: 'none',
-  },
-]);
+export const MenuItem = styled(Link)(menuItemClassName, {
+  textDecoration: 'none',
+});
 
 export default MenuItem;

@@ -3,7 +3,6 @@ import { gql, useQuery } from '@apollo/client';
 
 import { Header, Loading } from '../components';
 import { CartItem, BookTrips } from '../containers';
-import { BrowserRouterProps } from 'react-router-dom';
 import { GetCartItems } from './__generated__/GetCartItems';
 
 export const GET_CART_ITEMS = gql`
@@ -12,7 +11,7 @@ export const GET_CART_ITEMS = gql`
   }
 `;
 
-interface CartProps extends BrowserRouterProps {}
+interface CartProps {}
 
 const Cart: React.FC<CartProps> = () => {
   const { data, loading, error } = useQuery<GetCartItems>(GET_CART_ITEMS);
