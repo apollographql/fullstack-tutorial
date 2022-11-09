@@ -1,10 +1,6 @@
 import React from 'react';
 
-import {
-  renderApollo,
-  cleanup,
-  waitForElement,
-} from '../../test-utils';
+import { renderApollo, cleanup, waitFor } from '../../test-utils';
 import Cart from '../cart';
 import { GET_LAUNCH } from '../../containers/cart-item';
 import { cache, cartItemsVar } from '../../cache';
@@ -29,7 +25,7 @@ describe('Cart Page', () => {
 
   it('renders with message for empty carts', () => {
     const { getByTestId } = renderApollo(<Cart />, { cache });
-    return waitForElement(() => getByTestId('empty-message'));
+    return waitFor(() => getByTestId('empty-message'));
   });
 
   it('renders cart', () => {
@@ -42,6 +38,6 @@ describe('Cart Page', () => {
 
     const { getByTestId } = renderApollo(<Cart />, { cache, mocks });
     cartItemsVar(['1']);
-    return waitForElement(() => getByTestId('book-button'));
+    return waitFor(() => getByTestId('book-button'));
   });
 });

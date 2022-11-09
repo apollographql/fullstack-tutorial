@@ -1,11 +1,6 @@
 import React from 'react';
 
-import {
-  renderApollo,
-  cleanup,
-  fireEvent,
-  waitForElement,
-} from '../../test-utils';
+import { renderApollo, cleanup, fireEvent, waitFor } from '../../test-utils';
 import BookTrips, { BOOK_TRIPS } from '../book-trips';
 import { GET_LAUNCH } from '../cart-item';
 
@@ -48,18 +43,15 @@ describe('book trips', () => {
         result: { data: { launch: mockLaunch } },
       },
     ];
-    const { getByTestId } = renderApollo(
-      <BookTrips cartItems={['1']} />,
-      { mocks, addTypename: false },
-    );
+    const { getByTestId } = renderApollo(<BookTrips cartItems={['1']} />, { mocks, addTypename: false });
 
     fireEvent.click(getByTestId('book-button'));
 
     // Let's wait until our mocked mutation resolves and
     // the component re-renders.
     // getByTestId throws an error if it cannot find an element with the given ID
-    // and waitForElement will wait until the callback doesn't throw an error
-    await waitForElement(() => getByTestId('message'));
+    // and waitFor will wait until the callback doesn't throw an error
+    await waitFor(() => getByTestId('message'));
   });
 
   // >>>> TODO

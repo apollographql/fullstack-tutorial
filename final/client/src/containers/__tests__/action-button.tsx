@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { renderApollo, cleanup } from '../../test-utils';
+import { renderApollo, cleanup, waitFor } from '../../test-utils';
 import ActionButton from '../action-button';
 import { cartItemsVar } from '../../cache';
 
@@ -18,7 +18,7 @@ describe('action button', () => {
     getByText(/add to cart/i);
 
     // rerender with different props to same container
-    cartItemsVar(['1']);
+    waitFor(() => cartItemsVar(['1']));
     renderApollo(<ActionButton id="1" />, { container });
     getByText(/remove from cart/i);
     cartItemsVar([]);
