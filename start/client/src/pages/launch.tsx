@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouterProps} from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 interface LaunchProps {
 }
