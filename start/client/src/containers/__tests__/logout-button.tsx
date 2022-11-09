@@ -14,8 +14,8 @@ describe('logout button', () => {
 
   it('complete logout', async () => {
     isLoggedInVar(true);
-    localStorage.setItem('token', 'testTokenValue');
-    localStorage.setItem('userId', 'abc123');
+    localStorage.setItem('token', window.btoa('testTokenValue'));
+    localStorage.setItem('userId', window.btoa('abc123'));
     const { getByTestId } = renderApollo(<LogoutButton />, { cache });
     fireEvent.click(getByTestId('logout-button'));
     expect(isLoggedInVar()).toBeFalsy();

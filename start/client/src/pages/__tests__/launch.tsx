@@ -1,11 +1,9 @@
 import React from 'react';
 
-import {
-  renderApollo,
-  cleanup,
-  waitForElement,
-} from '../../test-utils';
+import { renderApollo, cleanup, waitFor } from '../../test-utils';
 import Launch, { GET_LAUNCH_DETAILS } from '../launch';
+import { Route, Routes } from 'react-router-dom';
+import { createMemoryHistory } from 'history';
 
 const mockLaunch = {
   __typename: 'Launch',
@@ -34,14 +32,24 @@ describe('Launch Page', () => {
   it('renders launch', async () => {
     const mocks = [
       {
-        request: { query: GET_LAUNCH_DETAILS, variables: { launchId: 1 } },
+        request: { query: GET_LAUNCH_DETAILS, variables: { launchId: '1' } },
         result: { data: { launch: mockLaunch } },
       },
     ];
-    const { getByText } = await renderApollo(<Launch launchId={1} />, {
-      mocks,
-      resolvers: {}
-    });
-    await waitForElement(() => getByText(/test mission/i));
+
+    const history = ['/launch/1'];
+
+    const { getByText } = await renderApollo(
+      <Routes>
+        <Route path="launch/:launchId" element={<Launch />} />
+      </Routes>,
+      {
+        mocks,
+        history,
+        resolvers: {},
+      },
+    );
+
+    await waitFor(() => getByText(/test mission/i));
   });
 });
