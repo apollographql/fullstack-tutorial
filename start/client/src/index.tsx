@@ -6,10 +6,7 @@ import Pages from './pages';
 import injectStyles from './styles';
 
 // Initialize ApolloClient
-const client = new ApolloClient({
-  cache,
-  uri: 'http://localhost:4000/graphql',
-});
+
 
 injectStyles();
 
