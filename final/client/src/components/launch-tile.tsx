@@ -1,6 +1,7 @@
 import React from 'react';
-import styled, { css } from 'react-emotion';
-import { Link } from '@reach/router';
+import styled from '@emotion/styled';
+import { css } from '@emotion/react';
+import { Link } from 'react-router-dom';
 
 import galaxy from '../assets/images/galaxy.jpg';
 import iss from '../assets/images/iss.jpg';
@@ -30,7 +31,7 @@ const LaunchTile: React.FC<LaunchTileProps> = ({ launch }) => {
       <h5>{rocket && rocket.name}</h5>
     </StyledLink>
   );
-}
+};
 
 export default LaunchTile;
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'react-emotion';
+import styled from '@emotion/styled';
 import { useApolloClient } from '@apollo/client';
 
 import { menuItemClassName } from '../components/menu-item';
@@ -34,7 +34,7 @@ const LogoutButton = () => {
       Logout
     </StyledButton>
   );
-}
+};
 
 export default LogoutButton;
 
@@ -42,8 +42,11 @@ export default LogoutButton;
  * STYLED COMPONENTS USED IN THIS FILE ARE BELOW HERE
  */
 
-const StyledButton = styled('button')(menuItemClassName, {
-  background: 'none',
-  border: 'none',
-  padding: 0,
-});
+const StyledButton = styled('button')([
+  menuItemClassName,
+  {
+    background: 'none',
+    border: 'none',
+    padding: 0,
+  },
+]);

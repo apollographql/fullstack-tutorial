@@ -1,11 +1,7 @@
 import React from 'react';
 import { InMemoryCache } from '@apollo/client';
 
-import {
-  renderApollo,
-  cleanup,
-  waitForElement,
-} from '../../test-utils';
+import { renderApollo, cleanup, waitFor } from '../../test-utils';
 import Launches, { GET_LAUNCHES } from '../launches';
 
 const mockLaunch = {
@@ -52,6 +48,6 @@ describe('Launches Page', () => {
       mocks,
       cache,
     });
-    await waitForElement(() => getByText(/test mission/i));
+    await waitFor(() => getByText(/test mission/i));
   });
 });

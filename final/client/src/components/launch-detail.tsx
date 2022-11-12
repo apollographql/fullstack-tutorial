@@ -1,11 +1,11 @@
 import React from 'react';
-import styled from 'react-emotion';
+import styled from '@emotion/styled';
 
 import { unit } from '../styles';
 import { cardClassName, getBackgroundImage } from './launch-tile';
 import { LaunchDetails_launch } from '../pages/__generated__/LaunchDetails';
 
-type LaunchDetailProps = Partial<LaunchDetails_launch>
+type LaunchDetailProps = Partial<LaunchDetails_launch>;
 
 const LaunchDetail: React.FC<LaunchDetailProps> = ({ id, site, rocket }) => (
   <Card

@@ -1,12 +1,7 @@
 import React from 'react';
 
-import {
-  renderApollo,
-  cleanup,
-  fireEvent,
-  waitForElement,
-} from '../../test-utils';
-import Login, {LOGIN_USER} from '../login';
+import { renderApollo, cleanup, fireEvent, waitFor } from '../../test-utils';
+import Login, { LOGIN_USER } from '../login';
 import { cache, isLoggedInVar } from '../../cache';
 
 describe('Login Page', () => {
@@ -22,7 +17,7 @@ describe('Login Page', () => {
 
     const mocks = [
       {
-        request: {query: LOGIN_USER, variables: {email: 'a@a.a'}},
+        request: { query: LOGIN_USER, variables: { email: 'a@a.a' } },
         result: {
           data: {
             login: {
@@ -34,19 +29,19 @@ describe('Login Page', () => {
       },
     ];
 
-    const {getByText, getByTestId} = await renderApollo(<Login />, {
+    const { getByText, getByTestId } = await renderApollo(<Login />, {
       mocks,
       cache,
     });
 
     fireEvent.change(getByTestId('login-input'), {
-      target: {value: 'a@a.a'},
+      target: { value: 'a@a.a' },
     });
 
     fireEvent.click(getByText(/log in/i));
 
     // login is done if loader is gone
-    await waitForElement(() => getByText(/log in/i));
+    await waitFor(() => getByText(/log in/i));
 
     expect(isLoggedInVar()).toBeTruthy();
   });

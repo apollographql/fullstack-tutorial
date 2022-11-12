@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import styled, { css } from 'react-emotion';
+import styled from '@emotion/styled';
+import { css } from '@emotion/react';
 import { size } from 'polished';
 
 import Button from './button';
@@ -23,7 +24,7 @@ export default class LoginForm extends Component<LoginFormProps, LoginFormState>
 
   onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const email = (event.target as HTMLInputElement).value;
-    this.setState(s => ({ email }));
+    this.setState((s) => ({ email }));
   };
 
   onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -41,14 +42,7 @@ export default class LoginForm extends Component<LoginFormProps, LoginFormState>
         <StyledRocket />
         <Heading>Space Explorer</Heading>
         <StyledForm onSubmit={(e) => this.onSubmit(e)}>
-          <StyledInput
-            required
-            type="email"
-            name="email"
-            placeholder="Email"
-            data-testid="login-input"
-            onChange={(e) => this.onChange(e)}
-          />
+          <StyledInput required type="email" name="email" placeholder="Email" data-testid="login-input" onChange={(e) => this.onChange(e)} />
           <Button type="submit">Log in</Button>
         </StyledForm>
       </Container>
@@ -78,33 +72,45 @@ const svgClassName = css({
   fill: 'currentColor',
 });
 
-const Header = styled('header')(svgClassName, {
-  width: '100%',
-  marginBottom: unit * 5,
-  padding: unit * 2.5,
-  position: 'relative',
-});
+const Header = styled('header')([
+  svgClassName,
+  {
+    width: '100%',
+    marginBottom: unit * 5,
+    padding: unit * 2.5,
+    position: 'relative',
+  },
+]);
 
-const StyledLogo = styled(Logo)(size(56), {
-  display: 'block',
-  margin: '0 auto',
-  position: 'relative',
-});
+const StyledLogo = styled(Logo)([
+  size(56),
+  {
+    display: 'block',
+    margin: '0 auto',
+    position: 'relative',
+  },
+]);
 
-const StyledCurve = styled(Curve)(size('100%'), {
-  fill: colors.primary,
-  position: 'absolute',
-  top: 0,
-  left: 0,
-});
+const StyledCurve = styled(Curve)([
+  size('100%'),
+  {
+    fill: colors.primary,
+    position: 'absolute',
+    top: 0,
+    left: 0,
+  },
+]);
 
 const Heading = styled('h1')({
   margin: `${unit * 3}px 0 ${unit * 6}px`,
 });
 
-const StyledRocket = styled(Rocket)(svgClassName, {
-  width: 250,
-});
+const StyledRocket = styled(Rocket)([
+  svgClassName,
+  {
+    width: 250,
+  },
+]);
 
 const StyledForm = styled('form')({
   width: '100%',

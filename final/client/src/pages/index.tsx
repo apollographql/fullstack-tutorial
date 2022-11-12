@@ -1,5 +1,5 @@
-import React, { Fragment } from 'react';
-import { Router } from '@reach/router';
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 import Launch from './launch';
 import Launches from './launches';
@@ -9,16 +9,16 @@ import { Footer, PageContainer } from '../components';
 
 export default function Pages() {
   return (
-    <Fragment>
+    <Router>
       <PageContainer>
-        <Router primary={false} component={Fragment}>
-          <Launches path="/" />
-          <Launch path="launch/:launchId" />
-          <Cart path="cart" />
-          <Profile path="profile" />
-        </Router>
+        <Routes>
+          <Route path="/" element={<Launches />} />
+          <Route path="launch/:launchId" element={<Launch />} />
+          <Route path="cart" element={<Cart />} />
+          <Route path="profile" element={<Profile />} />
+        </Routes>
       </PageContainer>
       <Footer />
-    </Fragment>
+    </Router>
   );
 }

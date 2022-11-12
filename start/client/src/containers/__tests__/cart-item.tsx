@@ -1,10 +1,6 @@
 import React from 'react';
 
-import {
-  renderApollo,
-  cleanup,
-  waitForElement,
-} from '../../test-utils';
+import { renderApollo, cleanup, waitFor } from '../../test-utils';
 import CartItem, { GET_LAUNCH } from '../cart-item';
 
 const mockLaunch = {
@@ -43,7 +39,7 @@ describe('cart item', () => {
     // check the loading state
     getByText(/loading/i);
 
-    return waitForElement(() => getByText(/test mission/i));
+    return waitFor(() => getByText(/test mission/i));
   });
 
   it('renders with error state', () => {
@@ -61,6 +57,6 @@ describe('cart item', () => {
       addTypename: false,
     });
 
-    waitForElement(() => getByText(/error: aw shucks/i));
+    waitFor(() => getByText(/aw shucks/i));
   });
 });
