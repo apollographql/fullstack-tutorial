@@ -10,9 +10,12 @@ import injectStyles from './styles';
 
 injectStyles();
 
-// Pass the ApolloClient instance to the ApolloProvider component
+// Find our rootElement or throw and error if it doesn't exist
+const rootElement = document.getElementById('root');
+if (!rootElement) throw new Error('Failed to find the root element');
+const root = ReactDOM.createRoot(rootElement);
 
-const root = ReactDOM.createRoot(document.getElementById("root")!);
+// Pass the ApolloClient instance to the ApolloProvider component;
 root.render(
   <ApolloProvider client={client}>
     <Pages />

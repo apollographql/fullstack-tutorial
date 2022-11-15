@@ -49,10 +49,14 @@ function IsLoggedIn() {
   return data.isLoggedIn ? <Pages /> : <Login />;
 }
 
-const root = ReactDOM.createRoot(document.getElementById('root')!);
+// Find our rootElement or throw and error if it doesn't exist
+const rootElement = document.getElementById('root');
+if (!rootElement) throw new Error('Failed to find the root element');
+const root = ReactDOM.createRoot(rootElement);
 
 injectStyles();
 
+// Pass the ApolloClient instance to the ApolloProvider component
 root.render(
   <ApolloProvider client={client}>
     <IsLoggedIn />

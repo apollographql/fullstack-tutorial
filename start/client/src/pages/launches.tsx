@@ -1,4 +1,4 @@
-import React, { }  from 'react';
+import React from 'react';
 import { gql } from '@apollo/client'
 
 export const LAUNCH_TILE_DATA = gql`
