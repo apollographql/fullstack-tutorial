@@ -1,6 +1,6 @@
-import React from 'react';
-import styled, { css } from 'react-emotion';
-import { Link } from '@reach/router';
+import styled from '@emotion/styled';
+import { css } from '@emotion/react';
+import { Link } from 'react-router-dom';
 
 import galaxy from '../assets/images/galaxy.jpg';
 import iss from '../assets/images/iss.jpg';
@@ -12,7 +12,7 @@ export function getBackgroundImage(id: string) {
   return `url(${backgrounds[Number(id) % backgrounds.length]})`;
 }
 
-export default ({ launch }: any) => {
+const LaunchTile = ({ launch }: any) => {
   const { id, mission, rocket } = launch;
   return (
     <StyledLink
@@ -26,6 +26,8 @@ export default ({ launch }: any) => {
     </StyledLink>
   );
 };
+
+export default LaunchTile
 
 /**
  * STYLED COMPONENTS USED IN THIS FILE ARE BELOW HERE

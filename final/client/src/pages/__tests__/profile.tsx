@@ -1,10 +1,6 @@
 import React from 'react';
 
-import {
-  renderApollo,
-  cleanup,
-  waitForElement,
-} from '../../test-utils';
+import { renderApollo, cleanup, waitFor } from '../../test-utils';
 import Profile, { GET_MY_TRIPS } from '../profile';
 
 const mockLaunch = {
@@ -46,6 +42,6 @@ describe('Profile Page', () => {
     const { getByText } = renderApollo(<Profile />, { mocks });
 
     // if the profile renders, it will have the list of missions booked
-    await waitForElement(() => getByText(/test mission/i));
+    await waitFor(() => getByText(/test mission/i));
   });
 });

@@ -1,5 +1,4 @@
-import React, { Fragment, useState }  from 'react';
-import { RouteComponentProps } from '@reach/router';
+import React from 'react';
 import { gql } from '@apollo/client'
 
 export const LAUNCH_TILE_DATA = gql`
@@ -18,7 +17,7 @@ export const LAUNCH_TILE_DATA = gql`
   }
 `;
 
-interface LaunchesProps extends RouteComponentProps {}
+interface LaunchesProps {}
 
 const Launches: React.FC<LaunchesProps> = () => {
   return <div />;

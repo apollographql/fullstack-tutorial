@@ -1,12 +1,6 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import {
-  ApolloClient,
-  NormalizedCacheObject,
-  ApolloProvider,
-  gql,
-  useQuery
-} from '@apollo/client';
+import ReactDOM from 'react-dom/client';
+import { ApolloClient, NormalizedCacheObject, ApolloProvider, gql, useQuery } from '@apollo/client';
 
 import Pages from './pages';
 import Login from './pages/login';
@@ -55,10 +49,16 @@ function IsLoggedIn() {
   return data.isLoggedIn ? <Pages /> : <Login />;
 }
 
+// Find our rootElement or throw and error if it doesn't exist
+const rootElement = document.getElementById('root');
+if (!rootElement) throw new Error('Failed to find the root element');
+const root = ReactDOM.createRoot(rootElement);
+
 injectStyles();
-ReactDOM.render(
+
+// Pass the ApolloClient instance to the ApolloProvider component
+root.render(
   <ApolloProvider client={client}>
     <IsLoggedIn />
   </ApolloProvider>,
-  document.getElementById('root'),
 );

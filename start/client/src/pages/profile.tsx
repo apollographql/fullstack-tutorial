@@ -1,7 +1,6 @@
 import React from 'react';
-import { RouteComponentProps } from '@reach/router';
 
-interface ProfileProps extends RouteComponentProps {}
+interface ProfileProps {}
 
 const Profile: React.FC<ProfileProps> = () => {
   return <div />;

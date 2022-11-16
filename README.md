@@ -5,6 +5,7 @@ This is the fullstack app for the [Apollo tutorial](https://www.apollographql.co
 ## File structure
 
 The app is split out into two folders:
+
 - `start`: Starting point for the tutorial
 - `final`: Final version
 

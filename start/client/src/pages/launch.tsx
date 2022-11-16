@@ -1,8 +1,7 @@
 import React from 'react';
-import { RouteComponentProps } from '@reach/router';
+import { useParams } from 'react-router-dom';
 
-interface LaunchProps extends RouteComponentProps {
-
+interface LaunchProps {
 }
 
 const Launch: React.FC<LaunchProps> = () => {
