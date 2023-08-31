@@ -13,7 +13,7 @@ const typeDefs = gql`
       after: String
     ): LaunchConnection!
     launch(id: ID!): Launch
-    me: User
+    me: User!
   }
 
   type Mutation {
